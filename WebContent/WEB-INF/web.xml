@@ -14,7 +14,7 @@
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 	  	<init-param>
 			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>com.service</param-value>
+			<param-value>com.services</param-value>
 		</init-param>
 		
 	</servlet>
