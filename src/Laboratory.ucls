@@ -2,96 +2,132 @@
 <class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="com.beans.Customer" project="LabApi" file="/LabApi/src/com/beans/Customer.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    binary="false" corner="BOTTOM_LEFT">    
     <position height="533" width="220" x="42" y="-173"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="2" language="java" name="com.beans.Address" project="LabApi" file="/LabApi/src/com/beans/Address.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    binary="false" corner="BOTTOM_LEFT">    
     <position height="-1" width="-1" x="459" y="154"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="3" language="java" name="com.beans.LabOffice" project="LabApi" file="/LabApi/src/com/beans/LabOffice.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    binary="false" corner="BOTTOM_LEFT">    
     <position height="-1" width="-1" x="430" y="-62"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="4" language="java" name="com.beans.LabBranch" project="LabApi" file="/LabApi/src/com/beans/LabBranch.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    binary="false" corner="BOTTOM_LEFT">    
     <position height="-1" width="-1" x="633" y="374"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="5" language="java" name="com.beans.Reviews" project="LabApi" file="/LabApi/src/com/beans/Reviews.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    binary="false" corner="BOTTOM_LEFT">    
     <position height="-1" width="-1" x="161" y="320"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="6" language="java" name="com.beans.Appointment" project="LabApi" 
-    file="/LabApi/src/com/beans/Appointment.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/LabApi/src/com/beans/Appointment.java" binary="false" corner="BOTTOM_LEFT">    
     <position height="-1" width="-1" x="431" y="447"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="7" language="java" name="com.beans.Doctor" project="LabApi" file="/LabApi/src/com/beans/Doctor.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="731" width="283" x="719" y="-312"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    binary="false" corner="BOTTOM_LEFT">    
+    <position height="270" width="219" x="637" y="-128"/>    
+    <display autosize="false" stereotype="true" package="false" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <association id="8">    
+  <class id="8" language="java" name="com.beans.Tests" project="LabApi" file="/LabApi/src/com/beans/Tests.java" 
+    binary="false" corner="BOTTOM_LEFT">    
+    <position height="-1" width="-1" x="993" y="142"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.beans.TestResults" project="LabApi" 
+    file="/LabApi/src/com/beans/TestResults.java" binary="false" corner="BOTTOM_LEFT">    
+    <position height="-1" width="-1" x="881" y="396"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.beans.TestsbyLab" project="LabApi" 
+    file="/LabApi/src/com/beans/TestsbyLab.java" binary="false" corner="BOTTOM_LEFT">    
+    <position height="-1" width="-1" x="1079" y="336"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.beans.Response" project="LabApi" file="/LabApi/src/com/beans/Response.java" 
+    binary="false" corner="BOTTOM_LEFT">    
+    <position height="-1" width="-1" x="172" y="497"/>    
+    <display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="9" name="labAddress"/>      
-      <multiplicity id="10" minimum="0" maximum="1"/>    
+      <attribute id="13" name="labAddress"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="11">    
+  <association id="15">    
     <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="12" name="docAddress"/>      
-      <multiplicity id="13" minimum="0" maximum="1"/>    
+      <attribute id="16" name="docAddress"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="14">    
+  <association id="18">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="15" name="labAddress"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
+      <attribute id="19" name="labAddress"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="17">    
+  <association id="21">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="18" name="customerAddress"/>      
-      <multiplicity id="19" minimum="0" maximum="1"/>    
+      <attribute id="22" name="customerAddress"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
