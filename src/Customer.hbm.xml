@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.beans.Customer"
+		table="CUSTOMER">
+		<meta attribute="class-description">
+			This class contains the Customer details.
+		</meta>
+		<id name="customerId" type="string" column="customerId">
+			<generator class="native" />
+		</id>
+		<property name="customerName" column="CUST_NAME" type="string" />		
+		<property name="Age" column="AGE" type="int" />
+		<property name="gender" column="GENDER" type="string" />
+		<property name="status" column="STATUS" type="string" />
+		<property name="primaryMobileNo" column="PRIM_MOBILE"
+			type="string" />
+		<property name="secondaryMobileNo" column="SECOND_MOBILE"
+			type="string" />
+
+	</class>
+</hibernate-mapping>
