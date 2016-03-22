@@ -1,17 +1,48 @@
 package com.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
+@Entity
+@Table(name = "LAB_OFFICE")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "LabOffice")
 public class LabOffice {
 
-	String labName, labOfficeId, status;
+	@Override
+	public String toString() {
+		return "LabOffice [labName=" + labName + ", labOfficeId=" + labOfficeId
+				+ ", status=" + status + ", labAddress=" + labAddress
+				+ ", labOwner=" + labOwner + ", labRepresentative="
+				+ labRepresentative + ", primaryMobileNo=" + primaryMobileNo
+				+ ", secondaryMobileNo=" + secondaryMobileNo + "]";
+	}
+
+	@Id
+	@GeneratedValue
+	@Column(name = "LAB_OFFICE_ID")
+	String labOfficeId;
+	@Column(name = "LAB_NAME")
+	String labName;
+	@Column(name = "STATUS")
+	String status;
+	@Column(name = "ADDRESS")
 	Address labAddress;
-	String labOwner, labRepresentative, primaryMobileNo, secondaryMobileNo;
+	@Column(name = "LAB_OWNER")
+	String labOwner;
+	@Column(name = "LAB_REP")
+	String labRepresentative;
+	@Column(name = "PRIM_MOBILE")
+	String primaryMobileNo;
+	@Column(name = "SECOND_MOBILE")
+	String secondaryMobileNo;
 
 	public String getLabName() {
 		return labName;
@@ -85,13 +116,5 @@ public class LabOffice {
 		this.secondaryMobileNo = secondaryMobileNo;
 	}
 
-	@Override
-	public String toString() {
-		return "LabOffice [labName=" + labName + ", labOfficeId=" + labOfficeId
-				+ ", status=" + status + ", labAddress=" + labAddress
-				+ ", labOwner=" + labOwner + ", labRepresentative="
-				+ labRepresentative + ", primaryMobileNo=" + primaryMobileNo
-				+ ", secondaryMobileNo=" + secondaryMobileNo + "]";
-	}
-
+	
 }

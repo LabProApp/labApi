@@ -2,6 +2,9 @@ package com.beans;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlElement;
 
 public class Doctor {
@@ -18,9 +21,23 @@ public class Doctor {
 				+ "]";
 	}
 
-	String doctorName, docId, branchCode, status, hospitalName;
+	@Id
+	@GeneratedValue
+	@Column(name = "DOC_ID")
+	String docId;
+	@Column(name = "NAME")
+	String doctorName;
+	@Column(name = "DOC_BRANCH_CD")
+	String branchCode;
+	@Column(name = "STATUS")
+	String status;
+	@Column(name = "HOSP_NAME")
+	String hospitalName;
+	@Column(name = "DOC_DEGREE")
 	ArrayList<String> doctorDegree;
+	@Column(name = "DOC_SPEC")
 	ArrayList<String> doctorSpecialization;
+	@Column(name = "DOC_EXP")
 	ArrayList<String> doctorExperience;
 
 	Address docAddress;

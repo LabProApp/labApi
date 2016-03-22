@@ -1,19 +1,63 @@
 package com.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
+@Entity
+@Table(name = "LAB_BRANCH")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "LabBranch")
 public class LabBranch {
 
-	String labName, labOfficeId, labbranchCode, status, labBranchOwner;
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "LabBranch [labOfficeId=" + labOfficeId + ", labName=" + labName
+				+ ", labbranchCode=" + labbranchCode + ", status=" + status
+				+ ", labBranchOwner=" + labBranchOwner + ", labAddress="
+				+ labAddress + ", labRepresentative1=" + labRepresentative1
+				+ ", primaryMobileNo1=" + primaryMobileNo1
+				+ ", labRepresentative2=" + labRepresentative2
+				+ ", primaryMobileNo2=" + primaryMobileNo2
+				+ ", labRepresentative3=" + labRepresentative3
+				+ ", primaryMobileNo3=" + primaryMobileNo3 + "]";
+	}
+
+	@Id
+	@GeneratedValue
+	@Column(name = "LAB_OFFICE_ID")
+	String labOfficeId;
+	@Column(name = "NAME")
+	String labName;
+	@Column(name = "LAB_BRANCH_CD")
+	String labbranchCode;
+	@Column(name = "STATUS")
+	String status;
+	@Column(name = "LAB_BR_OWNER")
+	String labBranchOwner;
+	@Column(name = "ADDRESS")
 	Address labAddress;
-	String labRepresentative1, primaryMobileNo1;
-	String labRepresentative2, primaryMobileNo2;
-	String labRepresentative3, primaryMobileN3;
+	@Column(name = "LAB_REP1")
+	String labRepresentative1;
+	@Column(name = "PRIM_MOBILE1")
+	String primaryMobileNo1;
+	@Column(name = "LAB_REP2")
+	String labRepresentative2;
+	@Column(name = "PRIM_MOBILE2")
+	String primaryMobileNo2;
+	@Column(name = "LAB_REP3")
+	String labRepresentative3;
+	@Column(name = "PRIM_MOBILE3")
+	String primaryMobileNo3;
 
 	public String getLabName() {
 		return labName;
@@ -32,8 +76,6 @@ public class LabBranch {
 	public void setLabOfficeId(String labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
-
-	
 
 	public String getStatus() {
 		return status;
@@ -108,12 +150,12 @@ public class LabBranch {
 	}
 
 	public String getPrimaryMobileN3() {
-		return primaryMobileN3;
+		return primaryMobileNo3;
 	}
 
 	@XmlElement
-	public void setPrimaryMobileN3(String primaryMobileN3) {
-		this.primaryMobileN3 = primaryMobileN3;
+	public void setPrimaryMobileN3(String primaryMobileNo3) {
+		this.primaryMobileNo3 = primaryMobileNo3;
 	}
 
 }

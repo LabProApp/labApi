@@ -1,10 +1,17 @@
 package com.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "CUSTOMER")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Customer")
 public class Customer {
@@ -17,9 +24,25 @@ public class Customer {
 				+ ", secondaryMobileNo=" + secondaryMobileNo + "]";
 	}
 
-	String customerName, customerId, age, gender, status;
+	@Id
+	@GeneratedValue
+	@Column(name = "CUST_ID")
+	String customerId;
+	@Column(name = "CUST_NAME")
+	String customerName;
+	@Column(name = "AGE")
+	String age;
+	@Column(name = "GENDER")
+	String gender;
+	@Column(name = "STATUS")
+	String status;
+
+	@Column(name = "ADDRESS")
 	Address customerAddress;
-	String primaryMobileNo, secondaryMobileNo;
+	@Column(name = "PRIM_MOBILE")
+	String primaryMobileNo;
+	@Column(name = "SECOND_MOBILE")
+	String secondaryMobileNo;
 
 	public String getAge() {
 

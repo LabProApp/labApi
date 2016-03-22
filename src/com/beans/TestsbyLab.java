@@ -1,17 +1,36 @@
 package com.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 
-
+@Entity
+@Table(name = "TESTS_LAB")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "TestsbyLab")
 public class TestsbyLab {
 
-	String labOfficeId,labbranchCode,testId, status;
-	
+	@Override
+	public String toString() {
+		return "TestsbyLab [labOfficeId=" + labOfficeId + ", labbranchCode="
+				+ labbranchCode + ", testId=" + testId + ", status=" + status
+				+ ", isHomePick=" + isHomePick + "]";
+	}
+
+	@Column(name = "LAB_OFFICE_ID")
+	String labOfficeId;
+	@Column(name = "LAB_BRANCH_CD")
+	String labbranchCode;
+	@Column(name = "TEST_ID")
+	String testId;
+	@Column(name = "STATUS")
+	String status;
+	@Column(name = "HOME_PICK")
+	boolean isHomePick;
+
 	/**
 	 * @return the labOfficeId
 	 */
@@ -20,7 +39,8 @@ public class TestsbyLab {
 	}
 
 	/**
-	 * @param labOfficeId the labOfficeId to set
+	 * @param labOfficeId
+	 *            the labOfficeId to set
 	 */
 	public void setLabOfficeId(String labOfficeId) {
 		this.labOfficeId = labOfficeId;
@@ -34,7 +54,8 @@ public class TestsbyLab {
 	}
 
 	/**
-	 * @param labbranchCode the labbranchCode to set
+	 * @param labbranchCode
+	 *            the labbranchCode to set
 	 */
 	public void setLabbranchCode(String labbranchCode) {
 		this.labbranchCode = labbranchCode;
@@ -48,7 +69,8 @@ public class TestsbyLab {
 	}
 
 	/**
-	 * @param testId the testId to set
+	 * @param testId
+	 *            the testId to set
 	 */
 	public void setTestId(String testId) {
 		this.testId = testId;
@@ -62,15 +84,26 @@ public class TestsbyLab {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	
-	
-	
+	/**
+	 * @return the isHomePick
+	 */
+	public boolean isHomePick() {
+		return isHomePick;
+	}
 
-	
+	/**
+	 * @param isHomePick
+	 *            the isHomePick to set
+	 */
+	public void setHomePick(boolean isHomePick) {
+		this.isHomePick = isHomePick;
+	}
+
 }

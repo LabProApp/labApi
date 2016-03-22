@@ -2,30 +2,46 @@ package com.beans;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "APPOINTMENT")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Appointment")
 public class Appointment {
 
-	
-
 	String appntmntId;
+	@Column(name = "LAB_OFFICE_ID")
 	String labOfficeId;
+	@Column(name = "LAB_BRANCH_CD")
 	String branchCode;
+	@Column(name = "CUST_ID")
 	String customerId;
+	@Column(name = "TEST_ID")
 	String testId;
+	@Column(name = "TEST_RESULTS_ID")
 	String resultsId;
+	@Column(name = "ACCEPTED_DT")
 	Date acceptedOn;
+	@Column(name = "SCHEDULE_DT")
 	Date scheduleDate;
+	@Column(name = "TEST_DT")
 	Date testDate;
+	@Column(name = "HOME_PICK")
 	boolean isHomePick;
+	@Column(name = "NOW")
 	boolean now;
+	@Column(name = "STATUS")
 	String status;
+	@Column(name = "DOC_ID")
 	String refferedBy;
+	@Column(name = "REFFERED_DT")
 	Date refferedOn;
 
 	public String getAppntmntId() {
@@ -37,9 +53,6 @@ public class Appointment {
 		this.appntmntId = appntmntId;
 	}
 
-	
-
-	
 	public String getTestId() {
 		return testId;
 	}
