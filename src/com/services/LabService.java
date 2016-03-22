@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
-import com.beans.lab;
+import com.beans.LabBranch;
 import com.services.Impl.LabImpl;
 
 @Path("/lab")
@@ -22,9 +22,8 @@ public class LabService {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response addLab(lab b) {
+	public Response addLab(LabBranch b) {
 		LabImpl instance = LabImpl.getInstance();
-
 		Response resp = instance.addLab(b);
 
 		return resp;
@@ -33,20 +32,10 @@ public class LabService {
 	@GET
 	@Path("/get/{labId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public lab getLab(@PathParam("labId") String labId) {
-		lab lr = new lab();
-		System.out.println("Fresh Get Lab");
-		System.out.println("Lab Id =" + labId);
+	public LabBranch getLab(@PathParam("labId") String labId) {
 
-		if (labId.equalsIgnoreCase("10")) {
-			lr.setLabId(labId);
-			lr.setLabName("PATIALA LAB");
-		}
-		if (labId.equalsIgnoreCase("20")) {
-			lr.setLabId(labId);
-			lr.setLabName("CHANDIGARH LAB");
-		}
-		System.out.println("Get Lab  =>" + lr);
+		LabImpl instance = LabImpl.getInstance();
+		LabBranch lr = instance.getLab(labId);
 
 		return lr;
 
@@ -55,17 +44,10 @@ public class LabService {
 	@GET
 	@Path("/getList")
 	@Produces(MediaType.APPLICATION_XML)
-	public ArrayList<lab> getLabList() {
-		ArrayList<lab> labList = new ArrayList<lab>();
-		lab lr = new lab();
-		System.out.println("Get Entire Lab List");
-		lr.setLabId("10");
-		lr.setLabName("PATIALA LAB");
-		labList.add(lr);
-		lab lr2 = new lab();
-		lr2.setLabId("20");
-		lr2.setLabName("CHANDIGARH LAB");
-		labList.add(lr2);
+	public ArrayList<LabBranch> getLabList() {
+
+		LabImpl instance = LabImpl.getInstance();
+		ArrayList<LabBranch> labList = instance.getLabList();
 
 		System.out.println("Get Entire Lab List => " + labList);
 
@@ -77,11 +59,10 @@ public class LabService {
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response updateLab(lab b) {
+	public Response updateLab(LabBranch b) {
 
-		Response resp = new Response();
-
-		System.out.println("Update Lab => " + b);
+		LabImpl instance = LabImpl.getInstance();
+		Response resp = instance.updateLab(b);
 
 		resp.setSTATUS("SUCCESS");
 		return resp;
@@ -91,9 +72,9 @@ public class LabService {
 	@Path("/delete/{labId}")
 	@Produces(MediaType.APPLICATION_XML)
 	public Response deleteLab(@PathParam("labId") String labId) {
-		Response resp = new Response();
-		System.out.println("Delete Lab");
-		System.out.println("Lab Id =" + labId);
+
+		LabImpl instance = LabImpl.getInstance();
+		Response resp = instance.deleteLab(labId);
 
 		resp.setSTATUS("SUCCESS");
 		return resp;

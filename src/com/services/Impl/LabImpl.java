@@ -3,11 +3,10 @@ package com.services.Impl;
 import java.util.ArrayList;
 
 import com.beans.Response;
-import com.beans.lab;
-
+import com.beans.LabBranch;
 
 public class LabImpl {
-	
+
 	private static LabImpl instance;
 
 	private LabImpl() {
@@ -19,24 +18,25 @@ public class LabImpl {
 			instance = new LabImpl();
 		return instance;
 	}
-	public Response addLab(lab b) {
+
+	public Response addLab(LabBranch b) {
 		Response resp = new Response();
 		System.out.println("Add Lab =>" + b);
 		resp.setSTATUS("SUCCESS");
 		return resp;
 	}
 
-	public lab getLab(String labId) {
-		lab lr = new lab();
+	public LabBranch getLab(String labId) {
+		LabBranch lr = new LabBranch();
 		System.out.println("Fresh Get Lab");
 		System.out.println("Lab Id =" + labId);
 
 		if (labId.equalsIgnoreCase("10")) {
-			lr.setLabId(labId);
+			lr.setLabOfficeId(labId);
 			lr.setLabName("PATIALA LAB");
 		}
 		if (labId.equalsIgnoreCase("20")) {
-			lr.setLabId(labId);
+			lr.setLabOfficeId(labId);
 			lr.setLabName("CHANDIGARH LAB");
 		}
 		System.out.println("Get Lab  =>" + lr);
@@ -45,15 +45,15 @@ public class LabImpl {
 
 	}
 
-	public ArrayList<lab> getLabList() {
-		ArrayList<lab> labList = new ArrayList<lab>();
-		lab lr = new lab();
+	public ArrayList<LabBranch> getLabList() {
+		ArrayList<LabBranch> labList = new ArrayList<LabBranch>();
+		LabBranch lr = new LabBranch();
 		System.out.println("Get Entire Lab List");
-		lr.setLabId("10");
+		lr.setLabOfficeId("10");
 		lr.setLabName("PATIALA LAB");
 		labList.add(lr);
-		lab lr2 = new lab();
-		lr2.setLabId("20");
+		LabBranch lr2 = new LabBranch();
+		lr2.setLabOfficeId("20");
 		lr2.setLabName("CHANDIGARH LAB");
 		labList.add(lr2);
 
@@ -63,11 +63,10 @@ public class LabImpl {
 
 	}
 
-
-	public Response updateLab(lab b) {
+	public Response updateLab(LabBranch b) {
 
 		Response resp = new Response();
-		
+
 		System.out.println("Update Lab => " + b);
 
 		resp.setSTATUS("SUCCESS");

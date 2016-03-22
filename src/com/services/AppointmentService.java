@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.beans.Appointment;
 import com.beans.Response;
-import com.beans.lab;
+import com.beans.LabBranch;
 import com.services.Impl.AppointmentImpl;
 
 @Path("/appointment")
@@ -46,8 +46,8 @@ public class AppointmentService {
 	@GET
 	@Path("/getAppointListbyLab")
 	@Produces(MediaType.APPLICATION_XML)
-	public ArrayList<lab> getAppointListbyLab(@PathParam("LabId") String LabId) {
-		ArrayList<lab> AppointListbyLab = new ArrayList<lab>();
+	public ArrayList<LabBranch> getAppointListbyLab(@PathParam("LabId") String LabId) {
+		ArrayList<LabBranch> AppointListbyLab = new ArrayList<LabBranch>();
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
 		AppointListbyLab = appmntImpl.getAppointListbyLab(LabId);
@@ -58,9 +58,9 @@ public class AppointmentService {
 	@GET
 	@Path("/getAppointListbyCustomer")
 	@Produces(MediaType.APPLICATION_XML)
-	public ArrayList<lab> getAppointListbyCustomer(
+	public ArrayList<LabBranch> getAppointListbyCustomer(
 			@PathParam("CustomerId") String CustomerId) {
-		ArrayList<lab> AppointListbyCustomer = new ArrayList<lab>();
+		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
 		AppointListbyCustomer = appmntImpl.getAppointListbyCustomer(CustomerId);
