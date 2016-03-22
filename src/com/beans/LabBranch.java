@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlRootElement(name = "LabBranch")
 public class LabBranch {
 
-	String labName, labOfficeId, branchCode, status, labBranchOwner;
+	String labName, labOfficeId, labbranchCode, status, labBranchOwner;
 	Address labAddress;
 	String labRepresentative1, primaryMobileNo1;
 	String labRepresentative2, primaryMobileNo2;
@@ -33,14 +33,7 @@ public class LabBranch {
 		this.labOfficeId = labOfficeId;
 	}
 
-	public String getBranchCode() {
-		return branchCode;
-	}
-
-	@XmlElement
-	public void setBranchCode(String branchCode) {
-		this.branchCode = branchCode;
-	}
+	
 
 	public String getStatus() {
 		return status;

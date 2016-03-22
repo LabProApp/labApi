@@ -11,22 +11,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Appointment")
 public class Appointment {
 
-	@Override
-	public String toString() {
-		return "Appointment [appntmntId=" + appntmntId + ", labId=" + labId
-				+ ", labbranchCode=" + labbranchCode + ", custId=" + custId
-				+ ", testId=" + testId + ", acceptedOn=" + acceptedOn
-				+ ", scheduleDate=" + scheduleDate + ", testDate=" + testDate
-				+ ", isHomePick=" + isHomePick + ", now=" + now + ", status="
-				+ status + ", refferedBy=" + refferedBy + ", refferedOn="
-				+ refferedOn + "]";
-	}
+	
 
 	String appntmntId;
-	String labId;
-	String labbranchCode;
-	String custId;
+	String labOfficeId;
+	String branchCode;
+	String customerId;
 	String testId;
+	String resultsId;
 	Date acceptedOn;
 	Date scheduleDate;
 	Date testDate;
@@ -45,33 +37,9 @@ public class Appointment {
 		this.appntmntId = appntmntId;
 	}
 
-	public String getLabId() {
-		return labId;
-	}
+	
 
-	@XmlElement
-	public void setLabId(String labId) {
-		this.labId = labId;
-	}
-
-	public String getLabbranchCode() {
-		return labbranchCode;
-	}
-
-	@XmlElement
-	public void setLabbranchCode(String labbranchCode) {
-		this.labbranchCode = labbranchCode;
-	}
-
-	public String getCustId() {
-		return custId;
-	}
-
-	@XmlElement
-	public void setCustId(String custId) {
-		this.custId = custId;
-	}
-
+	
 	public String getTestId() {
 		return testId;
 	}
