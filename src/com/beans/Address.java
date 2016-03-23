@@ -1,10 +1,17 @@
 package com.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "ADDRESS")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Address")
 public class Address {
@@ -16,7 +23,24 @@ public class Address {
 				+ country + "]";
 	}
 
-	String addressLine1, addressLine2, addressLine3, city, state, zip, country;
+	@Id
+	@GeneratedValue
+	@Column(name = "CUST_ID")
+	String addressId;
+	@Column(name = "CUST_ID1")
+	String addressLine1;
+	@Column(name = "ADD_LINE2")
+	String addressLine2;
+	@Column(name = "ADD_LINE3")
+	String addressLine3;
+	@Column(name = "CITY")
+	String city;
+	@Column(name = "STATE")
+	String state;
+	@Column(name = "ZIP")
+	String zip;
+	@Column(name = "COUNTRY")
+	String country;
 
 	public String getAddressLine1() {
 		return addressLine1;

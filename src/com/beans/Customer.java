@@ -1,8 +1,10 @@
 package com.beans;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "CUSTOMER")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -25,32 +28,32 @@ public class Customer {
 	}
 
 	@Id
-	@GeneratedValue
-	@Column(name = "CUST_ID")
-	String customerId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "CUST_ID", unique = true)
+	Long customerId;
 	@Column(name = "CUST_NAME")
 	String customerName;
 	@Column(name = "AGE")
-	String age;
+	Integer age;
 	@Column(name = "GENDER")
 	String gender;
 	@Column(name = "STATUS")
 	String status;
 
-	@Column(name = "ADDRESS")
-	Address customerAddress;
+	@Column(name = "ADDRESS_ID")
+	String customerAddress;
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")
 	String secondaryMobileNo;
 
-	public String getAge() {
+	public Integer getAge() {
 
 		return age;
 	}
 
 	@XmlElement
-	public void setAge(String age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -72,12 +75,12 @@ public class Customer {
 		this.customerName = customerName;
 	}
 
-	public String getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
 
 	@XmlElement
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 
@@ -90,12 +93,12 @@ public class Customer {
 		this.status = status;
 	}
 
-	public Address getCustomerAddress() {
+	public String getCustomerAddress() {
 		return customerAddress;
 	}
 
 	@XmlElement
-	public void setCustomerAddress(Address customerAddress) {
+	public void setCustomerAddress(String customerAddress) {
 		this.customerAddress = customerAddress;
 	}
 

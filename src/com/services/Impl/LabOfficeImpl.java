@@ -2,12 +2,14 @@ package com.services.Impl;
 
 import java.util.ArrayList;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import com.beans.Customer;
+import com.beans.LabOffice;
 import com.beans.Response;
-import com.beans.LabBranch;
 
 public class LabOfficeImpl {
 
@@ -22,8 +24,8 @@ public class LabOfficeImpl {
 		if (instance == null)
 			instance = new LabOfficeImpl();
 		try {
-			factory = new AnnotationConfiguration().configure()
-					.addPackage("com.beans").addAnnotatedClass(LabBranch.class)
+			factory = new Configuration().configure()
+					.addPackage("com.beans").addAnnotatedClass(LabOffice.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
@@ -32,40 +34,66 @@ public class LabOfficeImpl {
 		return instance;
 	}
 
-	public Response addLab(LabBranch b) {
+	public Response addLab(LabOffice labOff) {
 		Response resp = new Response();
-		System.out.println("Add Lab =>" + b);
-		resp.setSTATUS("SUCCESS");
+		System.out.println("Add Lab Office =>" + labOff);
+		Session session = factory.openSession();
+		Transaction tx = null;
+		String labOfficeId = null;
+		try {
+			tx = session.beginTransaction();
+			labOfficeId = (String) session.save(labOff);
+			tx.commit();
+			System.out.println("Lab Office Created - " + labOfficeId);
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
 		return resp;
 	}
 
-	public LabBranch getLab(String labId) {
-		LabBranch lr = new LabBranch();
-		System.out.println("Fresh Get Lab");
-		System.out.println("Lab Id =" + labId);
+	public LabOffice getLab(String labOfficeId) {
+		LabOffice labOffice = new LabOffice();
 
-		if (labId.equalsIgnoreCase("10")) {
-			lr.setLabOfficeId(labId);
-			lr.setLabName("PATIALA LAB");
+		
+		Response resp = new Response();
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			labOffice = (LabOffice) session
+					.get(LabOffice.class, labOfficeId);
+			System.out.println("Lab Office - "
+					+ labOffice.getLabOfficeId());
+			tx.commit();
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
 		}
-		if (labId.equalsIgnoreCase("20")) {
-			lr.setLabOfficeId(labId);
-			lr.setLabName("CHANDIGARH LAB");
-		}
-		System.out.println("Get Lab  =>" + lr);
 
-		return lr;
+		return labOffice;
 
 	}
 
-	public ArrayList<LabBranch> getLabList() {
-		ArrayList<LabBranch> labList = new ArrayList<LabBranch>();
-		LabBranch lr = new LabBranch();
+	public ArrayList<LabOffice> getLabList() {
+		ArrayList<LabOffice> labList = new ArrayList<LabOffice>();
+		LabOffice lr = new LabOffice();
 		System.out.println("Get Entire Lab List");
 		lr.setLabOfficeId("10");
 		lr.setLabName("PATIALA LAB");
 		labList.add(lr);
-		LabBranch lr2 = new LabBranch();
+		LabOffice lr2 = new LabOffice();
 		lr2.setLabOfficeId("20");
 		lr2.setLabName("CHANDIGARH LAB");
 		labList.add(lr2);
@@ -76,7 +104,7 @@ public class LabOfficeImpl {
 
 	}
 
-	public Response updateLab(LabBranch b) {
+	public Response updateLab(LabOffice b) {
 
 		Response resp = new Response();
 

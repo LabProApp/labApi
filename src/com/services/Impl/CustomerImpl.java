@@ -3,11 +3,12 @@ package com.services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.HibernateException; 
+import org.hibernate.Session; 
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.beans.Customer;
 import com.beans.Response;
@@ -26,7 +27,7 @@ public class CustomerImpl {
 			instance = new CustomerImpl();
 
 		try {
-			factory = new AnnotationConfiguration().configure()
+			factory = new Configuration().configure()
 					.addPackage("com.beans").addAnnotatedClass(Customer.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
@@ -42,10 +43,10 @@ public class CustomerImpl {
 		System.out.println("Add Customer =>" + cust);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		String customerId = null;
+		Long customerId = null;
 		try {
 			tx = session.beginTransaction();
-			customerId = (String) session.save(cust);
+			customerId = (Long) session.save(cust);
 			tx.commit();
 			System.out.println("Customer Created - " + customerId);
 			resp.setSTATUS("SUCCESS");
@@ -61,7 +62,7 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Customer get(String customerId) {
+	public Customer get(Long customerId) {
 
 		Response resp = new Response();
 		Customer customer = null;
@@ -70,6 +71,11 @@ public class CustomerImpl {
 		try {
 			tx = session.beginTransaction();
 			customer = (Customer) session.get(Customer.class, customerId);
+			if (customer==null)
+			{
+				customer = new Customer();
+				customer.setCustomerId(0L);
+			}
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
@@ -133,7 +139,7 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Response deletecustomer(String customerId) {
+	public Response deletecustomer(Long customerId) {
 		Response resp = new Response();
 
 		System.out.println("Delete customer");

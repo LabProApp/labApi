@@ -33,7 +33,7 @@ public class CustomerService {
 	@GET
 	@Path("/get/{customerId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Customer get(@PathParam("customerId") String customerId) {
+	public Customer get(@PathParam("customerId") Long customerId) {
 		CustomerImpl customerImpl = CustomerImpl.getInstance();
 		Customer cust = customerImpl.get(customerId);
 		return cust;
@@ -66,7 +66,7 @@ public class CustomerService {
 	@DELETE
 	@Path("/delete/{customerId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deletecustomer(@PathParam("customerId") String customerId) {
+	public Response deletecustomer(@PathParam("customerId") Long customerId) {
 
 		System.out.println("Delete customer");
 		CustomerImpl customerImpl = CustomerImpl.getInstance();

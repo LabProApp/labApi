@@ -7,7 +7,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 
 import com.beans.LabBranch;
 import com.beans.Response;
@@ -25,7 +25,7 @@ public class LabBranchImpl {
 		if (instance == null)
 			instance = new LabBranchImpl();
 		try {
-			factory = new AnnotationConfiguration().configure()
+			factory = new Configuration().configure()
 					.addPackage("com.beans").addAnnotatedClass(LabBranch.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
