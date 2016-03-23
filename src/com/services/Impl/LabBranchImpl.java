@@ -9,25 +9,24 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 
-import com.beans.Customer;
+import com.beans.LabBranch;
 import com.beans.Response;
 
-public class CustomerImpl {
+public class LabBranchImpl {
 
-	private static CustomerImpl instance;
+	private static LabBranchImpl instance;
 	private static SessionFactory factory;
 
-	private CustomerImpl() {
+	private LabBranchImpl() {
 
 	}
 
-	public static CustomerImpl getInstance() {
+	public static LabBranchImpl getInstance() {
 		if (instance == null)
-			instance = new CustomerImpl();
-
+			instance = new LabBranchImpl();
 		try {
 			factory = new AnnotationConfiguration().configure()
-					.addPackage("com.beans").addAnnotatedClass(Customer.class)
+					.addPackage("com.beans").addAnnotatedClass(LabBranch.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
@@ -36,18 +35,18 @@ public class CustomerImpl {
 		return instance;
 	}
 
-	public Response add(Customer cust) {
-
+	public Response addLab(LabBranch lab_branch) {
 		Response resp = new Response();
-		System.out.println("Add Customer =>" + cust);
+		System.out.println("Add Lab Branch =>" + lab_branch);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		String customerId = null;
+		String labbranchCode = null;
 		try {
 			tx = session.beginTransaction();
-			customerId = (String) session.save(cust);
+			labbranchCode = (String) session.save(lab_branch);
 			tx.commit();
-			System.out.println("Customer Created - " + customerId);
+			System.out.println("Lab Branch Created - " + labbranchCode
+					+ "Lab Office - " + lab_branch.getLabOfficeId());
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -61,15 +60,18 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Customer get(String customerId) {
-
+	public LabBranch getLab(String LAB_BRANCH_CD) {
+		LabBranch lab_branch = null;
 		Response resp = new Response();
-		Customer customer = null;
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			customer = (Customer) session.get(Customer.class, customerId);
+			lab_branch = (LabBranch) session
+					.get(LabBranch.class, LAB_BRANCH_CD);
+			System.out.println("Lab Branch Fetched - "
+					+ lab_branch.getLabbranchCode() + "Lab Office - "
+					+ lab_branch.getLabOfficeId());
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
@@ -81,18 +83,18 @@ public class CustomerImpl {
 			session.close();
 		}
 
-		return customer;
+		return lab_branch;
 
 	}
 
-	public List<Customer> getcustomerList() {
-		List<Customer> custList = new ArrayList<Customer>();
-		System.out.println("Get Entire customer List");
+	public List<LabBranch> getLabList() {
+		List<LabBranch> labList = new ArrayList<LabBranch>();
+		System.out.println("Get Entire LabBranch List");
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			custList = session.createQuery("FROM CUSTOMER").list();
+			labList = session.createQuery("FROM LAB_BRANCH").list();
 
 			tx.commit();
 		} catch (HibernateException e) {
@@ -103,50 +105,24 @@ public class CustomerImpl {
 			session.close();
 		}
 
-		System.out.println("Entire Customer List " + custList);
-		return custList;
+		System.out.println("Get Entire Lab Branches List => " + labList);
+
+		return labList;
 
 	}
 
-	public Response updatecustomer(Customer cust) {
+	public Response updateLab(LabBranch lab_branch) {
+
 		Response resp = new Response();
-		System.out.println("Update Customer ==>" + cust);
+		System.out.println("Update Lab Branch ==>" + lab_branch);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Customer customer = (Customer) session.get(Customer.class,
-					cust.getCustomerId());
-			customer = cust;
-			session.update(customer);
-			tx.commit();
-			resp.setSTATUS("SUCCESS");
-		} catch (HibernateException e) {
-			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-
-		return resp;
-	}
-
-	public Response deletecustomer(String customerId) {
-		Response resp = new Response();
-
-		System.out.println("Delete customer");
-		System.out.println("Deleting customer  =>" + customerId);
-
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			Customer customer = (Customer) session.get(Customer.class,
-					customerId);
-			customer.setStatus("DELETED");
-			session.update(customer);
+			LabBranch lab_branch_get = (LabBranch) session.get(LabBranch.class,
+					lab_branch.getLabbranchCode());
+			lab_branch_get = lab_branch;
+			session.update(lab_branch_get);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
@@ -158,6 +134,31 @@ public class CustomerImpl {
 			session.close();
 		}
 		return resp;
+	}
 
+	public Response deleteLab(String labBranchCode) {
+		Response resp = new Response();
+
+		System.out.println("Deleting Lab Branch  =>" + labBranchCode);
+
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			LabBranch labBranch = (LabBranch) session.get(LabBranch.class,
+					labBranchCode);
+			labBranch.setStatus("DELETED");
+			session.update(labBranch);
+			tx.commit();
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resp;
 	}
 }

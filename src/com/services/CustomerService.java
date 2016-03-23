@@ -1,6 +1,6 @@
 package com.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 
 import com.beans.Customer;
 import com.beans.Response;
-import com.services.Impl.AppointmentImpl;
 import com.services.Impl.CustomerImpl;
 
 @Path("/customer")
@@ -44,8 +43,8 @@ public class CustomerService {
 	@GET
 	@Path("/getList")
 	@Produces(MediaType.APPLICATION_XML)
-	public ArrayList<Customer> getcustomerList() {
-		ArrayList<Customer> custList = new ArrayList<Customer>();
+	public List<Customer> getcustomerList() {
+		List<Customer> custList;
 		CustomerImpl customerImpl = CustomerImpl.getInstance();
 		custList = customerImpl.getcustomerList();
 		return custList;

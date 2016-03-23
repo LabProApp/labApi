@@ -16,7 +16,9 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlRootElement(name = "LabBranch")
 public class LabBranch {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -36,10 +38,12 @@ public class LabBranch {
 	@GeneratedValue
 	@Column(name = "LAB_OFFICE_ID")
 	String labOfficeId;
-	@Column(name = "NAME")
-	String labName;
+	@Id
+	@GeneratedValue
 	@Column(name = "LAB_BRANCH_CD")
 	String labbranchCode;
+	@Column(name = "NAME")
+	String labName;
 	@Column(name = "STATUS")
 	String status;
 	@Column(name = "LAB_BR_OWNER")
@@ -88,6 +92,36 @@ public class LabBranch {
 
 	public String getLabBranchOwner() {
 		return labBranchOwner;
+	}
+
+	/**
+	 * @return the labbranchCode
+	 */
+	public String getLabbranchCode() {
+		return labbranchCode;
+	}
+
+	/**
+	 * @param labbranchCode
+	 *            the labbranchCode to set
+	 */
+	public void setLabbranchCode(String labbranchCode) {
+		this.labbranchCode = labbranchCode;
+	}
+
+	/**
+	 * @return the primaryMobileNo3
+	 */
+	public String getPrimaryMobileNo3() {
+		return primaryMobileNo3;
+	}
+
+	/**
+	 * @param primaryMobileNo3
+	 *            the primaryMobileNo3 to set
+	 */
+	public void setPrimaryMobileNo3(String primaryMobileNo3) {
+		this.primaryMobileNo3 = primaryMobileNo3;
 	}
 
 	@XmlElement
