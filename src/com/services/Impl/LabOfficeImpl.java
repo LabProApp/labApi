@@ -88,15 +88,7 @@ public class LabOfficeImpl {
 
 	public ArrayList<LabOffice> getLabList() {
 		ArrayList<LabOffice> labList = new ArrayList<LabOffice>();
-		LabOffice lr = new LabOffice();
-		System.out.println("Get Entire Lab List");
-		lr.setLabOfficeId("10");
-		lr.setLabName("PATIALA LAB");
-		labList.add(lr);
-		LabOffice lr2 = new LabOffice();
-		lr2.setLabOfficeId("20");
-		lr2.setLabName("CHANDIGARH LAB");
-		labList.add(lr2);
+		
 
 		System.out.println("Get Entire Lab List => " + labList);
 

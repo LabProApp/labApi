@@ -16,19 +16,22 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlRootElement(name = "LabOffice")
 public class LabOffice {
 
+	
+
 	@Override
 	public String toString() {
-		return "LabOffice [labName=" + labName + ", labOfficeId=" + labOfficeId
+		return "LabOffice [labOfficeId=" + labOfficeId + ", labName=" + labName
 				+ ", status=" + status + ", labAddress=" + labAddress
 				+ ", labOwner=" + labOwner + ", labRepresentative="
 				+ labRepresentative + ", primaryMobileNo=" + primaryMobileNo
-				+ ", secondaryMobileNo=" + secondaryMobileNo + "]";
+				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
+				+ emailID + "]";
 	}
 
 	@Id
 	@GeneratedValue
 	@Column(name = "LAB_OFFICE_ID")
-	String labOfficeId;
+	Long labOfficeId;
 	@Column(name = "LAB_NAME")
 	String labName;
 	@Column(name = "STATUS")
@@ -43,7 +46,8 @@ public class LabOffice {
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")
 	String secondaryMobileNo;
-
+	@Column(name = "EMAIL_ID")
+	String emailID;
 	public String getLabName() {
 		return labName;
 	}
@@ -53,12 +57,12 @@ public class LabOffice {
 		this.labName = labName;
 	}
 
-	public String getLabOfficeId() {
+	public Long getLabOfficeId() {
 		return labOfficeId;
 	}
 
 	@XmlElement
-	public void setLabOfficeId(String labOfficeId) {
+	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
 
@@ -114,6 +118,21 @@ public class LabOffice {
 	@XmlElement
 	public void setSecondaryMobileNo(String secondaryMobileNo) {
 		this.secondaryMobileNo = secondaryMobileNo;
+	}
+
+	/**
+	 * @return the emailID
+	 */
+	public String getEmailID() {
+		return emailID;
+	}
+
+	/**
+	 * @param emailID the emailID to set
+	 */
+	@XmlElement
+	public void setEmailID(String emailID) {
+		this.emailID = emailID;
 	}
 
 	

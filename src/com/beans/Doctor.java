@@ -1,48 +1,66 @@
 package com.beans;
 
-import java.util.ArrayList;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-
+import javax.xml.bind.annotation.XmlRootElement;
+@Entity
+@Table(name = "DOCTOR")
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "Doctor")
 public class Doctor {
+
+
 	@Override
 	public String toString() {
-		return "Doctor [doctorName=" + doctorName + ", docId=" + docId
+		return "Doctor [docId=" + docId + ", doctorName=" + doctorName
 				+ ", branchCode=" + branchCode + ", status=" + status
 				+ ", hospitalName=" + hospitalName + ", doctorDegree="
-				+ doctorDegree + ", doctorSpecialization="
+				+ doctorDegrees + ", doctorSpecialization="
 				+ doctorSpecialization + ", doctorExperience="
 				+ doctorExperience + ", docAddress=" + docAddress
-				+ ", doctorPRO=" + doctorPRO + ", primaryMobileNo="
-				+ primaryMobileNo + ", secondaryMobileNo=" + secondaryMobileNo
-				+ "]";
+				+ ", primaryMobileNo=" + primaryMobileNo
+				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
+				+ emailID + "]";
 	}
 
+	
 	@Id
-	@GeneratedValue
-	@Column(name = "DOC_ID")
-	String docId;
-	@Column(name = "NAME")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "DOC_ID", unique = true)
+	
+	Long docId;
+	@Column(name = "DOC_NAME")
 	String doctorName;
 	@Column(name = "DOC_BRANCH_CD")
-	String branchCode;
+	Long branchCode;
 	@Column(name = "STATUS")
 	String status;
 	@Column(name = "HOSP_NAME")
 	String hospitalName;
 	@Column(name = "DOC_DEGREE")
-	ArrayList<String> doctorDegree;
+	String doctorDegrees;
 	@Column(name = "DOC_SPEC")
-	ArrayList<String> doctorSpecialization;
+	String doctorSpecialization;
 	@Column(name = "DOC_EXP")
-	ArrayList<String> doctorExperience;
-
+	String doctorExperience;
+	@OneToOne(cascade = CascadeType.ALL)
 	Address docAddress;
-	String doctorPRO, primaryMobileNo, secondaryMobileNo;
-
+	@Column(name = "PRIM_MOBILE")
+	String primaryMobileNo;
+	@Column(name = "SECOND_MOBILE")
+	String secondaryMobileNo;
+	@Column(name = "EMAIL_ID")
+	String emailID;
+	
 	public String getDoctorName() {
 		return doctorName;
 	}
@@ -52,21 +70,21 @@ public class Doctor {
 		this.doctorName = doctorName;
 	}
 
-	public String getDocId() {
+	public Long getDocId() {
 		return docId;
 	}
 
 	@XmlElement
-	public void setDocId(String docId) {
+	public void setDocId(Long docId) {
 		this.docId = docId;
 	}
 
-	public String getBranchCode() {
+	public Long getBranchCode() {
 		return branchCode;
 	}
 
 	@XmlElement
-	public void setBranchCode(String branchCode) {
+	public void setBranchCode(Long branchCode) {
 		this.branchCode = branchCode;
 	}
 
@@ -88,30 +106,30 @@ public class Doctor {
 		this.hospitalName = hospitalName;
 	}
 
-	public ArrayList<String> getDoctorDegree() {
-		return doctorDegree;
+	public String getDoctorDegrees() {
+		return doctorDegrees;
 	}
 
 	@XmlElement
-	public void setDoctorDegree(ArrayList<String> doctorDegree) {
-		this.doctorDegree = doctorDegree;
+	public void setDoctorDegrees(String doctorDegree) {
+		this.doctorDegrees = doctorDegree;
 	}
 
-	public ArrayList<String> getDoctorSpecialization() {
+	public String getDoctorSpecialization() {
 		return doctorSpecialization;
 	}
 
 	@XmlElement
-	public void setDoctorSpecialization(ArrayList<String> doctorSpecialization) {
+	public void setDoctorSpecialization(String doctorSpecialization) {
 		this.doctorSpecialization = doctorSpecialization;
 	}
 
-	public ArrayList<String> getDoctorExperience() {
+	public String getDoctorExperience() {
 		return doctorExperience;
 	}
 
 	@XmlElement
-	public void setDoctorExperience(ArrayList<String> doctorExperience) {
+	public void setDoctorExperience(String doctorExperience) {
 		this.doctorExperience = doctorExperience;
 	}
 
@@ -124,14 +142,7 @@ public class Doctor {
 		this.docAddress = docAddress;
 	}
 
-	public String getDoctorPRO() {
-		return doctorPRO;
-	}
-
-	@XmlElement
-	public void setDoctorPRO(String doctorPRO) {
-		this.doctorPRO = doctorPRO;
-	}
+	
 
 	public String getPrimaryMobileNo() {
 		return primaryMobileNo;
@@ -149,6 +160,21 @@ public class Doctor {
 	@XmlElement
 	public void setSecondaryMobileNo(String secondaryMobileNo) {
 		this.secondaryMobileNo = secondaryMobileNo;
+	}
+
+	/**
+	 * @return the emailID
+	 */
+	public String getEmailID() {
+		return emailID;
+	}
+
+	/**
+	 * @param emailID the emailID to set
+	 */
+	@XmlElement
+	public void setEmailID(String emailID) {
+		this.emailID = emailID;
 	}
 
 }

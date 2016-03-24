@@ -21,27 +21,30 @@ public class LabBranch {
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+
+
 	@Override
 	public String toString() {
-		return "LabBranch [labOfficeId=" + labOfficeId + ", labName=" + labName
-				+ ", labbranchCode=" + labbranchCode + ", status=" + status
+		return "LabBranch [labOfficeId=" + labOfficeId + ", labbranchCode="
+				+ labbranchCode + ", labName=" + labName + ", status=" + status
 				+ ", labBranchOwner=" + labBranchOwner + ", labAddress="
 				+ labAddress + ", labRepresentative1=" + labRepresentative1
 				+ ", primaryMobileNo1=" + primaryMobileNo1
 				+ ", labRepresentative2=" + labRepresentative2
 				+ ", primaryMobileNo2=" + primaryMobileNo2
 				+ ", labRepresentative3=" + labRepresentative3
-				+ ", primaryMobileNo3=" + primaryMobileNo3 + "]";
+				+ ", primaryMobileNo3=" + primaryMobileNo3 + ", emailID="
+				+ emailID + "]";
 	}
 
 	@Id
 	@GeneratedValue
 	@Column(name = "LAB_OFFICE_ID")
-	String labOfficeId;
+	Long labOfficeId;
 	@Id
 	@GeneratedValue
 	@Column(name = "LAB_BRANCH_CD")
-	String labbranchCode;
+	Long labbranchCode;
 	@Column(name = "NAME")
 	String labName;
 	@Column(name = "STATUS")
@@ -62,7 +65,8 @@ public class LabBranch {
 	String labRepresentative3;
 	@Column(name = "PRIM_MOBILE3")
 	String primaryMobileNo3;
-
+	@Column(name = "EMAIL_ID")
+	String emailID;
 	public String getLabName() {
 		return labName;
 	}
@@ -72,12 +76,12 @@ public class LabBranch {
 		this.labName = labName;
 	}
 
-	public String getLabOfficeId() {
+	public Long getLabOfficeId() {
 		return labOfficeId;
 	}
 
 	@XmlElement
-	public void setLabOfficeId(String labOfficeId) {
+	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
 
@@ -97,7 +101,7 @@ public class LabBranch {
 	/**
 	 * @return the labbranchCode
 	 */
-	public String getLabbranchCode() {
+	public Long getLabbranchCode() {
 		return labbranchCode;
 	}
 
@@ -105,7 +109,7 @@ public class LabBranch {
 	 * @param labbranchCode
 	 *            the labbranchCode to set
 	 */
-	public void setLabbranchCode(String labbranchCode) {
+	public void setLabbranchCode(Long labbranchCode) {
 		this.labbranchCode = labbranchCode;
 	}
 
@@ -190,6 +194,21 @@ public class LabBranch {
 	@XmlElement
 	public void setPrimaryMobileN3(String primaryMobileNo3) {
 		this.primaryMobileNo3 = primaryMobileNo3;
+	}
+
+	/**
+	 * @return the emailID
+	 */
+	public String getEmailID() {
+		return emailID;
+	}
+
+	/**
+	 * @param emailID the emailID to set
+	 */
+	@XmlElement
+	public void setEmailID(String emailID) {
+		this.emailID = emailID;
 	}
 
 }

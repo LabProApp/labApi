@@ -1,34 +1,37 @@
 package com.beans;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "CUSTOMER")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Customer")
 public class Customer {
+	
+
 	@Override
 	public String toString() {
-		return "Customer [customerName=" + customerName + ", customerId="
-				+ customerId + ", Age=" + age + ", gender=" + gender
+		return "Customer [customerId=" + customerId + ", customerName="
+				+ customerName + ", age=" + age + ", gender=" + gender
 				+ ", status=" + status + ", customerAddress=" + customerAddress
 				+ ", primaryMobileNo=" + primaryMobileNo
-				+ ", secondaryMobileNo=" + secondaryMobileNo + "]";
+				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
+				+ emailID + "]";
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CUST_ID", unique = true)
 	Long customerId;
 	@Column(name = "CUST_NAME")
@@ -39,13 +42,15 @@ public class Customer {
 	String gender;
 	@Column(name = "STATUS")
 	String status;
-
-	@Column(name = "ADDRESS_ID")
-	String customerAddress;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	Address customerAddress;
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")
 	String secondaryMobileNo;
+	@Column(name = "EMAIL_ID")
+	String emailID;
 
 	public Integer getAge() {
 
@@ -93,12 +98,12 @@ public class Customer {
 		this.status = status;
 	}
 
-	public String getCustomerAddress() {
+	public Address getCustomerAddress() {
 		return customerAddress;
 	}
 
 	@XmlElement
-	public void setCustomerAddress(String customerAddress) {
+	public void setCustomerAddress(Address customerAddress) {
 		this.customerAddress = customerAddress;
 	}
 
@@ -118,6 +123,22 @@ public class Customer {
 	@XmlElement
 	public void setSecondaryMobileNo(String secondaryMobileNo) {
 		this.secondaryMobileNo = secondaryMobileNo;
+	}
+
+	/**
+	 * @return the emailID
+	 */
+	public String getEmailID() {
+		return emailID;
+	}
+
+	/**
+	 * @param emailID
+	 *            the emailID to set
+	 */
+	@XmlElement
+	public void setEmailID(String emailID) {
+		this.emailID = emailID;
 	}
 
 }

@@ -51,7 +51,7 @@ public class CustomerService {
 
 	}
 
-	@PUT
+	@POST
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
@@ -63,7 +63,7 @@ public class CustomerService {
 		return resp;
 	}
 
-	@DELETE
+	@POST
 	@Path("/delete/{customerId}")
 	@Produces(MediaType.APPLICATION_XML)
 	public Response deletecustomer(@PathParam("customerId") Long customerId) {

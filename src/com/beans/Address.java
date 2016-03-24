@@ -1,8 +1,10 @@
 package com.beans;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,19 +17,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Address")
 public class Address {
+	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Address [AddressLine1=" + addressLine1 + ", AddressLine2="
-				+ addressLine2 + ", AddressLine3=" + addressLine3 + ", City="
-				+ city + ", State=" + state + ", Zip=" + zip + ", Country="
-				+ country + "]";
+		return "Address [addressId=" + addressId + ", addressLine1="
+				+ addressLine1 + ", addressLine2=" + addressLine2
+				+ ", addressLine3=" + addressLine3 + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", country=" + country
+				+ "]";
 	}
 
 	@Id
-	@GeneratedValue
-	@Column(name = "CUST_ID")
-	String addressId;
-	@Column(name = "CUST_ID1")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ADDRESS_ID", unique = true)	
+	Long addressId;
+	@Column(name = "ADD_LINE1")
 	String addressLine1;
 	@Column(name = "ADD_LINE2")
 	String addressLine2;
@@ -41,6 +49,20 @@ public class Address {
 	String zip;
 	@Column(name = "COUNTRY")
 	String country;
+
+	/**
+	 * @return the addressId
+	 */
+	public Long getAddressId() {
+		return addressId;
+	}
+
+	/**
+	 * @param addressId the addressId to set
+	 */
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
+	}
 
 	public String getAddressLine1() {
 		return addressLine1;

@@ -10,25 +10,25 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.beans.Address;
-import com.beans.Customer;
+import com.beans.Doctor;
 import com.beans.Response;
 
-public class CustomerImpl {
+public class DoctorImpl {
 
-	private static CustomerImpl instance;
+	private static DoctorImpl instance;
 	private static SessionFactory factory;
 
-	private CustomerImpl() {
+	private DoctorImpl() {
 
 	}
 
-	public static CustomerImpl getInstance() {
+	public static DoctorImpl getInstance() {
 		if (instance == null)
-			instance = new CustomerImpl();
+			instance = new DoctorImpl();
 
 		try {
 			factory = new Configuration().configure()
-					.addPackage("com.beans").addAnnotatedClass(Customer.class).addAnnotatedClass(Address.class)
+					.addPackage("com.beans").addAnnotatedClass(Doctor.class).addAnnotatedClass(Address.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
@@ -37,18 +37,18 @@ public class CustomerImpl {
 		return instance;
 	}
 
-	public Response add(Customer cust) {
+	public Response add(Doctor cust) {
 
 		Response resp = new Response();
-		System.out.println("Add Customer =>" + cust);
+		System.out.println("Add Doctor =>" + cust);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Long customerId = null;
+		Long doctorId = null;
 		try {
 			tx = session.beginTransaction();
-			customerId = (Long) session.save(cust);
+			doctorId = (Long) session.save(cust);
 			tx.commit();
-			System.out.println("Customer Created - " + customerId);
+			System.out.println("Doctor Created - " + doctorId);
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -62,19 +62,19 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Customer get(Long customerId) {
+	public Doctor get(Long doctorId) {
 
 		Response resp = new Response();
-		Customer customer = null;
+		Doctor doctor = null;
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			customer = (Customer) session.get(Customer.class, customerId);
-			if (customer==null)
+			doctor = (Doctor) session.get(Doctor.class, doctorId);
+			if (doctor==null)
 			{
-				customer = new Customer();
-				customer.setCustomerId(0L);
+				doctor = new Doctor();
+				doctor.setDocId(0L);
 			}
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
@@ -87,18 +87,18 @@ public class CustomerImpl {
 			session.close();
 		}
 
-		return customer;
+		return doctor;
 
 	}
 
-	public List<Customer> getcustomerList() {
-		List<Customer> custList = new ArrayList<Customer>();
-		System.out.println("Get Entire customer List");
+	public List<Doctor> getdoctorList() {
+		List<Doctor> custList = new ArrayList<Doctor>();
+		System.out.println("Get Entire doctor List");
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			custList = session.createQuery("FROM Customer").list();
+			custList = session.createQuery("FROM Doctor").list();
 
 			tx.commit();
 		} catch (HibernateException e) {
@@ -109,22 +109,22 @@ public class CustomerImpl {
 			session.close();
 		}
 
-		System.out.println("Entire Customer List " + custList);
+		System.out.println("Entire Doctor List " + custList);
 		return custList;
 
 	}
 
-	public Response updatecustomer(Customer cust) {
+	public Response updatedoctor(Doctor cust) {
 		Response resp = new Response();
-		System.out.println("Update Customer ==>" + cust);
+		System.out.println("Update Doctor ==>" + cust);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Customer customer = (Customer) session.get(Customer.class,
-					cust.getCustomerId());
-			customer=cust;
-			session.merge(customer);
+			Doctor doctor = (Doctor) session.get(Doctor.class,
+					cust.getDocId());
+			doctor=cust;
+			session.merge(doctor);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
@@ -139,20 +139,20 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Response deletecustomer(Long customerId) {
+	public Response deletedoctor(Long doctorId) {
 		Response resp = new Response();
 
-		System.out.println("Delete customer");
-		System.out.println("Deleting customer  =>" + customerId);
+		System.out.println("Delete doctor");
+		System.out.println("Deleting doctor  =>" + doctorId);
 
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Customer customer = (Customer) session.get(Customer.class,
-					customerId);
-			customer.setStatus("DELETED");
-			session.update(customer);
+			Doctor doctor = (Doctor) session.get(Doctor.class,
+					doctorId);
+			doctor.setStatus("DELETED");
+			session.update(doctor);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {

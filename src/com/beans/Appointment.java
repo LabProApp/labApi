@@ -19,17 +19,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Appointment")
 public class Appointment {
 
-	String appntmntId;
+	Long appntmntId;
 	@Column(name = "LAB_OFFICE_ID")
-	String labOfficeId;
+	Long labOfficeId;
 	@Column(name = "LAB_BRANCH_CD")
-	String branchCode;
+	Long branchCode;
 	@Column(name = "CUST_ID")
-	String customerId;
+	Long customerId;
 	@Column(name = "TEST_ID")
-	String testId;
+	Long testId;
 	@Column(name = "TEST_RESULTS_ID")
-	String resultsId;
+	Long resultsId;
 	@Column(name = "ACCEPTED_DT")
 	Date acceptedOn;
 	@Column(name = "SCHEDULE_DT")
@@ -43,25 +43,25 @@ public class Appointment {
 	@Column(name = "STATUS")
 	String status;
 	@Column(name = "DOC_ID")
-	String refferedBy;
+	Long refferedBy;
 	@Column(name = "REFFERED_DT")
 	Date refferedOn;
 
-	public String getAppntmntId() {
+	public Long getAppntmntId() {
 		return appntmntId;
 	}
 
 	@XmlElement
-	public void setAppntmntId(String appntmntId) {
+	public void setAppntmntId(Long appntmntId) {
 		this.appntmntId = appntmntId;
 	}
 
-	public String getTestId() {
+	public Long getTestId() {
 		return testId;
 	}
 
 	@XmlElement
-	public void setTestId(String testId) {
+	public void setTestId(Long testId) {
 		this.testId = testId;
 	}
 
@@ -119,12 +119,12 @@ public class Appointment {
 		this.status = status;
 	}
 
-	public String getRefferedBy() {
+	public Long getRefferedBy() {
 		return refferedBy;
 	}
 
 	@XmlElement
-	public void setRefferedBy(String refferedBy) {
+	public void setRefferedBy(Long refferedBy) {
 		this.refferedBy = refferedBy;
 	}
 
