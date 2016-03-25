@@ -5,35 +5,29 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.beans.Address;
-import com.beans.Customer;
+import com.beans.LabRep;
 import com.beans.Response;
 
-public class CustomerImpl {
+public class LabRepImpl {
 
-	private static CustomerImpl instance;
+	private static LabRepImpl instance;
 	private static SessionFactory factory;
 
-	private CustomerImpl() {
+	private LabRepImpl() {
 
 	}
 
-	public static CustomerImpl getInstance() {
+	public static LabRepImpl getInstance() {
 		if (instance == null)
-			instance = new CustomerImpl();
-
+			instance = new LabRepImpl();
 		try {
-			if (factory == null) {
-				factory = new Configuration().configure()
-						.addPackage("com.beans")
-						.addAnnotatedClass(Customer.class)
-						.addAnnotatedClass(Address.class).buildSessionFactory();
-			}
-
+			factory = new Configuration().configure()
+					.addPackage("com.beans").addAnnotatedClass(LabRep.class).addAnnotatedClass(LabRep.class)
+					.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
@@ -41,104 +35,23 @@ public class CustomerImpl {
 		return instance;
 	}
 
-	public Response add(Customer cust) {
-
+	public Response addLab(LabRep lab_rep) {
 		Response resp = new Response();
-		System.out.println("Add Customer =>" + cust);
+		System.out.println("Add Lab Branch =>" + lab_rep);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Long customerId = null;
+		Long labRepId = null;
 		try {
 			tx = session.beginTransaction();
-			customerId = (Long) session.save(cust);
+			labRepId = (Long) session.save(lab_rep);
 			tx.commit();
-			System.out.println("Customer Created - " + customerId);
+			System.out.println("Lab Rep Created - " + labRepId);
+			System.out.println("Lab Branch  - " + lab_rep.getLabbranchCode());
 			resp.setSTATUS("SUCCESS");
-		} catch (HibernateException e) {
-			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-
-		return resp;
-	}
-
-	public Customer get(Long customerId) {
-
-		Response resp = new Response();
-		Customer customer = null;
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			customer = (Customer) session.get(Customer.class, customerId);
-			if (customer == null) {
-				customer = new Customer();
-				customer.setCustomerId(0L);
-			}
-			tx.commit();
-			resp.setSTATUS("SUCCESS");
-		} catch (HibernateException e) {
-			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-
-		return customer;
-
-	}
-
-	public List<Customer> getcustomerList() {
-		List<Customer> custList = new ArrayList<Customer>();
-		System.out.println("Get Entire customer List");
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			custList = session.createQuery("FROM Customer").list();
-
-			tx.commit();
-		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-
-		System.out.println("Entire Customer List " + custList);
-		return custList;
-
-	}
-
-	public Response updatecustomer(Customer cust) {
-		Response resp = new Response();
-		System.out.println("Update Customer ==>" + cust);
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			
-			
-			if(cust==null)
-			{
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Customer with Id = " + cust.getCustomerId());
-			}
-			
-			session.update(cust);
-			tx.commit();
 			resp.setERROR_CODE("0000");
-			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -149,30 +62,107 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Response deletecustomer(Long customerId) {
+	public LabRep getLab(Long labRepId) {
+		LabRep lab_rep = null;
+		Response resp = new Response();
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			lab_rep = (LabRep) session
+					.get(LabRep.class, labRepId);
+			System.out.println("Lab Rep Fetched - "
+					+ lab_rep.getLabbranchCode()  +" Rep ID =" + lab_rep.getLabRepresentativeId());
+			tx.commit();
+			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return lab_rep;
+
+	}
+
+	public List<LabRep> getLabRepList(Long LabBranchCode) {
+		
+		//TODO: Fetch this List for a Particular Lab BRanch Code
+		List<LabRep> labRepList = new ArrayList<LabRep>();
+		System.out.println("Get Entire LabRep List for BranchCode = " +LabBranchCode);
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			labRepList = session.createQuery("FROM LAB_REP").list();
+
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		System.out.println("Get Entire Lab Rep List => " + labRepList);
+
+		return labRepList;
+
+	}
+
+	public Response updateLab(LabRep lab_rep) {
+
+		Response resp = new Response();
+		System.out.println("Update Lab Branch ==>" + lab_rep);
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			
+			session.update(lab_rep);
+			tx.commit();
+			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resp;
+	}
+
+	public Response deleteLabRep(Long labRepId) {
 		Response resp = new Response();
 
-		System.out.println("Delete customer");
-		System.out.println("Deleting customer  =>" + customerId);
+		System.out.println("Deleting Lab Representative  =>" + labRepId);
 
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Customer customer = (Customer) session.get(Customer.class,
-					customerId);
-			if(customer==null)
+			LabRep lab_rep = (LabRep) session.get(LabRep.class,
+					labRepId);
+			if(lab_rep==null)
 			{
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Customer with Id = " + customerId);
+				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labRepId);
 				session.close();
 				return resp;
 			}
-			customer.setStatus("DELETED");
-			session.update(customer);
+			lab_rep.setStatus("DELETED");
+			session.update(lab_rep);
 			tx.commit();
-			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -183,6 +173,5 @@ public class CustomerImpl {
 			session.close();
 		}
 		return resp;
-
 	}
 }

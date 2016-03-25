@@ -73,7 +73,7 @@ public class TestsService {
 
 	}
 
-	@PUT
+	@POST
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
@@ -86,7 +86,7 @@ public class TestsService {
 		return resp;
 	}
 
-	@DELETE
+	@POST
 	@Path("/delete/{TestId}")
 	@Produces(MediaType.APPLICATION_XML)
 	public Response deleteTest(@PathParam("TestId") String TestId) {

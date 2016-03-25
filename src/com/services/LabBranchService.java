@@ -16,7 +16,7 @@ import com.beans.LabBranch;
 import com.beans.Response;
 import com.services.Impl.LabBranchImpl;
 
-@Path("/lab")
+@Path("/labbranch")
 public class LabBranchService {
 	@POST
 	@Path("/add")
@@ -30,24 +30,24 @@ public class LabBranchService {
 	}
 
 	@GET
-	@Path("/get/{labId}")
+	@Path("/get/{labbranchCode}")
 	@Produces(MediaType.APPLICATION_XML)
-	public LabBranch getLab(@PathParam("labId") String labId) {
+	public LabBranch getLab(@PathParam("labbranchCode") Long labbranchCode) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
-		LabBranch lr = instance.getLab(labId);
+		LabBranch lr = instance.getLab(labbranchCode);
 
 		return lr;
 
 	}
 
 	@GET
-	@Path("/getList")
+	@Path("/getList/{OfficeId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public List<LabBranch> getLabList() {
+	public List<LabBranch> getLabList(@PathParam("OfficeId") Long OfficeId) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
-		List<LabBranch> labList = instance.getLabList();
+		List<LabBranch> labList = instance.getLabList(OfficeId);
 
 		System.out.println("Get Entire Lab List => " + labList);
 
@@ -55,28 +55,28 @@ public class LabBranchService {
 
 	}
 
-	@PUT
+	@POST
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response updateLab(LabBranch b) {
+	public Response updateLabBranch(LabBranch b) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
-		Response resp = instance.updateLab(b);
+		Response resp = instance.updateLabBranch(b);
 
-		resp.setSTATUS("SUCCESS");
+		
 		return resp;
 	}
 
-	@DELETE
-	@Path("/delete/{labId}")
+	@POST
+	@Path("/delete/{labBranchCode}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteLab(@PathParam("labId") String labId) {
+	public Response deleteLab(@PathParam("labBranchCode") String labBranchCode) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
-		Response resp = instance.deleteLab(labId);
+		Response resp = instance.deleteLabBranch(labBranchCode);
 
-		resp.setSTATUS("SUCCESS");
+	
 		return resp;
 	}
 }

@@ -33,7 +33,7 @@ public class AppointmentImpl {
 		return resp;
 	}
 
-	public Response cancelAppointment(String appntId) {
+	public Response cancelAppointment(Long appntId) {
 
 		Response resp = new Response();
 		// TODO Update acceptedStatus = CANCELLED in Appointments Table
@@ -42,7 +42,7 @@ public class AppointmentImpl {
 
 	}
 
-	public ArrayList<LabBranch> getAppointListbyLab(String LabId) {
+	public ArrayList<LabBranch> getAppointListbyLab(Long LabId) {
 		ArrayList<LabBranch> AppointListbyLab = new ArrayList<LabBranch>();
 
 		// TODO Fetch Appointment List by Lab ID & BranchCode
@@ -51,7 +51,14 @@ public class AppointmentImpl {
 
 	}
 
-	public ArrayList<LabBranch> getAppointListbyCustomer(String CustomerId) {
+	public ArrayList<LabBranch> getAppointListbyCustomer(Long CustomerId) {
+		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
+
+		// TODO Fetch Appointment List by Customer ID
+		return AppointListbyCustomer;
+
+	}
+	public ArrayList<LabBranch> getAppointListbyDoctor(Long DoctorId) {
 		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
 
 		// TODO Fetch Appointment List by Customer ID

@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import com.beans.Address;
 import com.beans.LabBranch;
 import com.beans.Response;
 
@@ -26,7 +27,7 @@ public class LabBranchImpl {
 			instance = new LabBranchImpl();
 		try {
 			factory = new Configuration().configure()
-					.addPackage("com.beans").addAnnotatedClass(LabBranch.class)
+					.addPackage("com.beans").addAnnotatedClass(LabBranch.class).addAnnotatedClass(Address.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
@@ -40,16 +41,18 @@ public class LabBranchImpl {
 		System.out.println("Add Lab Branch =>" + lab_branch);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		String labbranchCode = null;
+		Long labbranchCode = null;
 		try {
 			tx = session.beginTransaction();
-			labbranchCode = (String) session.save(lab_branch);
+			labbranchCode = (Long) session.save(lab_branch);
 			tx.commit();
 			System.out.println("Lab Branch Created - " + labbranchCode
 					+ "Lab Office - " + lab_branch.getLabOfficeId());
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -60,7 +63,7 @@ public class LabBranchImpl {
 		return resp;
 	}
 
-	public LabBranch getLab(String LAB_BRANCH_CD) {
+	public LabBranch getLab(Long labbranchCode) {
 		LabBranch lab_branch = null;
 		Response resp = new Response();
 		Session session = factory.openSession();
@@ -68,14 +71,16 @@ public class LabBranchImpl {
 		try {
 			tx = session.beginTransaction();
 			lab_branch = (LabBranch) session
-					.get(LabBranch.class, LAB_BRANCH_CD);
+					.get(LabBranch.class, labbranchCode);
 			System.out.println("Lab Branch Fetched - "
 					+ lab_branch.getLabbranchCode() + "Lab Office - "
 					+ lab_branch.getLabOfficeId());
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -87,7 +92,7 @@ public class LabBranchImpl {
 
 	}
 
-	public List<LabBranch> getLabList() {
+	public List<LabBranch> getLabList(Long OfficeId) {
 		List<LabBranch> labList = new ArrayList<LabBranch>();
 		System.out.println("Get Entire LabBranch List");
 		Session session = factory.openSession();
@@ -111,7 +116,7 @@ public class LabBranchImpl {
 
 	}
 
-	public Response updateLab(LabBranch lab_branch) {
+	public Response updateLabBranch(LabBranch lab_branch) {
 
 		Response resp = new Response();
 		System.out.println("Update Lab Branch ==>" + lab_branch);
@@ -119,14 +124,14 @@ public class LabBranchImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			LabBranch lab_branch_get = (LabBranch) session.get(LabBranch.class,
-					lab_branch.getLabbranchCode());
-			lab_branch_get = lab_branch;
-			session.update(lab_branch_get);
+			
+			session.update(lab_branch);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -136,7 +141,7 @@ public class LabBranchImpl {
 		return resp;
 	}
 
-	public Response deleteLab(String labBranchCode) {
+	public Response deleteLabBranch(String labBranchCode) {
 		Response resp = new Response();
 
 		System.out.println("Deleting Lab Branch  =>" + labBranchCode);
@@ -147,6 +152,14 @@ public class LabBranchImpl {
 			tx = session.beginTransaction();
 			LabBranch labBranch = (LabBranch) session.get(LabBranch.class,
 					labBranchCode);
+			if(labBranch==null)
+			{
+				resp.setERROR_CODE("0001");
+				resp.setSTATUS("FAIL");
+				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labBranchCode);
+				session.close();
+				return resp;
+			}
 			labBranch.setStatus("DELETED");
 			session.update(labBranch);
 			tx.commit();

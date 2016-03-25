@@ -1,9 +1,12 @@
 package com.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -28,15 +31,16 @@ public class LabOffice {
 				+ emailID + "]";
 	}
 
+
 	@Id
-	@GeneratedValue
-	@Column(name = "LAB_OFFICE_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "LAB_OFFICE_ID", unique = true)
 	Long labOfficeId;
 	@Column(name = "LAB_NAME")
 	String labName;
 	@Column(name = "STATUS")
 	String status;
-	@Column(name = "ADDRESS")
+	@OneToOne(cascade = CascadeType.ALL)
 	Address labAddress;
 	@Column(name = "LAB_OWNER")
 	String labOwner;

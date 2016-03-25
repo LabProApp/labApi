@@ -6,55 +6,53 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
 @Entity
-@Table(name = "LAB_BRANCH")
+@Table(name = "LAB_OFFICE")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "LabBranch")
-public class LabBranch {
+@XmlRootElement(name = "LabOffice")
+public class Hospital {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
+	
 
 	@Override
 	public String toString() {
-		return "LabBranch [labbranchCode=" + labbranchCode + ", labOfficeId="
-				+ labOfficeId + ", labName=" + labName + ", status=" + status
-				+ ", labBranchOwner=" + labBranchOwner + ", labAddress="
-				+ labAddress + ", primaryMobileNo=" + primaryMobileNo
-				+ ", emailID=" + emailID + "]";
+		return "LabOffice [labOfficeId=" + labOfficeId + ", labName=" + labName
+				+ ", status=" + status + ", labAddress=" + labAddress
+				+ ", labOwner=" + labOwner + ", labRepresentative="
+				+ labRepresentative + ", primaryMobileNo=" + primaryMobileNo
+				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
+				+ emailID + "]";
 	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "LAB_BRANCH_CD", unique = true)
-	Long labbranchCode;
-	@Column(name = "LAB_OFFICE_ID")
+	@Column(name = "LAB_OFFICE_ID", unique = true)
 	Long labOfficeId;
 	@Column(name = "LAB_NAME")
 	String labName;
 	@Column(name = "STATUS")
 	String status;
-	@Column(name = "LAB_BR_OWNER")
-	String labBranchOwner;
 	@OneToOne(cascade = CascadeType.ALL)
+	@Column(name = "ADDRESS")
 	Address labAddress;
+	@Column(name = "LAB_OWNER")
+	String labOwner;
+	@Column(name = "LAB_REP")
+	String labRepresentative;
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
+	@Column(name = "SECOND_MOBILE")
+	String secondaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
-
-	
 	public String getLabName() {
 		return labName;
 	}
@@ -82,47 +80,6 @@ public class LabBranch {
 		this.status = status;
 	}
 
-	public String getLabBranchOwner() {
-		return labBranchOwner;
-	}
-
-	/**
-	 * @return the labbranchCode
-	 */
-	public Long getLabbranchCode() {
-		return labbranchCode;
-	}
-
-	/**
-	 * @param labbranchCode
-	 *            the labbranchCode to set
-	 */
-	@XmlElement
-	public void setLabbranchCode(Long labbranchCode) {
-		this.labbranchCode = labbranchCode;
-	}
-
-	/**
-	 * @return the primaryMobileNo3
-	 */
-	public String getPrimaryMobileNo() {
-		return primaryMobileNo;
-	}
-
-	/**
-	 * @param primaryMobileNo3
-	 *            the primaryMobileNo3 to set
-	 */
-	@XmlElement
-	public void setPrimaryMobileNo(String primaryMobileNo) {
-		this.primaryMobileNo = primaryMobileNo;
-	}
-
-	@XmlElement
-	public void setLabBranchOwner(String labBranchOwner) {
-		this.labBranchOwner = labBranchOwner;
-	}
-
 	public Address getLabAddress() {
 		return labAddress;
 	}
@@ -130,6 +87,42 @@ public class LabBranch {
 	@XmlElement
 	public void setLabAddress(Address labAddress) {
 		this.labAddress = labAddress;
+	}
+
+	public String getLabOwner() {
+		return labOwner;
+	}
+
+	@XmlElement
+	public void setLabOwner(String labOwner) {
+		this.labOwner = labOwner;
+	}
+
+	public String getLabRepresentative() {
+		return labRepresentative;
+	}
+
+	@XmlElement
+	public void setLabRepresentative(String labRepresentative) {
+		this.labRepresentative = labRepresentative;
+	}
+
+	public String getPrimaryMobileNo() {
+		return primaryMobileNo;
+	}
+
+	@XmlElement
+	public void setPrimaryMobileNo(String primaryMobileNo) {
+		this.primaryMobileNo = primaryMobileNo;
+	}
+
+	public String getSecondaryMobileNo() {
+		return secondaryMobileNo;
+	}
+
+	@XmlElement
+	public void setSecondaryMobileNo(String secondaryMobileNo) {
+		this.secondaryMobileNo = secondaryMobileNo;
 	}
 
 	/**
@@ -140,8 +133,7 @@ public class LabBranch {
 	}
 
 	/**
-	 * @param emailID
-	 *            the emailID to set
+	 * @param emailID the emailID to set
 	 */
 	@XmlElement
 	public void setEmailID(String emailID) {

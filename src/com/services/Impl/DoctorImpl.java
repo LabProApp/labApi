@@ -3,8 +3,8 @@ package com.services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException; 
-import org.hibernate.Session; 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -27,9 +27,12 @@ public class DoctorImpl {
 			instance = new DoctorImpl();
 
 		try {
-			factory = new Configuration().configure()
-					.addPackage("com.beans").addAnnotatedClass(Doctor.class).addAnnotatedClass(Address.class)
-					.buildSessionFactory();
+			if (factory == null) {
+				factory = new Configuration().configure()
+						.addPackage("com.beans")
+						.addAnnotatedClass(Doctor.class)
+						.addAnnotatedClass(Address.class).buildSessionFactory();
+			}
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
@@ -50,8 +53,10 @@ public class DoctorImpl {
 			tx.commit();
 			System.out.println("Doctor Created - " + doctorId);
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -71,13 +76,13 @@ public class DoctorImpl {
 		try {
 			tx = session.beginTransaction();
 			doctor = (Doctor) session.get(Doctor.class, doctorId);
-			if (doctor==null)
-			{
+			if (doctor == null) {
 				doctor = new Doctor();
 				doctor.setDocId(0L);
 			}
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			if (tx != null)
@@ -114,21 +119,21 @@ public class DoctorImpl {
 
 	}
 
-	public Response updatedoctor(Doctor cust) {
+	public Response updatedoctor(Doctor doctor) {
 		Response resp = new Response();
-		System.out.println("Update Doctor ==>" + cust);
+		System.out.println("Update Doctor ==>" + doctor);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Doctor doctor = (Doctor) session.get(Doctor.class,
-					cust.getDocId());
-			doctor=cust;
-			session.merge(doctor);
+		
+			session.update(doctor);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -149,14 +154,23 @@ public class DoctorImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Doctor doctor = (Doctor) session.get(Doctor.class,
-					doctorId);
+			Doctor doctor = (Doctor) session.get(Doctor.class, doctorId);
+			if(doctor==null)
+			{
+				resp.setERROR_CODE("0001");
+				resp.setSTATUS("FAIL");
+				resp.setERROR_MESSAGE("No Doctor with Id = " + doctorId);
+				session.close();
+				return resp;
+			}
 			doctor.setStatus("DELETED");
 			session.update(doctor);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
+			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();

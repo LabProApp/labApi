@@ -35,7 +35,7 @@ public class AppointmentService {
 	@GET
 	@Path("/cancelAppointment/{appntId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response cancelAppointment(@PathParam("appntId") String appntId) {
+	public Response cancelAppointment(@PathParam("appntId") Long appntId) {
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
 		Response resp = appmntImpl.cancelAppointment(appntId);
@@ -46,7 +46,30 @@ public class AppointmentService {
 	@GET
 	@Path("/getAppointListbyLab")
 	@Produces(MediaType.APPLICATION_XML)
-	public ArrayList<LabBranch> getAppointListbyLab(@PathParam("LabId") String LabId) {
+	public ArrayList<LabBranch> getAppointListbyLabOffice(@PathParam("LabId") Long LabId) {
+		ArrayList<LabBranch> AppointListbyLab = new ArrayList<LabBranch>();
+
+		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
+		AppointListbyLab = appmntImpl.getAppointListbyLab(LabId);
+		return AppointListbyLab;
+
+	}
+	@GET
+	@Path("/getAppointListbyLab")
+	@Produces(MediaType.APPLICATION_XML)
+	public ArrayList<LabBranch> getAppointListbyLabBranch(@PathParam("LabId") Long LabId) {
+		ArrayList<LabBranch> AppointListbyLab = new ArrayList<LabBranch>();
+
+		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
+		AppointListbyLab = appmntImpl.getAppointListbyLab(LabId);
+		return AppointListbyLab;
+
+	}
+
+	@GET
+	@Path("/getAppointListbyLab")
+	@Produces(MediaType.APPLICATION_XML)
+	public ArrayList<LabBranch> getAppointListbyLabRep(@PathParam("LabId") Long LabId) {
 		ArrayList<LabBranch> AppointListbyLab = new ArrayList<LabBranch>();
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
@@ -59,7 +82,7 @@ public class AppointmentService {
 	@Path("/getAppointListbyCustomer")
 	@Produces(MediaType.APPLICATION_XML)
 	public ArrayList<LabBranch> getAppointListbyCustomer(
-			@PathParam("CustomerId") String CustomerId) {
+			@PathParam("CustomerId") Long CustomerId) {
 		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
@@ -67,8 +90,20 @@ public class AppointmentService {
 		return AppointListbyCustomer;
 
 	}
+	@GET
+	@Path("/getAppointListbyCustomer")
+	@Produces(MediaType.APPLICATION_XML)
+	public ArrayList<LabBranch> getAppointListbyDoctor(
+			@PathParam("DoctorId") Long DoctorId) {
+		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
 
-	@PUT
+		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
+		AppointListbyCustomer = appmntImpl.getAppointListbyDoctor(DoctorId);
+		return AppointListbyCustomer;
+
+	}
+
+	@POST
 	@Path("/updateAppointment")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
