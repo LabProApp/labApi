@@ -1,9 +1,10 @@
 package com.services.Impl;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.beans.Appointment;
 import com.beans.Response;
-import com.beans.LabBranch;
 
 public class AppointmentImpl {
 
@@ -42,8 +43,8 @@ public class AppointmentImpl {
 
 	}
 
-	public ArrayList<LabBranch> getAppointListbyLab(Long LabId) {
-		ArrayList<LabBranch> AppointListbyLab = new ArrayList<LabBranch>();
+	public List<Appointment> getAppointListbyLab(Long LabId) {
+		List<Appointment> AppointListbyLab = new ArrayList<Appointment>();
 
 		// TODO Fetch Appointment List by Lab ID & BranchCode
 
@@ -51,15 +52,15 @@ public class AppointmentImpl {
 
 	}
 
-	public ArrayList<LabBranch> getAppointListbyCustomer(Long CustomerId) {
-		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
+	public List<Appointment> getAppointListbyCustomer(Long CustomerId) {
+		List<Appointment> AppointListbyCustomer = new ArrayList<Appointment>();
 
 		// TODO Fetch Appointment List by Customer ID
 		return AppointListbyCustomer;
 
 	}
-	public ArrayList<LabBranch> getAppointListbyDoctor(Long DoctorId) {
-		ArrayList<LabBranch> AppointListbyCustomer = new ArrayList<LabBranch>();
+	public List<Appointment> getAppointListbyDoctor(Long DoctorId) {
+		ArrayList<Appointment> AppointListbyCustomer = new ArrayList<Appointment>();
 
 		// TODO Fetch Appointment List by Customer ID
 		return AppointListbyCustomer;

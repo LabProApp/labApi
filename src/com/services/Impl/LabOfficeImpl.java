@@ -166,7 +166,6 @@ public class LabOfficeImpl {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
 				resp.setERROR_MESSAGE("No Lab Office with Id = " + labOfficeId);
-				session.close();
 				return resp;
 			}
 			b.setStatus("DELETED");

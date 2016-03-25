@@ -160,7 +160,6 @@ public class DoctorImpl {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
 				resp.setERROR_MESSAGE("No Doctor with Id = " + doctorId);
-				session.close();
 				return resp;
 			}
 			doctor.setStatus("DELETED");

@@ -71,7 +71,7 @@ public class LabBranchService {
 	@POST
 	@Path("/delete/{labBranchCode}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteLab(@PathParam("labBranchCode") String labBranchCode) {
+	public Response deleteLab(@PathParam("labBranchCode") Long labBranchCode) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
 		Response resp = instance.deleteLabBranch(labBranchCode);

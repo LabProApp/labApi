@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.beans.LabRep;
 import com.beans.Response;
@@ -37,7 +38,7 @@ public class LabRepImpl {
 
 	public Response addLab(LabRep lab_rep) {
 		Response resp = new Response();
-		System.out.println("Add Lab Branch =>" + lab_rep);
+		System.out.println("Add Lab Rep =>" + lab_rep);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		Long labRepId = null;
@@ -49,7 +50,18 @@ public class LabRepImpl {
 			System.out.println("Lab Branch  - " + lab_rep.getLabbranchCode());
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-		} catch (HibernateException e) {
+		}
+		catch(ConstraintViolationException ce)
+		{
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0003");
+			resp.setERROR_MESSAGE("No Lab Branch Exists with Branch Id ="+lab_rep.getLabbranchCode());
+			if (tx != null)
+				tx.rollback();
+			ce.printStackTrace();
+			
+		}
+		 catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
 			if (tx != null)
@@ -129,7 +141,18 @@ public class LabRepImpl {
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-		} catch (HibernateException e) {
+		} 
+		catch(ConstraintViolationException ce)
+		{
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0003");
+			resp.setERROR_MESSAGE("No Lab Branch Exists with Branch Id ="+lab_rep.getLabbranchCode());
+			if (tx != null)
+				tx.rollback();
+			
+			
+		}
+		catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
 			if (tx != null)
@@ -157,7 +180,6 @@ public class LabRepImpl {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
 				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labRepId);
-				session.close();
 				return resp;
 			}
 			lab_rep.setStatus("DELETED");

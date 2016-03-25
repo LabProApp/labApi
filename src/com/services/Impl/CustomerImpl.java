@@ -166,7 +166,6 @@ public class CustomerImpl {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
 				resp.setERROR_MESSAGE("No Customer with Id = " + customerId);
-				session.close();
 				return resp;
 			}
 			customer.setStatus("DELETED");

@@ -110,6 +110,36 @@ POST - http://localhost:8080/LabApi/api/labbranch/delete/2
 
 --------------------------------------------------LAB REPRESENTATIVES ----------------------------------------------------------------------------------------------
 
+GET - 
+http://localhost:8080/LabApp/api/LabRep/get/10
+GET - http://localhost:8080/LabApi/api/LabRep/getList/1
+
+POST - http://localhost:8080/LabApi/api/labRep/delete/2
+
+ADD - 
+POST -- http://localhost:8080/LabApi/api/labRep/add
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+   <LabRep>
+  	 <repName>MUKESH</repName>
+   	<primaryMobileNo>124343432</primaryMobileNo>
+   	<labbranchCode>1</labbranchCode>
+   	<status>ACTIVE</status>
+   </LabRep>
+
+UPDATE - 
+POST -- http://localhost:8080/LabApi/api/labRep/update
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+    <LabRep>
+     <labRepresentativeId>2</labRepresentativeId>
+  	 <repName>NIKHIL</repName>
+   	<primaryMobileNo>3242342111</primaryMobileNo>
+   	<labbranchCode>1</labbranchCode>
+   	<status>ACTIVE</status>
+   </LabRep>
+
+
 
 
 --------------------------------------------------DOCTOR ----------------------------------------------------------------------------------------------

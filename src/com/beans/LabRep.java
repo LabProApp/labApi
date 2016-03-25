@@ -11,12 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "LAB_BRANCH_REP")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "LabBranch")
+@XmlRootElement(name = "LabRep")
 public class LabRep {
 
 	
@@ -44,30 +45,35 @@ public class LabRep {
 	public Long getLabRepresentativeId() {
 		return labRepresentativeId;
 	}
+	@XmlElement
 	public void setLabRepresentativeId(Long labRepresentativeId) {
 		this.labRepresentativeId = labRepresentativeId;
 	}
 	public String getPrimaryMobileNo() {
 		return primaryMobileNo;
 	}
+	@XmlElement
 	public void setPrimaryMobileNo(String primaryMobileNo) {
 		this.primaryMobileNo = primaryMobileNo;
 	}
 	public String getRepName() {
 		return repName;
 	}
+	@XmlElement
 	public void setRepName(String repName) {
 		this.repName = repName;
 	}
 	public Long getLabbranchCode() {
 		return labbranchCode;
 	}
+	@XmlElement
 	public void setLabbranchCode(Long labbranchCode) {
 		this.labbranchCode = labbranchCode;
 	}
 	public String getStatus() {
 		return status;
 	}
+	@XmlElement
 	public void setStatus(String status) {
 		this.status = status;
 	}

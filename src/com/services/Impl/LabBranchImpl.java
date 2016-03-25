@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.beans.Address;
 import com.beans.LabBranch;
@@ -50,7 +51,18 @@ public class LabBranchImpl {
 					+ "Lab Office - " + lab_branch.getLabOfficeId());
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-		} catch (HibernateException e) {
+		} 
+		catch(ConstraintViolationException ce)
+		{
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0003");
+			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="+lab_branch.getLabOfficeId());
+			if (tx != null)
+				tx.rollback();
+			ce.printStackTrace();
+			
+		}
+		catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
 			if (tx != null)
@@ -129,7 +141,18 @@ public class LabBranchImpl {
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-		} catch (HibernateException e) {
+		} 
+		catch(ConstraintViolationException ce)
+		{
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0003");
+			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="+lab_branch.getLabOfficeId());
+			if (tx != null)
+				tx.rollback();
+			
+			
+		}
+		catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
 			if (tx != null)
@@ -141,7 +164,7 @@ public class LabBranchImpl {
 		return resp;
 	}
 
-	public Response deleteLabBranch(String labBranchCode) {
+	public Response deleteLabBranch(Long labBranchCode) {
 		Response resp = new Response();
 
 		System.out.println("Deleting Lab Branch  =>" + labBranchCode);
@@ -157,7 +180,6 @@ public class LabBranchImpl {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
 				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labBranchCode);
-				session.close();
 				return resp;
 			}
 			labBranch.setStatus("DELETED");
