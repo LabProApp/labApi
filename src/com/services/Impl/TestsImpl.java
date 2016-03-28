@@ -51,6 +51,7 @@ public class TestsImpl {
 			testId = (Long) session.save(test);
 			tx.commit();
 			System.out.println("Tests Created - " + testId);
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -78,6 +79,7 @@ public class TestsImpl {
 				test.setTestId(0L);
 			}
 			tx.commit();
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");

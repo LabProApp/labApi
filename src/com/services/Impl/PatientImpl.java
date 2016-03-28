@@ -55,6 +55,7 @@ public class PatientImpl {
 			patientId = (Long) session.save(ptnt);
 			tx.commit();
 			System.out.println("Patient Created - " + patientId);
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -82,6 +83,7 @@ public class PatientImpl {
 				patient.setPatientId(0L);
 			}
 			tx.commit();
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
