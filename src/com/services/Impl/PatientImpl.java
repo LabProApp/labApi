@@ -1,36 +1,40 @@
 package com.services.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.beans.Address;
-import com.beans.LabOffice;
+import com.beans.Patient;
 import com.beans.Response;
+import com.common.Constants;
 
-public class LabOfficeImpl {
+public class PatientImpl {
 
-	private static LabOfficeImpl instance;
+	private static PatientImpl instance;
 	private static SessionFactory factory;
 
-	private LabOfficeImpl() {
+	private PatientImpl() {
 
 	}
 
-	public static LabOfficeImpl getInstance() {
+	public static PatientImpl getInstance() {
 		if (instance == null)
-			instance = new LabOfficeImpl();
+			instance = new PatientImpl();
+
 		try {
 			if (factory == null) {
 				factory = new Configuration().configure()
 						.addPackage("com.beans")
-						.addAnnotatedClass(LabOffice.class)
+						.addAnnotatedClass(Patient.class)
 						.addAnnotatedClass(Address.class).buildSessionFactory();
 			}
+
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
@@ -38,23 +42,22 @@ public class LabOfficeImpl {
 		return instance;
 	}
 
-	public Response addLabOffice(LabOffice labOff) {
+	public Response add(Patient ptnt) {
+
 		Response resp = new Response();
-		System.out.println("Add Lab Office =>" + labOff);
+		System.out.println("Add Patient =>" + ptnt);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Long labOfficeId = null;
+		Long patientId = null;
 		try {
+			ptnt.getPatientAddress().setAddressType(Constants.PATIENT);
 			tx = session.beginTransaction();
-			labOff.getLabAddress().setAddressType("LAB_OFFICE");
-			labOfficeId = (Long) session.save(labOff);
+			patientId = (Long) session.save(ptnt);
 			tx.commit();
-			System.out.println("Lab Office Created - " + labOfficeId);
-			resp.setERROR_CODE("0000");
+			System.out.println("Patient Created - " + patientId);
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -65,26 +68,23 @@ public class LabOfficeImpl {
 		return resp;
 	}
 
-	public LabOffice getLabOffice(Long labOfficeId) {
-		LabOffice labOffice = new LabOffice();
+	public Patient get(Long patientId) {
 
 		Response resp = new Response();
+		Patient patient = null;
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			labOffice = (LabOffice) session.get(LabOffice.class, labOfficeId);
-			if (labOffice == null) {
-				labOffice = new LabOffice();
-				labOffice.setLabOfficeId(0L);
+			patient = (Patient) session.get(Patient.class, patientId);
+			if (patient == null) {
+				patient = new Patient();
+				patient.setPatientId(0L);
 			}
-			System.out.println("Lab Office - " + labOffice.getLabOfficeId());
 			tx.commit();
-			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -92,20 +92,18 @@ public class LabOfficeImpl {
 			session.close();
 		}
 
-		return labOffice;
+		return patient;
 
 	}
 
-	public List<LabOffice> getLabOfficeList() {
-		
-
-		List<LabOffice> labList=null;
-		System.out.println("Get Entire Lab Office List");
+	public List<Patient> getpatientList() {
+		List<Patient> ptntList = new ArrayList<Patient>();
+		System.out.println("Get Entire patient List");
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			labList = session.createQuery("FROM LabOffice").list();
+			ptntList = session.createQuery("FROM Patient").list();
 
 			tx.commit();
 		} catch (HibernateException e) {
@@ -116,31 +114,25 @@ public class LabOfficeImpl {
 			session.close();
 		}
 
-		
-
-		System.out.println("Get Entire Lab List => " + labList);
-
-		return labList;
+		System.out.println("Entire Patient List " + ptntList);
+		return ptntList;
 
 	}
 
-	public Response updateLabOffice(LabOffice labOff) {
-
-
+	public Response updatepatient(Patient ptnt) {
 		Response resp = new Response();
-		System.out.println("Update LabOffice ==>" + labOff);
+		System.out.println("Update Patient ==>" + ptnt);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
+			
 			tx = session.beginTransaction();
-			labOff.getLabAddress().setAddressType("LAB_OFFICE");
-			session.update(labOff);
+			session.merge(ptnt); 
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -151,36 +143,37 @@ public class LabOfficeImpl {
 		return resp;
 	}
 
-	public Response deleteLabOffice(Long labOfficeId) {
-
+	public Response deletepatient(Long patientId) {
 		Response resp = new Response();
-		System.out.println("Delete LabOffice ==>" + labOfficeId);
+
+		System.out.println("Delete patient");
+		System.out.println("Deleting patient  =>" + patientId);
+
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			LabOffice b = (LabOffice) session.get(LabOffice.class,labOfficeId);
-			if(b==null)
-			{
+			Patient patient = (Patient) session.get(Patient.class, patientId);
+			if (patient == null) {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Lab Office with Id = " + labOfficeId);
+				resp.setERROR_MESSAGE("No Patient with Id = " + patientId);
 				return resp;
 			}
-			b.setStatus(14);
-			session.update(b);
+			patient.setStatus(14);
+			session.merge(patient);
 			tx.commit();
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-
 		return resp;
+
 	}
 }

@@ -14,17 +14,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "CUSTOMER")
+@Table(name = "PATIENT")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Customer")
-public class Customer {
+@XmlRootElement(name = "Patient")
+public class Patient {
 	
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", customerName="
-				+ customerName + ", age=" + age + ", gender=" + gender
-				+ ", status=" + status + ", customerAddress=" + customerAddress
+		return "Patient [patientId=" + patientId + ", patientName="
+				+ patientName + ", age=" + age + ", gender=" + gender
+				+ ", status=" + status + ", patientAddress=" + patientAddress
 				+ ", primaryMobileNo=" + primaryMobileNo
 				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
 				+ emailID + "]";
@@ -32,25 +32,27 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CUST_ID", unique = true)
-	Long customerId;
-	@Column(name = "CUST_NAME")
-	String customerName;
+	@Column(name = "PTNT_ID", unique = true)
+	Long patientId;
+	@Column(name = "PTNT_NAME")
+	String patientName;
 	@Column(name = "AGE")
 	Integer age;
 	@Column(name = "GENDER")
 	String gender;
 	@Column(name = "STATUS")
-	String status;
+	Integer status;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	Address customerAddress;
+	Address patientAddress;
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")
 	String secondaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
+	@Column(name = "IMG_PATH")
+	String imgPath;
 
 	public Integer getAge() {
 
@@ -71,40 +73,40 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public String getCustomerName() {
-		return customerName;
+	public String getPatientName() {
+		return patientName;
 	}
 
 	@XmlElement
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
-	public Long getCustomerId() {
-		return customerId;
+	public Long getPatientId() {
+		return patientId;
 	}
 
 	@XmlElement
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	@XmlElement
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public Address getCustomerAddress() {
-		return customerAddress;
+	public Address getPatientAddress() {
+		return patientAddress;
 	}
 
 	@XmlElement
-	public void setCustomerAddress(Address customerAddress) {
-		this.customerAddress = customerAddress;
+	public void setPatientAddress(Address patientAddress) {
+		this.patientAddress = patientAddress;
 	}
 
 	public String getPrimaryMobileNo() {

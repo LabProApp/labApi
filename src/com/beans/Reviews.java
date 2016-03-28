@@ -36,7 +36,7 @@ public class Reviews {
 	@GeneratedValue
 	@Column(name = "REVIEW_ID")
 	String reviewId;
-	@Column(name = "CUST_ID")
+	@Column(name = "PTNT_ID")
 	String ratingCustomerId;
 	@Column(name = "DOCTOR_ID")
 	String doctorId;
@@ -48,7 +48,7 @@ public class Reviews {
 	String star_rating;
 	@Column(name = "RATING_DT")
 	Date ratingDate;
-	@Column(name = "DESC")
+	@Column(name = "REVIEW")
 	String reviewDescription;
 
 	/**

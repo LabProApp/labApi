@@ -45,6 +45,7 @@ public class LabBranchImpl {
 		Long labbranchCode = null;
 		try {
 			tx = session.beginTransaction();
+			lab_branch.getLabAddress().setAddressType("LAB_BRANCH");
 			labbranchCode = (Long) session.save(lab_branch);
 			tx.commit();
 			System.out.println("Lab Branch Created - " + labbranchCode
@@ -136,7 +137,7 @@ public class LabBranchImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			
+			lab_branch.getLabAddress().setAddressType("LAB_BRANCH");
 			session.update(lab_branch);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
@@ -182,7 +183,7 @@ public class LabBranchImpl {
 				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labBranchCode);
 				return resp;
 			}
-			labBranch.setStatus("DELETED");
+			labBranch.setStatus(14);
 			session.update(labBranch);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");

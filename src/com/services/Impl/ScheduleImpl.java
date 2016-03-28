@@ -5,33 +5,32 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.beans.Address;
-import com.beans.Customer;
 import com.beans.Response;
+import com.beans.Schedule;
 
-public class CustomerImpl {
+public class ScheduleImpl {
 
-	private static CustomerImpl instance;
+	private static ScheduleImpl instance;
 	private static SessionFactory factory;
 
-	private CustomerImpl() {
+	private ScheduleImpl() {
 
 	}
 
-	public static CustomerImpl getInstance() {
+	public static ScheduleImpl getInstance() {
 		if (instance == null)
-			instance = new CustomerImpl();
+			instance = new ScheduleImpl();
 
 		try {
 			if (factory == null) {
 				factory = new Configuration().configure()
 						.addPackage("com.beans")
-						.addAnnotatedClass(Customer.class)
-						.addAnnotatedClass(Address.class).buildSessionFactory();
+						.addAnnotatedClass(Schedule.class)
+						.buildSessionFactory();
 			}
 
 		} catch (Throwable ex) {
@@ -41,18 +40,18 @@ public class CustomerImpl {
 		return instance;
 	}
 
-	public Response add(Customer cust) {
+	public Response addSchedule(Schedule schedule) {
 
 		Response resp = new Response();
-		System.out.println("Add Customer =>" + cust);
+		System.out.println("Add Schedule =>" + schedule);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Long customerId = null;
+		Long ScheduleId = null;
 		try {
 			tx = session.beginTransaction();
-			customerId = (Long) session.save(cust);
+			ScheduleId = (Long) session.save(schedule);
 			tx.commit();
-			System.out.println("Customer Created - " + customerId);
+			System.out.println("Schedule Created - " + ScheduleId);
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -66,18 +65,18 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Customer get(Long customerId) {
+	public Schedule getSchedulebyScheduleId(Long ScheduleId) {
 
 		Response resp = new Response();
-		Customer customer = null;
+		Schedule Schedule = null;
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			customer = (Customer) session.get(Customer.class, customerId);
-			if (customer == null) {
-				customer = new Customer();
-				customer.setCustomerId(0L);
+			Schedule = (Schedule) session.get(Schedule.class, ScheduleId);
+			if (Schedule == null) {
+				Schedule = new Schedule();
+				Schedule.setScheduleId(0L);
 			}
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
@@ -90,18 +89,18 @@ public class CustomerImpl {
 			session.close();
 		}
 
-		return customer;
+		return Schedule;
 
 	}
 
-	public List<Customer> getcustomerList() {
-		List<Customer> custList = new ArrayList<Customer>();
-		System.out.println("Get Entire customer List");
+	public List<Schedule> getScheduleList() {
+		List<Schedule> scheduleList = new ArrayList<Schedule>();
+		System.out.println("Get Entire Schedule List");
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			custList = session.createQuery("FROM Customer").list();
+			scheduleList = session.createQuery("FROM Schedule").list();
 
 			tx.commit();
 		} catch (HibernateException e) {
@@ -112,28 +111,19 @@ public class CustomerImpl {
 			session.close();
 		}
 
-		System.out.println("Entire Customer List " + custList);
-		return custList;
+		System.out.println("Entire Schedule List " + scheduleList);
+		return scheduleList;
 
 	}
 
-	public Response updatecustomer(Customer cust) {
+	public Response updateSchedule(Schedule schedule) {
 		Response resp = new Response();
-		System.out.println("Update Customer ==>" + cust);
+		System.out.println("Update Schedule ==>" + schedule);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			
-			
-			if(cust==null)
-			{
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Customer with Id = " + cust.getCustomerId());
-			}
-			
-			session.update(cust);
+			session.update(schedule);
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
@@ -149,27 +139,25 @@ public class CustomerImpl {
 		return resp;
 	}
 
-	public Response deletecustomer(Long customerId) {
+	public Response deleteSchedule(Long ScheduleId) {
 		Response resp = new Response();
 
-		System.out.println("Delete customer");
-		System.out.println("Deleting customer  =>" + customerId);
+		System.out.println("Delete Schedule");
+		System.out.println("Deleting Schedule  =>" + ScheduleId);
 
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Customer customer = (Customer) session.get(Customer.class,
-					customerId);
-			if(customer==null)
-			{
+			Schedule Schedule = (Schedule) session.get(Schedule.class, ScheduleId);
+			if (Schedule == null) {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Customer with Id = " + customerId);
+				resp.setERROR_MESSAGE("No Schedule with Id = " + ScheduleId);
 				return resp;
 			}
-			customer.setStatus("DELETED");
-			session.update(customer);
+			Schedule.setStatus(1);
+			session.update(Schedule);
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
@@ -184,4 +172,30 @@ public class CustomerImpl {
 		return resp;
 
 	}
+
+	public List<Schedule> getScheduleListbyLabBranch(Long labBranchCd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Schedule> getScheduleListbyLabOffice(Long labOfficeId) {
+		
+		return null;
+	}
+
+	public List<Schedule> getScheduleListbyLabRep(Long labRepId) {
+	
+		return null;
+	}
+
+	public List<Schedule> getScheduleListbyDoctor(Long doctorId) {
+		
+		return null;
+	}
+
+	public List<Schedule> getScheduleListbyHospital(Long doctorId) {
+	
+		return null;
+	}
+	
 }

@@ -39,7 +39,7 @@ public class Hospital {
 	@Column(name = "LAB_NAME")
 	String labName;
 	@Column(name = "STATUS")
-	String status;
+	Integer status;
 	@OneToOne(cascade = CascadeType.ALL)
 	@Column(name = "ADDRESS")
 	Address labAddress;
@@ -71,12 +71,12 @@ public class Hospital {
 		this.labOfficeId = labOfficeId;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	@XmlElement
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

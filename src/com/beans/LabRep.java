@@ -40,7 +40,7 @@ public class LabRep {
 	@Column(name = "LAB_BRANCH_CD", nullable = false)
 	Long labbranchCode;
 	@Column(name = "STATUS")
-	String status;
+	Integer status;
 	
 	public Long getLabRepresentativeId() {
 		return labRepresentativeId;
@@ -70,11 +70,11 @@ public class LabRep {
 	public void setLabbranchCode(Long labbranchCode) {
 		this.labbranchCode = labbranchCode;
 	}
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 	@XmlElement
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

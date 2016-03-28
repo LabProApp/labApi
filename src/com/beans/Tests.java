@@ -3,6 +3,7 @@ package com.beans;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,29 +14,29 @@ import javax.xml.bind.annotation.XmlElement;
 @Entity
 @Table(name = "TESTS")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Test")
+@XmlRootElement(name = "test")
 public class Tests {
-	
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Tests [testId=" + testId + ", status=" + status + ", testName="
-				+ testName + ", lowerValue=" + lowerValue + ", upperValue="
-				+ upperValue + ", units=" + units + ", testType=" + testType
-				+ "]";
+				+ testName + ", shortName=" + shortName + ", lowerValue="
+				+ lowerValue + ", upperValue=" + upperValue + ", units="
+				+ units + ", testType=" + testType + ", bodyOrgan=" + bodyOrgan
+				+ ", description=" + description + ", procedure=" + procedure
+				+ ", imgPath=" + imgPath + "]";
 	}
 
 	@Id
-	@GeneratedValue
-	@Column(name = "TEST_ID")
-	String testId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "TEST_ID", unique = true)
+	Long testId;
 	@Column(name = "STATUS")
-	String status;
-	@Column(name = "NAME")
+	Integer status;
+	@Column(name = "TEST_NAME")
 	String testName;
+	@Column(name = "SHORT_NAME")
+	String shortName;
 	@Column(name = "LOWER_VALUE")
 	String lowerValue;
 	@Column(name = "UPPER_VALUE")
@@ -44,7 +45,14 @@ public class Tests {
 	String units;
 	@Column(name = "TEST_TYPE")
 	String testType;
-	
+	@Column(name = "BODY_ORGAN")
+	String bodyOrgan;
+	@Column(name = "DESCRIPTION")
+	String description;
+	@Column(name = "TEST_STEPS")
+	String procedure;
+	@Column(name = "IMG_PATH")
+	String imgPath;
 
 	public String getTestName() {
 		return testName;
@@ -55,21 +63,21 @@ public class Tests {
 		this.testName = testName;
 	}
 
-	public String getTestId() {
+	public Long getTestId() {
 		return testId;
 	}
 
 	@XmlElement
-	public void setTestId(String testId) {
+	public void setTestId(Long testId) {
 		this.testId = testId;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	@XmlElement
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -109,6 +117,49 @@ public class Tests {
 		this.testType = testType;
 	}
 
-	
+	public String getShortName() {
+		return shortName;
+	}
+
+	@XmlElement
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
+	public String getBodyOrgan() {
+		return bodyOrgan;
+	}
+
+	@XmlElement
+	public void setBodyOrgan(String bodyOrgan) {
+		this.bodyOrgan = bodyOrgan;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	@XmlElement
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getProcedure() {
+		return procedure;
+	}
+
+	@XmlElement
+	public void setProcedure(String procedure) {
+		this.procedure = procedure;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	@XmlElement
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
 
 }

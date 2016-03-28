@@ -43,6 +43,7 @@ public class LabRepImpl {
 		Transaction tx = null;
 		Long labRepId = null;
 		try {
+			
 			tx = session.beginTransaction();
 			labRepId = (Long) session.save(lab_rep);
 			tx.commit();
@@ -179,10 +180,10 @@ public class LabRepImpl {
 			{
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labRepId);
+				resp.setERROR_MESSAGE("No Lab Rep with Id = " + labRepId);
 				return resp;
 			}
-			lab_rep.setStatus("DELETED");
+			lab_rep.setStatus(14);
 			session.update(lab_rep);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");

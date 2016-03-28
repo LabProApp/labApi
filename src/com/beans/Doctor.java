@@ -23,13 +23,13 @@ public class Doctor {
 	public String toString() {
 		return "Doctor [docId=" + docId + ", doctorName=" + doctorName
 				+ ", branchCode=" + branchCode + ", status=" + status
-				+ ", hospitalName=" + hospitalName + ", doctorDegree="
+				+ ", hospitalName=" + hospitalName + ", doctorDegrees="
 				+ doctorDegrees + ", doctorSpecialization="
 				+ doctorSpecialization + ", doctorExperience="
 				+ doctorExperience + ", docAddress=" + docAddress
 				+ ", primaryMobileNo=" + primaryMobileNo
 				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
-				+ emailID + "]";
+				+ emailID + ", img_path=" + img_path + "]";
 	}
 
 	
@@ -43,7 +43,7 @@ public class Doctor {
 	@Column(name = "DOC_BRANCH_CD")
 	Long branchCode;
 	@Column(name = "STATUS")
-	String status;
+	Integer status;
 	@Column(name = "HOSP_NAME")
 	String hospitalName;
 	@Column(name = "DOC_DEGREE")
@@ -60,6 +60,9 @@ public class Doctor {
 	String secondaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
+	@Column(name = "IMG_PATH")
+	String img_path;
+	
 	
 	public String getDoctorName() {
 		return doctorName;
@@ -88,12 +91,12 @@ public class Doctor {
 		this.branchCode = branchCode;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	@XmlElement
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -175,6 +178,14 @@ public class Doctor {
 	@XmlElement
 	public void setEmailID(String emailID) {
 		this.emailID = emailID;
+	}
+
+	public String getImg_path() {
+		return img_path;
+	}
+	@XmlElement
+	public void setImg_path(String img_path) {
+		this.img_path = img_path;
 	}
 
 }

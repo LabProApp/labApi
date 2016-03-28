@@ -1,12 +1,10 @@
 package com.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
 import com.beans.Tests;
+import com.services.Impl.TestsImpl;
 
 @Path("/test")
 public class TestsService {
@@ -21,55 +20,32 @@ public class TestsService {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response add(Tests b) {
+	public Response add(Tests cust) {
 
-		Response resp = new Response();
-		System.out.println("Add Test =>" + b);
-		resp.setSTATUS("SUCCESS");
+		System.out.println("Add Tests =>" + cust);
+		TestsImpl testsImpl = TestsImpl.getInstance();
+		Response resp = testsImpl.add(cust);
 		return resp;
 	}
 
 	@GET
-	@Path("/get/{TestId}")
+	@Path("/get/{testsId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Tests get(@PathParam("TestId") String TestId) {
-		Tests lr = new Tests();
-		System.out.println("Get Test");
-
-		if (TestId.equalsIgnoreCase("10")) {
-			lr.setTestId(TestId);
-			lr.setTestName("MANINDER");
-		}
-		if (TestId.equalsIgnoreCase("20")) {
-			lr.setTestId(TestId);
-			lr.setTestName("NIKHIL");
-		}
-		lr.setStatus("SUCCESS");
-		System.out.println("Test  =" + lr);
-		return lr;
+	public Tests get(@PathParam("testsId") Long testsId) {
+		TestsImpl testsImpl = TestsImpl.getInstance();
+		Tests cust = testsImpl.get(testsId);
+		return cust;
 
 	}
 
 	@GET
 	@Path("/getList")
 	@Produces(MediaType.APPLICATION_XML)
-	public ArrayList<Tests> getTestList() {
-		ArrayList<Tests> testsList = new ArrayList<Tests>();
-		System.out.println("Get Entire Test List");
-		Tests lr = new Tests();
-
-		Tests lr2 = new Tests();
-		System.out.println("Get Test List");
-
-		lr.setTestId("1");
-		lr.setTestName("MANINDER");
-		testsList.add(lr);
-
-		lr2.setTestId("2");
-		lr.setTestName("NIKHIL");
-		testsList.add(lr2);
-		System.out.println("Tests List => " + testsList);
-		return testsList;
+	public List<Tests> gettestsList() {
+		List<Tests> testList;
+		TestsImpl testsImpl = TestsImpl.getInstance();
+		testList = testsImpl.gettestList();
+		return testList;
 
 	}
 
@@ -77,25 +53,23 @@ public class TestsService {
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response updateTest(Tests b) {
+	public Response updatetests(Tests cust) {
 
-		Response resp = new Response();
-		System.out.println("Update Test =>" + b);
-
+		TestsImpl testsImpl = TestsImpl.getInstance();
+		Response resp = testsImpl.updatetest(cust);
 		resp.setSTATUS("SUCCESS");
 		return resp;
 	}
 
 	@POST
-	@Path("/delete/{TestId}")
+	@Path("/delete/{testsId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteTest(@PathParam("TestId") String TestId) {
-		Response resp = new Response();
+	public Response deletetests(@PathParam("testsId") Long testsId) {
 
-		
-		System.out.println("Delete Test =" + TestId);
+		System.out.println("Delete tests");
+		TestsImpl testsImpl = TestsImpl.getInstance();
+		Response resp = testsImpl.deletetest(testsId);
 
-		resp.setSTATUS("SUCCESS");
 		return resp;
 
 	}

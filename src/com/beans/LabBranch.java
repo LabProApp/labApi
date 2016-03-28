@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,7 +31,7 @@ public class LabBranch {
 				+ labOfficeId + ", labName=" + labName + ", status=" + status
 				+ ", labBranchOwner=" + labBranchOwner + ", labAddress="
 				+ labAddress + ", primaryMobileNo=" + primaryMobileNo
-				+ ", emailID=" + emailID + "]";
+				+ ", emailID=" + emailID + ", img_path=" + img_path + "]";
 	}
 
 	@Id
@@ -44,7 +43,7 @@ public class LabBranch {
 	@Column(name = "LAB_NAME")
 	String labName;
 	@Column(name = "STATUS")
-	String status;
+	Integer status;
 	@Column(name = "LAB_BR_OWNER")
 	String labBranchOwner;
 	@OneToOne(cascade = CascadeType.ALL)
@@ -53,7 +52,8 @@ public class LabBranch {
 	String primaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
-
+	@Column(name = "IMG_PATH")
+	String img_path;
 	
 	public String getLabName() {
 		return labName;
@@ -73,12 +73,12 @@ public class LabBranch {
 		this.labOfficeId = labOfficeId;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	@XmlElement
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -146,6 +146,14 @@ public class LabBranch {
 	@XmlElement
 	public void setEmailID(String emailID) {
 		this.emailID = emailID;
+	}
+
+	public String getImg_path() {
+		return img_path;
+	}
+	@XmlElement
+	public void setImg_path(String img_path) {
+		this.img_path = img_path;
 	}
 
 	

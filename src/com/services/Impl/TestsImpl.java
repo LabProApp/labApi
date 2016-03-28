@@ -1,72 +1,180 @@
 package com.services.Impl;
 
 import java.util.ArrayList;
-import com.beans.Response;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import com.beans.Address;
 import com.beans.Tests;
+import com.beans.Response;
 
 public class TestsImpl {
 
-	public Response add(Tests b) {
+	private static TestsImpl instance;
+	private static SessionFactory factory;
+
+	private TestsImpl() {
+
+	}
+
+	public static TestsImpl getInstance() {
+		if (instance == null)
+			instance = new TestsImpl();
+
+		try {
+			if (factory == null) {
+				factory = new Configuration().configure()
+						.addPackage("com.beans").addAnnotatedClass(Tests.class)
+						.addAnnotatedClass(Address.class).buildSessionFactory();
+			}
+
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+		return instance;
+	}
+
+	public Response add(Tests test) {
 
 		Response resp = new Response();
-		System.out.println("Add Test =>" + b);
-		resp.setSTATUS("SUCCESS");
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long testId = null;
+		try {
+			tx = session.beginTransaction();
+			testId = (Long) session.save(test);
+			tx.commit();
+			System.out.println("Tests Created - " + testId);
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
 		return resp;
 	}
 
-	public Tests get(String TestId) {
-		Tests lr = new Tests();
-		System.out.println("Get Test");
-
-		if (TestId.equalsIgnoreCase("10")) {
-			lr.setTestId(TestId);
-			lr.setTestName("MANINDER");
-		}
-		if (TestId.equalsIgnoreCase("20")) {
-			lr.setTestId(TestId);
-			lr.setTestName("NIKHIL");
-		}
-		lr.setStatus("SUCCESS");
-		System.out.println("Test  =" + lr);
-		return lr;
-
-	}
-
-	public ArrayList<Tests> getTestList() {
-		ArrayList<Tests> testsList = new ArrayList<Tests>();
-		System.out.println("Get Entire Test List");
-		Tests lr = new Tests();
-
-		Tests lr2 = new Tests();
-		System.out.println("Get Test List");
-
-		lr.setTestId("1");
-		lr.setTestName("MANINDER");
-		testsList.add(lr);
-
-		lr2.setTestId("2");
-		lr.setTestName("NIKHIL");
-		testsList.add(lr2);
-		System.out.println("Tests List => " + testsList);
-		return testsList;
-
-	}
-
-	public Response updateTest(Tests b) {
+	public Tests get(Long testId) {
 
 		Response resp = new Response();
-		System.out.println("Update Test =>" + b);
+		Tests test = null;
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			test = (Tests) session.get(Tests.class, testId);
+			if (test == null) {
+				test = new Tests();
+				test.setTestId(0L);
+			}
+			tx.commit();
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 
-		resp.setSTATUS("SUCCESS");
+		return test;
+
+	}
+
+	public List<Tests> gettestList() {
+		List<Tests> testList = new ArrayList<Tests>();
+		System.out.println("Get Entire test List");
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			testList = session.createQuery("FROM Tests").list();
+
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		System.out.println("Entire Tests List " + testList);
+		return testList;
+
+	}
+
+	public Response updatetest(Tests test) {
+		Response resp = new Response();
+		System.out.println("Update Tests ==>" + test);
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+
+			if (test == null) {
+				resp.setERROR_CODE("0001");
+				resp.setSTATUS("FAIL");
+				resp.setERROR_MESSAGE("No Tests with Id = " + test.getTestId());
+			}
+
+			session.update(test);
+			tx.commit();
+			resp.setERROR_CODE("0000");
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
 		return resp;
 	}
 
-	public Response deleteTest(String TestId) {
+	public Response deletetest(Long testId) {
 		Response resp = new Response();
 
-		System.out.println("Delete Test =" + TestId);
+		System.out.println("Delete test");
+		System.out.println("Deleting test  =>" + testId);
 
-		resp.setSTATUS("SUCCESS");
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Tests test = (Tests) session.get(Tests.class, testId);
+			if (test == null) {
+				resp.setERROR_CODE("0001");
+				resp.setSTATUS("FAIL");
+				resp.setERROR_MESSAGE("No Tests with Id = " + testId);
+				return resp;
+			}
+			test.setStatus(14);
+			session.update(test);
+			tx.commit();
+			resp.setERROR_CODE("0000");
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 		return resp;
 
 	}

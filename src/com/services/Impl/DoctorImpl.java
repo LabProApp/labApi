@@ -12,6 +12,7 @@ import org.hibernate.cfg.Configuration;
 import com.beans.Address;
 import com.beans.Doctor;
 import com.beans.Response;
+import com.common.Constants;
 
 public class DoctorImpl {
 
@@ -40,16 +41,16 @@ public class DoctorImpl {
 		return instance;
 	}
 
-	public Response add(Doctor cust) {
+	public Response add(Doctor doctor) {
 
 		Response resp = new Response();
-		System.out.println("Add Doctor =>" + cust);
+		System.out.println("Add Doctor =>" + doctor);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		Long doctorId = null;
 		try {
 			tx = session.beginTransaction();
-			doctorId = (Long) session.save(cust);
+			doctorId = (Long) session.save(doctor);
 			tx.commit();
 			System.out.println("Doctor Created - " + doctorId);
 			resp.setSTATUS("SUCCESS");
@@ -103,6 +104,7 @@ public class DoctorImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
+			
 			custList = session.createQuery("FROM Doctor").list();
 
 			tx.commit();
@@ -126,8 +128,7 @@ public class DoctorImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-		
-			session.update(doctor);
+			session.merge(doctor);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
@@ -162,8 +163,8 @@ public class DoctorImpl {
 				resp.setERROR_MESSAGE("No Doctor with Id = " + doctorId);
 				return resp;
 			}
-			doctor.setStatus("DELETED");
-			session.update(doctor);
+			doctor.setStatus(14);
+			session.merge(doctor);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");

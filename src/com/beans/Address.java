@@ -17,23 +17,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Address")
 public class Address {
-	
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", addressLine1="
 				+ addressLine1 + ", addressLine2=" + addressLine2
 				+ ", addressLine3=" + addressLine3 + ", city=" + city
 				+ ", state=" + state + ", zip=" + zip + ", country=" + country
-				+ "]";
+				+ ", addressType=" + addressType + "]";
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ADDRESS_ID", unique = true)	
+	@Column(name = "ADDRESS_ID", unique = true)
 	Long addressId;
 	@Column(name = "ADD_LINE1")
 	String addressLine1;
@@ -49,6 +45,8 @@ public class Address {
 	String zip;
 	@Column(name = "COUNTRY")
 	String country;
+	@Column(name = "ADD_TYPE")
+	String addressType;
 
 	/**
 	 * @return the addressId
@@ -58,8 +56,10 @@ public class Address {
 	}
 
 	/**
-	 * @param addressId the addressId to set
+	 * @param addressId
+	 *            the addressId to set
 	 */
+	@XmlElement
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
@@ -125,5 +125,14 @@ public class Address {
 	@XmlElement
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public String getAddressType() {
+		return addressType;
+	}
+
+	@XmlElement
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
 	}
 }
