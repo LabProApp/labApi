@@ -123,13 +123,7 @@ public class TestsImpl {
 		try {
 			tx = session.beginTransaction();
 
-			if (test == null) {
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Tests with Id = " + test.getTestId());
-			}
-
-			session.update(test);
+			session.merge(test);
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");

@@ -46,7 +46,6 @@ public class LabOfficeImpl {
 		Long labOfficeId = null;
 		try {
 			tx = session.beginTransaction();
-			labOff.getLabAddress().setAddressType("LAB_OFFICE");
 			labOfficeId = (Long) session.save(labOff);
 			tx.commit();
 			System.out.println("Lab Office Created - " + labOfficeId);
@@ -133,8 +132,7 @@ public class LabOfficeImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			labOff.getLabAddress().setAddressType("LAB_OFFICE");
-			session.update(labOff);
+			session.merge(labOff);
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
@@ -168,7 +166,7 @@ public class LabOfficeImpl {
 				return resp;
 			}
 			b.setStatus(14);
-			session.update(b);
+			session.merge(b);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {

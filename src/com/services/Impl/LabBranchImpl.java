@@ -12,6 +12,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import com.beans.Address;
 import com.beans.LabBranch;
+import com.beans.LabOffice;
 import com.beans.Response;
 
 public class LabBranchImpl {
@@ -27,9 +28,9 @@ public class LabBranchImpl {
 		if (instance == null)
 			instance = new LabBranchImpl();
 		try {
-			factory = new Configuration().configure()
-					.addPackage("com.beans").addAnnotatedClass(LabBranch.class).addAnnotatedClass(Address.class)
-					.buildSessionFactory();
+			factory = new Configuration().configure().addPackage("com.beans")
+					.addAnnotatedClass(LabBranch.class)
+					.addAnnotatedClass(Address.class).buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
@@ -45,7 +46,6 @@ public class LabBranchImpl {
 		Long labbranchCode = null;
 		try {
 			tx = session.beginTransaction();
-			lab_branch.getLabAddress().setAddressType("LAB_BRANCH");
 			labbranchCode = (Long) session.save(lab_branch);
 			tx.commit();
 			System.out.println("Lab Branch Created - " + labbranchCode
@@ -53,17 +53,16 @@ public class LabBranchImpl {
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
 		} 
-		catch(ConstraintViolationException ce)
-		{
+		catch (ConstraintViolationException ce) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0003");
-			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="+lab_branch.getLabOfficeId());
+			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="
+					+ lab_branch.getLabOfficeId());
 			if (tx != null)
 				tx.rollback();
 			ce.printStackTrace();
-			
-		}
-		catch (HibernateException e) {
+
+		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
 			if (tx != null)
@@ -85,12 +84,16 @@ public class LabBranchImpl {
 			tx = session.beginTransaction();
 			lab_branch = (LabBranch) session
 					.get(LabBranch.class, labbranchCode);
+			if (lab_branch == null) {
+				lab_branch = new LabBranch();
+				lab_branch.setLabOfficeId(0L);
+				lab_branch.setLabbranchCode(0L);
+			}
 			System.out.println("Lab Branch Fetched - "
 					+ lab_branch.getLabbranchCode() + "Lab Office - "
 					+ lab_branch.getLabOfficeId());
 			tx.commit();
-			resp.setSTATUS("SUCCESS");
-			resp.setERROR_CODE("0000");
+			
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
@@ -137,23 +140,19 @@ public class LabBranchImpl {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			lab_branch.getLabAddress().setAddressType("LAB_BRANCH");
 			session.update(lab_branch);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-		} 
-		catch(ConstraintViolationException ce)
-		{
+		} catch (ConstraintViolationException ce) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0003");
-			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="+lab_branch.getLabOfficeId());
+			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="
+					+ lab_branch.getLabOfficeId());
 			if (tx != null)
 				tx.rollback();
-			
-			
-		}
-		catch (HibernateException e) {
+
+		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
 			if (tx != null)
@@ -176,11 +175,11 @@ public class LabBranchImpl {
 			tx = session.beginTransaction();
 			LabBranch labBranch = (LabBranch) session.get(LabBranch.class,
 					labBranchCode);
-			if(labBranch==null)
-			{
+			if (labBranch == null) {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Lab Branch with Id = " + labBranchCode);
+				resp.setERROR_MESSAGE("No Lab Branch with Id = "
+						+ labBranchCode);
 				return resp;
 			}
 			labBranch.setStatus(14);

@@ -25,8 +25,7 @@ public class LabOffice {
 	public String toString() {
 		return "LabOffice [labOfficeId=" + labOfficeId + ", labName=" + labName
 				+ ", status=" + status + ", labAddress=" + labAddress
-				+ ", labOwner=" + labOwner + ", labRepresentative="
-				+ labRepresentative + ", primaryMobileNo=" + primaryMobileNo
+				+ ", labOwner=" + labOwner + ", primaryMobileNo=" + primaryMobileNo
 				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
 				+ emailID + "]";
 	}
@@ -44,8 +43,7 @@ public class LabOffice {
 	Address labAddress;
 	@Column(name = "LAB_OWNER")
 	String labOwner;
-	@Column(name = "LAB_REP")
-	String labRepresentative;
+	
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")
@@ -97,14 +95,6 @@ public class LabOffice {
 		this.labOwner = labOwner;
 	}
 
-	public String getLabRepresentative() {
-		return labRepresentative;
-	}
-
-	@XmlElement
-	public void setLabRepresentative(String labRepresentative) {
-		this.labRepresentative = labRepresentative;
-	}
 
 	public String getPrimaryMobileNo() {
 		return primaryMobileNo;

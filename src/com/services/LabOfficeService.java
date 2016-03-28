@@ -68,12 +68,12 @@ public class LabOfficeService {
 	}
 
 	@POST
-	@Path("/delete/{labId}")
+	@Path("/delete/{labOfficeId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteLabOffice(@PathParam("labId") Long labId) {
+	public Response deleteLabOffice(@PathParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
-		Response resp = instance.deleteLabOffice(labId);
+		Response resp = instance.deleteLabOffice(labOfficeId);
 
 		resp.setSTATUS("SUCCESS");
 		return resp;
