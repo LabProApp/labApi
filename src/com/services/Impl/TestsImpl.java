@@ -26,7 +26,7 @@ public class TestsImpl {
 		if (instance == null)
 			instance = new TestsImpl();
 
-		try {
+	/*	try {
 			if (factory == null) {
 				factory = new Configuration().configure()
 						.addPackage("com.beans").addAnnotatedClass(Tests.class)
@@ -36,7 +36,7 @@ public class TestsImpl {
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
-		}
+		}*/
 		return instance;
 	}
 

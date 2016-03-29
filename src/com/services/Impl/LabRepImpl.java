@@ -25,14 +25,14 @@ public class LabRepImpl {
 	public static LabRepImpl getInstance() {
 		if (instance == null)
 			instance = new LabRepImpl();
-		try {
+		/*try {
 			factory = new Configuration().configure()
 					.addPackage("com.beans").addAnnotatedClass(LabRep.class).addAnnotatedClass(LabRep.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
-		}
+		}*/
 		return instance;
 	}
 

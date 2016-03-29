@@ -57,8 +57,8 @@ public class Schedule {
 	
 	
 	
-	Time night_time_start;		// Start Time of Night Shift
-	Time night_time_end;			// End Time of Night Shift
+	Time night_time_start;		// Start Time of Night Shift 20:00
+	Time night_time_end;			// End Time of Night Shift 08:00
 	Integer night_tokens_avlbl;		// Number of Patients that can be Served in Night
 									//so that System can dynamically calculate TimeSlot for each Patient
 	Integer night_tokens_booked;  // If night_tokens_avlbl < night_tokens_booked Then Booking is Open

@@ -5,32 +5,34 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.beans.Address;
+import com.beans.Patient;
 import com.beans.Response;
-import com.beans.Schedule;
+import com.common.Constants;
 
-public class ScheduleImpl {
+public class CopyOfPatientImpl {
 
-	private static ScheduleImpl instance;
+	private static CopyOfPatientImpl instance;
 	private static SessionFactory factory;
 
-	private ScheduleImpl() {
+	private CopyOfPatientImpl() {
 
 	}
 
-	public static ScheduleImpl getInstance() {
+	public static CopyOfPatientImpl getInstance() {
 		if (instance == null)
-			instance = new ScheduleImpl();
+			instance = new CopyOfPatientImpl();
 
 		/*try {
 			if (factory == null) {
 				factory = new Configuration().configure()
 						.addPackage("com.beans")
-						.addAnnotatedClass(Schedule.class)
-						.buildSessionFactory();
+						.addAnnotatedClass(Patient.class)
+						.addAnnotatedClass(Address.class).buildSessionFactory();
 			}
 
 		} catch (Throwable ex) {
@@ -40,18 +42,20 @@ public class ScheduleImpl {
 		return instance;
 	}
 
-	public Response addSchedule(Schedule schedule) {
+	public Response add(Patient ptnt) {
 
 		Response resp = new Response();
-		System.out.println("Add Schedule =>" + schedule);
+		System.out.println("Add Patient =>" + ptnt);
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Long ScheduleId = null;
+		Long patientId = null;
 		try {
+			ptnt.getPatientAddress().setAddressType(Constants.PATIENT);
 			tx = session.beginTransaction();
-			ScheduleId = (Long) session.save(schedule);
+			patientId = (Long) session.save(ptnt);
 			tx.commit();
-			System.out.println("Schedule Created - " + ScheduleId);
+			System.out.println("Patient Created - " + patientId);
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -65,20 +69,21 @@ public class ScheduleImpl {
 		return resp;
 	}
 
-	public Schedule getSchedulebyScheduleId(Long ScheduleId) {
+	public Patient get(Long patientId) {
 
 		Response resp = new Response();
-		Schedule Schedule = null;
+		Patient patient = null;
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Schedule = (Schedule) session.get(Schedule.class, ScheduleId);
-			if (Schedule == null) {
-				Schedule = new Schedule();
-				Schedule.setScheduleId(0L);
+			patient = (Patient) session.get(Patient.class, patientId);
+			if (patient == null) {
+				patient = new Patient();
+				patient.setPatientId(0L);
 			}
 			tx.commit();
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -89,18 +94,18 @@ public class ScheduleImpl {
 			session.close();
 		}
 
-		return Schedule;
+		return patient;
 
 	}
 
-	public List<Schedule> getScheduleList() {
-		List<Schedule> scheduleList = new ArrayList<Schedule>();
-		System.out.println("Get Entire Schedule List");
+	public List<Patient> getpatientList() {
+		List<Patient> ptntList = new ArrayList<Patient>();
+		System.out.println("Get Entire patient List");
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			scheduleList = session.createQuery("FROM Schedule").list();
+			ptntList = session.createQuery("FROM Patient").list();
 
 			tx.commit();
 		} catch (HibernateException e) {
@@ -111,19 +116,20 @@ public class ScheduleImpl {
 			session.close();
 		}
 
-		System.out.println("Entire Schedule List " + scheduleList);
-		return scheduleList;
+		System.out.println("Entire Patient List " + ptntList);
+		return ptntList;
 
 	}
 
-	public Response updateSchedule(Schedule schedule) {
+	public Response updatepatient(Patient ptnt) {
 		Response resp = new Response();
-		System.out.println("Update Schedule ==>" + schedule);
+		System.out.println("Update Patient ==>" + ptnt);
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
+			
 			tx = session.beginTransaction();
-			session.update(schedule);
+			session.merge(ptnt); 
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
@@ -139,25 +145,25 @@ public class ScheduleImpl {
 		return resp;
 	}
 
-	public Response deleteSchedule(Long ScheduleId) {
+	public Response deletepatient(Long patientId) {
 		Response resp = new Response();
 
-		System.out.println("Delete Schedule");
-		System.out.println("Deleting Schedule  =>" + ScheduleId);
+		System.out.println("Delete patient");
+		System.out.println("Deleting patient  =>" + patientId);
 
 		Session session = factory.openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			Schedule Schedule = (Schedule) session.get(Schedule.class, ScheduleId);
-			if (Schedule == null) {
+			Patient patient = (Patient) session.get(Patient.class, patientId);
+			if (patient == null) {
 				resp.setERROR_CODE("0001");
 				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Schedule with Id = " + ScheduleId);
+				resp.setERROR_MESSAGE("No Patient with Id = " + patientId);
 				return resp;
 			}
-			Schedule.setStatus(1);
-			session.update(Schedule);
+			patient.setStatus(14);
+			session.merge(patient);
 			tx.commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
@@ -172,30 +178,4 @@ public class ScheduleImpl {
 		return resp;
 
 	}
-
-	public List<Schedule> getScheduleListbyLabBranch(Long labBranchCd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Schedule> getScheduleListbyLabOffice(Long labOfficeId) {
-		
-		return null;
-	}
-
-	public List<Schedule> getScheduleListbyLabRep(Long labRepId) {
-	
-		return null;
-	}
-
-	public List<Schedule> getScheduleListbyDoctor(Long doctorId) {
-		
-		return null;
-	}
-
-	public List<Schedule> getScheduleListbyHospital(Long doctorId) {
-	
-		return null;
-	}
-	
 }

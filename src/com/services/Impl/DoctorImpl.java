@@ -3,21 +3,25 @@ package com.services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.Transaction;
 
-import com.beans.Address;
 import com.beans.Doctor;
+import com.beans.Patient;
 import com.beans.Response;
-import com.common.Constants;
 
 public class DoctorImpl {
 
 	private static DoctorImpl instance;
-	private static SessionFactory factory;
+	private static EntityManagerFactory entityManagerFactory;
+	private static EntityManager em;
 
 	private DoctorImpl() {
 
@@ -28,15 +32,17 @@ public class DoctorImpl {
 			instance = new DoctorImpl();
 
 		try {
-			if (factory == null) {
-				factory = new Configuration().configure()
-						.addPackage("com.beans")
-						.addAnnotatedClass(Doctor.class)
-						.addAnnotatedClass(Address.class).buildSessionFactory();
+			if (entityManagerFactory == null || em == null) {
+				entityManagerFactory = Persistence
+						.createEntityManagerFactory("mediapp");
+				em = entityManagerFactory.createEntityManager();
+
 			}
-		} catch (Throwable ex) {
-			System.err.println("Failed to create sessionFactory object." + ex);
-			throw new ExceptionInInitializerError(ex);
+
+		} catch (Exception ex) {
+			System.err.println("Failed to create entityManagerFactory object."
+					+ ex);
+			ex.printStackTrace();
 		}
 		return instance;
 	}
@@ -45,24 +51,22 @@ public class DoctorImpl {
 
 		Response resp = new Response();
 		System.out.println("Add Doctor =>" + doctor);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		Long doctorId = null;
 		try {
-			tx = session.beginTransaction();
-			doctorId = (Long) session.save(doctor);
-			tx.commit();
-			System.out.println("Doctor Created - " + doctorId);
+			em.getTransaction().begin();
+			em.persist(doctor);
+
+			em.getTransaction().commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return resp;
@@ -72,25 +76,22 @@ public class DoctorImpl {
 
 		Response resp = new Response();
 		Doctor doctor = null;
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			doctor = (Doctor) session.get(Doctor.class, doctorId);
+			doctor = em.find(Doctor.class, doctorId);
 			if (doctor == null) {
 				doctor = new Doctor();
 				doctor.setDocId(0L);
 			}
-			tx.commit();
+
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return doctor;
@@ -98,48 +99,44 @@ public class DoctorImpl {
 	}
 
 	public List<Doctor> getdoctorList() {
-		List<Doctor> custList = new ArrayList<Doctor>();
+		List<Doctor> docList = new ArrayList<Doctor>();
 		System.out.println("Get Entire doctor List");
-		Session session = factory.openSession();
-		Transaction tx = null;
 		try {
-			tx = session.beginTransaction();
 			
-			custList = session.createQuery("FROM Doctor").list();
+			docList = em.createQuery("SELECT d FROM Doctor d").getResultList();
 
-			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
-		System.out.println("Entire Doctor List " + custList);
-		return custList;
+		System.out.println("Entire Doctor List " + docList);
+		return docList;
 
 	}
 
 	public Response updatedoctor(Doctor doctor) {
 		Response resp = new Response();
 		System.out.println("Update Doctor ==>" + doctor);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			session.merge(doctor);
-			tx.commit();
+
+			em.getTransaction().begin();
+
+			em.merge(doctor);
+			em.getTransaction().commit();
+
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return resp;
@@ -151,31 +148,27 @@ public class DoctorImpl {
 		System.out.println("Delete doctor");
 		System.out.println("Deleting doctor  =>" + doctorId);
 
-		Session session = factory.openSession();
-		Transaction tx = null;
 		try {
-			tx = session.beginTransaction();
-			Doctor doctor = (Doctor) session.get(Doctor.class, doctorId);
-			if(doctor==null)
-			{
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Doctor with Id = " + doctorId);
-				return resp;
-			}
-			doctor.setStatus(14);
-			session.merge(doctor);
-			tx.commit();
+
+			em.getTransaction().begin();
+
+			Query q = em
+					.createNativeQuery("UPDATE DOCTOR set status=:status WHERE DOC_ID=:doctorId");
+			q.setParameter("status", 14);
+			q.setParameter("doctorId", doctorId);
+
+			int updateCount = q.executeUpdate();
+			System.out.println("Number of Doctors Deleted = " + updateCount);
+			em.getTransaction().commit();
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 		return resp;
 

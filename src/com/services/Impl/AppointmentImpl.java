@@ -29,7 +29,7 @@ public class AppointmentImpl {
 		if (instance == null)
 			instance = new AppointmentImpl();
 
-		try {
+		/*try {
 			if (factory == null) {
 				factory = new Configuration().configure()
 						.addPackage("com.beans")
@@ -40,7 +40,7 @@ public class AppointmentImpl {
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
-		}
+		}*/
 		return instance;
 	}
 

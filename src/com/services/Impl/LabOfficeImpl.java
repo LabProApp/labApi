@@ -2,20 +2,24 @@ package com.services.Impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
-import com.beans.Address;
 import com.beans.LabOffice;
+import com.beans.Patient;
 import com.beans.Response;
 
 public class LabOfficeImpl {
 
 	private static LabOfficeImpl instance;
-	private static SessionFactory factory;
+	private static EntityManagerFactory entityManagerFactory;
+	private static EntityManager em;
 
 	private LabOfficeImpl() {
 
@@ -25,15 +29,17 @@ public class LabOfficeImpl {
 		if (instance == null)
 			instance = new LabOfficeImpl();
 		try {
-			if (factory == null) {
-				factory = new Configuration().configure()
-						.addPackage("com.beans")
-						.addAnnotatedClass(LabOffice.class)
-						.addAnnotatedClass(Address.class).buildSessionFactory();
+			if (entityManagerFactory == null || em == null) {
+				entityManagerFactory = Persistence
+						.createEntityManagerFactory("mediapp");
+				em = entityManagerFactory.createEntityManager();
+
 			}
-		} catch (Throwable ex) {
-			System.err.println("Failed to create sessionFactory object." + ex);
-			throw new ExceptionInInitializerError(ex);
+
+		} catch (Exception ex) {
+			System.err.println("Failed to create entityManagerFactory object."
+					+ ex);
+			ex.printStackTrace();
 		}
 		return instance;
 	}
@@ -41,24 +47,24 @@ public class LabOfficeImpl {
 	public Response addLabOffice(LabOffice labOff) {
 		Response resp = new Response();
 		System.out.println("Add Lab Office =>" + labOff);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		Long labOfficeId = null;
 		try {
-			tx = session.beginTransaction();
-			labOfficeId = (Long) session.save(labOff);
-			tx.commit();
+
+			em.getTransaction().begin();
+			em.persist(labOff);
 			System.out.println("Lab Office Created - " + labOfficeId);
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
+			em.flush();
+			em.getTransaction().commit();
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return resp;
@@ -68,27 +74,23 @@ public class LabOfficeImpl {
 		LabOffice labOffice = new LabOffice();
 
 		Response resp = new Response();
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			labOffice = (LabOffice) session.get(LabOffice.class, labOfficeId);
+			labOffice = em.find(LabOffice.class, labOfficeId);
 			if (labOffice == null) {
 				labOffice = new LabOffice();
 				labOffice.setLabOfficeId(0L);
 			}
 			System.out.println("Lab Office - " + labOffice.getLabOfficeId());
-			tx.commit();
+
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return labOffice;
@@ -96,26 +98,20 @@ public class LabOfficeImpl {
 	}
 
 	public List<LabOffice> getLabOfficeList() {
-		
 
-		List<LabOffice> labList=null;
+		List<LabOffice> labList = null;
 		System.out.println("Get Entire Lab Office List");
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			labList = session.createQuery("FROM LabOffice").list();
 
-			tx.commit();
+		try {
+
+			labList = em.createQuery("SELECT l FROM LabOffice l")
+					.getResultList();
+
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
-		}
 
-		
+		}
 
 		System.out.println("Get Entire Lab List => " + labList);
 
@@ -125,25 +121,24 @@ public class LabOfficeImpl {
 
 	public Response updateLabOffice(LabOffice labOff) {
 
-
 		Response resp = new Response();
 		System.out.println("Update LabOffice ==>" + labOff);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			session.merge(labOff);
-			tx.commit();
+			em.getTransaction().begin();
+
+			em.merge(labOff);
+			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return resp;
@@ -153,30 +148,28 @@ public class LabOfficeImpl {
 
 		Response resp = new Response();
 		System.out.println("Delete LabOffice ==>" + labOfficeId);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			LabOffice b = (LabOffice) session.get(LabOffice.class,labOfficeId);
-			if(b==null)
-			{
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Lab Office with Id = " + labOfficeId);
-				return resp;
-			}
-			b.setStatus(14);
-			session.merge(b);
-			tx.commit();
+			em.getTransaction().begin();
+
+			Query q = em
+					.createNativeQuery("UPDATE LAB_OFFICE set status=:status WHERE LAB_OFFICE_ID=:labOfficeId");
+			q.setParameter("status", 14);
+			q.setParameter("labOfficeId", labOfficeId);
+
+			int updateCount = q.executeUpdate();
+
+			System.out.println("Number of LAB_OFFICE Deleted = " + updateCount);
+			em.getTransaction().commit();
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return resp;

@@ -3,6 +3,11 @@ package com.services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +23,8 @@ import com.beans.Response;
 public class LabBranchImpl {
 
 	private static LabBranchImpl instance;
-	private static SessionFactory factory;
+	private static EntityManagerFactory entityManagerFactory;
+	private static EntityManager em;
 
 	private LabBranchImpl() {
 
@@ -28,12 +34,17 @@ public class LabBranchImpl {
 		if (instance == null)
 			instance = new LabBranchImpl();
 		try {
-			factory = new Configuration().configure().addPackage("com.beans")
-					.addAnnotatedClass(LabBranch.class)
-					.addAnnotatedClass(Address.class).buildSessionFactory();
-		} catch (Throwable ex) {
-			System.err.println("Failed to create sessionFactory object." + ex);
-			throw new ExceptionInInitializerError(ex);
+			if (entityManagerFactory == null || em == null) {
+				entityManagerFactory = Persistence
+						.createEntityManagerFactory("mediapp");
+				em = entityManagerFactory.createEntityManager();
+
+			}
+
+		} catch (Exception ex) {
+			System.err.println("Failed to create entityManagerFactory object."
+					+ ex);
+			ex.printStackTrace();
 		}
 		return instance;
 	}
@@ -41,35 +52,33 @@ public class LabBranchImpl {
 	public Response addLab(LabBranch lab_branch) {
 		Response resp = new Response();
 		System.out.println("Add Lab Branch =>" + lab_branch);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		Long labbranchCode = null;
 		try {
-			tx = session.beginTransaction();
-			labbranchCode = (Long) session.save(lab_branch);
-			tx.commit();
+			em.getTransaction().begin();
+			em.persist(lab_branch);
+
 			System.out.println("Lab Branch Created - " + labbranchCode
 					+ "Lab Office - " + lab_branch.getLabOfficeId());
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-		} 
-		catch (ConstraintViolationException ce) {
+			em.flush();
+			em.getTransaction().commit();
+		} catch (ConstraintViolationException ce) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0003");
 			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="
 					+ lab_branch.getLabOfficeId());
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			ce.printStackTrace();
 
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 
 		return resp;
@@ -78,12 +87,9 @@ public class LabBranchImpl {
 	public LabBranch getLab(Long labbranchCode) {
 		LabBranch lab_branch = null;
 		Response resp = new Response();
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			lab_branch = (LabBranch) session
-					.get(LabBranch.class, labbranchCode);
+			lab_branch = em.find(LabBranch.class, labbranchCode);
 			if (lab_branch == null) {
 				lab_branch = new LabBranch();
 				lab_branch.setLabOfficeId(0L);
@@ -92,16 +98,14 @@ public class LabBranchImpl {
 			System.out.println("Lab Branch Fetched - "
 					+ lab_branch.getLabbranchCode() + "Lab Office - "
 					+ lab_branch.getLabOfficeId());
-			tx.commit();
-			
+
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		return lab_branch;
@@ -111,19 +115,17 @@ public class LabBranchImpl {
 	public List<LabBranch> getLabList(Long OfficeId) {
 		List<LabBranch> labList = new ArrayList<LabBranch>();
 		System.out.println("Get Entire LabBranch List");
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			labList = session.createQuery("FROM LAB_BRANCH").list();
 
-			tx.commit();
+		try {
+
+			labList = em.createQuery("SELECT l FROM LabBranch l")
+					.getResultList();
+
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		System.out.println("Get Entire Lab Branches List => " + labList);
@@ -136,12 +138,13 @@ public class LabBranchImpl {
 
 		Response resp = new Response();
 		System.out.println("Update Lab Branch ==>" + lab_branch);
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			session.update(lab_branch);
-			tx.commit();
+			em.getTransaction().begin();
+
+			em.merge(lab_branch);
+			em.getTransaction().commit();
+
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
 		} catch (ConstraintViolationException ce) {
@@ -149,17 +152,14 @@ public class LabBranchImpl {
 			resp.setERROR_CODE("0003");
 			resp.setERROR_MESSAGE("No Lab Branch Exists with Office Id ="
 					+ lab_branch.getLabOfficeId());
-			if (tx != null)
-				tx.rollback();
-
+			em.getTransaction().rollback();
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 			resp.setERROR_CODE("0002");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// em.close();
 		}
 		return resp;
 	}
@@ -169,30 +169,26 @@ public class LabBranchImpl {
 
 		System.out.println("Deleting Lab Branch  =>" + labBranchCode);
 
-		Session session = factory.openSession();
-		Transaction tx = null;
 		try {
-			tx = session.beginTransaction();
-			LabBranch labBranch = (LabBranch) session.get(LabBranch.class,
-					labBranchCode);
-			if (labBranch == null) {
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Lab Branch with Id = "
-						+ labBranchCode);
-				return resp;
-			}
-			labBranch.setStatus(14);
-			session.update(labBranch);
-			tx.commit();
+			em.getTransaction().begin();
+
+			Query q = em
+					.createNativeQuery("UPDATE LAB_BRANCH set status=:status WHERE LAB_BRANCH_CD=:labBranchCode");
+			q.setParameter("status", 14);
+			q.setParameter("labBranchCode", labBranchCode);
+
+			int updateCount = q.executeUpdate();
+
+			System.out.println("Number of LAB_BRANCH Deleted = " + updateCount);
+			em.getTransaction().commit();
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 		return resp;
 	}
