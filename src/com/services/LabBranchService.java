@@ -42,7 +42,7 @@ public class LabBranchService {
 	}
 
 	@GET
-	@Path("/getList/{OfficeId}")
+	@Path("/getLabList/{OfficeId}")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<LabBranch> getLabList(@PathParam("OfficeId") Long OfficeId) {
 

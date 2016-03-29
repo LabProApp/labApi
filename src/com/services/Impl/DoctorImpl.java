@@ -54,7 +54,9 @@ public class DoctorImpl {
 
 		Long doctorId = null;
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 			em.persist(doctor);
 
 			em.getTransaction().commit();
@@ -123,7 +125,9 @@ public class DoctorImpl {
 
 		try {
 
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			em.merge(doctor);
 			em.getTransaction().commit();
@@ -150,7 +154,9 @@ public class DoctorImpl {
 
 		try {
 
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			Query q = em
 					.createNativeQuery("UPDATE DOCTOR set status=:status WHERE DOC_ID=:doctorId");

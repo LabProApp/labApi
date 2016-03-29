@@ -55,14 +55,16 @@ public class LabBranchImpl {
 
 		Long labbranchCode = null;
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 			em.persist(lab_branch);
 
 			System.out.println("Lab Branch Created - " + labbranchCode
 					+ "Lab Office - " + lab_branch.getLabOfficeId());
 			resp.setSTATUS("SUCCESS");
 			resp.setERROR_CODE("0000");
-			em.flush();
+
 			em.getTransaction().commit();
 		} catch (ConstraintViolationException ce) {
 			resp.setSTATUS("FAIL");
@@ -118,9 +120,11 @@ public class LabBranchImpl {
 
 		try {
 
-			labList = em.createQuery("SELECT l FROM LabBranch l")
-					.getResultList();
+			Query q = em
+					.createNativeQuery("SELECT * FROM LAB_BRANCH where LAB_OFFICE_ID =:OfficeId");
+			q.setParameter("OfficeId", OfficeId);
 
+			labList = q.getResultList();
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
@@ -140,7 +144,9 @@ public class LabBranchImpl {
 		System.out.println("Update Lab Branch ==>" + lab_branch);
 
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			em.merge(lab_branch);
 			em.getTransaction().commit();
@@ -170,7 +176,9 @@ public class LabBranchImpl {
 		System.out.println("Deleting Lab Branch  =>" + labBranchCode);
 
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			Query q = em
 					.createNativeQuery("UPDATE LAB_BRANCH set status=:status WHERE LAB_BRANCH_CD=:labBranchCode");

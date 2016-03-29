@@ -49,20 +49,24 @@ public class PatientImpl {
 		System.out.println("Add Patient =>" + ptnt);
 
 		try {
-			em.getTransaction().begin();
+
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+
 			em.persist(ptnt);
 
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
+
 			em.getTransaction().commit();
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 
 			em.getTransaction().rollback();
 			e.printStackTrace();
-		} finally {
-			// em.close();
 		}
+		
 
 		return resp;
 	}
@@ -101,7 +105,7 @@ public class PatientImpl {
 			ptntList = em.createQuery("SELECT p FROM Patient p")
 					.getResultList();
 		} catch (HibernateException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			// em.close();
@@ -118,7 +122,9 @@ public class PatientImpl {
 
 		try {
 
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			em.merge(ptnt);
 			em.getTransaction().commit();
@@ -142,7 +148,9 @@ public class PatientImpl {
 		System.out.println("Deleting patient  =>" + patientId);
 
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			Query q = em
 					.createNativeQuery("UPDATE PATIENT set status=:status WHERE PTNT_ID=:patientId");

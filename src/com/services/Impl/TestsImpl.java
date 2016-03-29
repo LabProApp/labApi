@@ -3,6 +3,11 @@ package com.services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,13 +15,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.beans.Address;
+import com.beans.Patient;
 import com.beans.Tests;
 import com.beans.Response;
 
 public class TestsImpl {
 
 	private static TestsImpl instance;
-	private static SessionFactory factory;
+	private static EntityManagerFactory entityManagerFactory;
+	private static EntityManager em;
 
 	private TestsImpl() {
 
@@ -26,40 +33,47 @@ public class TestsImpl {
 		if (instance == null)
 			instance = new TestsImpl();
 
-	/*	try {
-			if (factory == null) {
-				factory = new Configuration().configure()
-						.addPackage("com.beans").addAnnotatedClass(Tests.class)
-						.addAnnotatedClass(Address.class).buildSessionFactory();
+		try {
+			if (entityManagerFactory == null || em == null) {
+				entityManagerFactory = Persistence
+						.createEntityManagerFactory("mediapp");
+				em = entityManagerFactory.createEntityManager();
+
 			}
 
-		} catch (Throwable ex) {
-			System.err.println("Failed to create sessionFactory object." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}*/
+		} catch (Exception ex) {
+			System.err.println("Failed to create entityManagerFactory object."
+					+ ex);
+			ex.printStackTrace();
+		}
 		return instance;
 	}
 
 	public Response add(Tests test) {
 
 		Response resp = new Response();
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		Long testId = null;
 		try {
-			tx = session.beginTransaction();
-			testId = (Long) session.save(test);
-			tx.commit();
-			System.out.println("Tests Created - " + testId);
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+
+			em.persist(test);
+
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
+
+			em.getTransaction().commit();
+			System.out.println("Tests Created - " + testId);
+
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+			resp.setERROR_CODE("0002");
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		return resp;
@@ -69,25 +83,22 @@ public class TestsImpl {
 
 		Response resp = new Response();
 		Tests test = null;
-		Session session = factory.openSession();
-		Transaction tx = null;
+
 		try {
-			tx = session.beginTransaction();
-			test = (Tests) session.get(Tests.class, testId);
+			test = em.find(Tests.class, testId);
 			if (test == null) {
 				test = new Tests();
 				test.setTestId(0L);
 			}
-			tx.commit();
+
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		return test;
@@ -97,19 +108,15 @@ public class TestsImpl {
 	public List<Tests> gettestList() {
 		List<Tests> testList = new ArrayList<Tests>();
 		System.out.println("Get Entire test List");
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			testList = session.createQuery("FROM Tests").list();
 
-			tx.commit();
+		try {
+			testList = em.createQuery("SELECT t FROM Tests t").getResultList();
+
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		System.out.println("Entire Tests List " + testList);
@@ -120,22 +127,23 @@ public class TestsImpl {
 	public Response updatetest(Tests test) {
 		Response resp = new Response();
 		System.out.println("Update Tests ==>" + test);
-		Session session = factory.openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
 
-			session.merge(test);
-			tx.commit();
+		try {
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+
+			em.merge(test);
+			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+			resp.setERROR_CODE("0002");
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		return resp;
@@ -147,29 +155,27 @@ public class TestsImpl {
 		System.out.println("Delete test");
 		System.out.println("Deleting test  =>" + testId);
 
-		Session session = factory.openSession();
-		Transaction tx = null;
 		try {
-			tx = session.beginTransaction();
-			Tests test = (Tests) session.get(Tests.class, testId);
-			if (test == null) {
-				resp.setERROR_CODE("0001");
-				resp.setSTATUS("FAIL");
-				resp.setERROR_MESSAGE("No Tests with Id = " + testId);
-				return resp;
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
 			}
-			test.setStatus(14);
-			session.update(test);
-			tx.commit();
+			Query q = em
+					.createNativeQuery("UPDATE TESTS set status=:status WHERE TEST_ID=:testId");
+			q.setParameter("status", 14);
+			q.setParameter("testId", testId);
+
+			int updateCount = q.executeUpdate();
+
+			System.out.println("Number of Patients Deleted = " + updateCount);
+			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 		return resp;
 

@@ -51,12 +51,14 @@ public class LabOfficeImpl {
 		Long labOfficeId = null;
 		try {
 
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 			em.persist(labOff);
 			System.out.println("Lab Office Created - " + labOfficeId);
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
-			em.flush();
+
 			em.getTransaction().commit();
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -125,7 +127,9 @@ public class LabOfficeImpl {
 		System.out.println("Update LabOffice ==>" + labOff);
 
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			em.merge(labOff);
 			em.getTransaction().commit();
@@ -150,7 +154,9 @@ public class LabOfficeImpl {
 		System.out.println("Delete LabOffice ==>" + labOfficeId);
 
 		try {
-			em.getTransaction().begin();
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			Query q = em
 					.createNativeQuery("UPDATE LAB_OFFICE set status=:status WHERE LAB_OFFICE_ID=:labOfficeId");

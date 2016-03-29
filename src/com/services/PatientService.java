@@ -45,6 +45,7 @@ public class PatientService {
 		List<Patient> ptntList;
 		PatientImpl patientImpl = PatientImpl.getInstance();
 		ptntList = patientImpl.getpatientList();
+
 		return ptntList;
 
 	}
