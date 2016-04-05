@@ -1,0 +1,41 @@
+Customer Side Features
+1. Search Lab and display Lab Name, address, photo, Home pickup option. Clicking on Lab will display Tests provided.
+2. Search by Test name and display test description, Test Category, Test limits, Nearby Labs which provides this test in current City
+3. Book a Test Appointment, There will be a option to schedule a home pickup.
+4. View Report & Past Test Report
+5. Manage & view appointments.
+
+Lab Side Features
+1. Accept a Appointment & Home pickup
+2. Upload Report
+3. View Appointments 
+4. View Serviced Booking for current day & next day.
+5. View completed booking.
+6. cancel booking.
+
+
+REST Services
+
+1. Book a Test Appointment for a particular lab & particular test
+2. Fetch Past Booking and test details
+3. Fetch test report a selected test for a Patient for a Lab for a date
+
+
+Lab Operations
+1. Add Lab
+2. Delete Lab
+3. Update Lab
+4. Fetch Lab List 
+
+
+Test Operations
+1. Add Test
+2. Delete Test
+3. Update Test
+4. Fetch Test List
+
+Customer Operations
+1. Add Customer
+2. Delete Customer
+3. Update Customer
+4. Fetch Customer List
