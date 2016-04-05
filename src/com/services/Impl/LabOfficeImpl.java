@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import com.beans.LabOffice;
 import com.beans.Patient;
 import com.beans.Response;
+import com.common.Constants;
 
 public class LabOfficeImpl {
 
@@ -160,12 +161,46 @@ public class LabOfficeImpl {
 
 			Query q = em
 					.createNativeQuery("UPDATE LAB_OFFICE set status=:status WHERE LAB_OFFICE_ID=:labOfficeId");
-			q.setParameter("status", 14);
+			q.setParameter("status", Constants.DELETED);
 			q.setParameter("labOfficeId", labOfficeId);
 
 			int updateCount = q.executeUpdate();
 
 			System.out.println("Number of LAB_OFFICE Deleted = " + updateCount);
+			em.getTransaction().commit();
+			resp.setERROR_CODE("0000");
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0002");
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			// em.close();
+		}
+
+		return resp;
+	}
+
+	public Response activateLabOffice(Long labOfficeId) {
+
+
+		Response resp = new Response();
+		System.out.println("Activate LabOffice ==>" + labOfficeId);
+
+		try {
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+
+			Query q = em
+					.createNativeQuery("UPDATE LAB_OFFICE set status=:status WHERE LAB_OFFICE_ID=:labOfficeId");
+			q.setParameter("status", Constants.ACTIVE);
+			q.setParameter("labOfficeId", labOfficeId);
+
+			int updateCount = q.executeUpdate();
+
+			System.out.println("Number of LAB_OFFICE Activated = " + updateCount);
 			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");

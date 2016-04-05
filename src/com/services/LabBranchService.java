@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.beans.LabBranch;
 import com.beans.Response;
+import com.dto.LabBranchDto;
 import com.services.Impl.LabBranchImpl;
 
 @Path("/labbranch")
@@ -44,10 +45,10 @@ public class LabBranchService {
 	@GET
 	@Path("/getLabList/{OfficeId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public List<LabBranch> getLabList(@PathParam("OfficeId") Long OfficeId) {
+	public List<LabBranchDto> getLabList(@PathParam("OfficeId") Long OfficeId) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
-		List<LabBranch> labList = instance.getLabList(OfficeId);
+		List<LabBranchDto> labList = instance.getLabList(OfficeId);
 
 		System.out.println("Get Entire Lab List => " + labList);
 
@@ -75,6 +76,16 @@ public class LabBranchService {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
 		Response resp = instance.deleteLabBranch(labBranchCode);
+
+	
+		return resp;
+	}
+	@Path("/activateLabBranch/{labBranchCode}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Response activateLabBranch(@PathParam("labBranchCode") Long labBranchCode) {
+
+		LabBranchImpl instance = LabBranchImpl.getInstance();
+		Response resp = instance.activateLabBranch(labBranchCode);
 
 	
 		return resp;

@@ -197,4 +197,9 @@ public class LabRepImpl {
 		}
 		return resp;
 	}
+
+	public Response activateLabRep(Long labBranchCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

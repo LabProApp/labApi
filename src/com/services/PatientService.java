@@ -74,4 +74,16 @@ public class PatientService {
 		return resp;
 
 	}
+	@POST
+	@Path("/activatepatient/{patientId}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Response activatepatient(@PathParam("patientId") Long patientId) {
+
+		System.out.println("Delete patient");
+		PatientImpl patientImpl = PatientImpl.getInstance();
+		Response resp = patientImpl.activatepatient(patientId);
+
+		return resp;
+
+	}
 }

@@ -9,16 +9,12 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
 
-import com.beans.Address;
 import com.beans.LabBranch;
-import com.beans.LabOffice;
 import com.beans.Response;
+import com.common.Constants;
+import com.dto.LabBranchDto;
 
 public class LabBranchImpl {
 
@@ -114,28 +110,89 @@ public class LabBranchImpl {
 
 	}
 
-	public List<LabBranch> getLabList(Long OfficeId) {
-		List<LabBranch> labList = new ArrayList<LabBranch>();
+	public List<LabBranchDto> getLabList(Long OfficeId) {
+		List<Object[]> labList = null;
+		List<LabBranchDto> LabBranchDtoList = null;
 		System.out.println("Get Entire LabBranch List");
 
 		try {
-
+			/*
+			 * String query=
+			 * "SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,labAddress_ADDRESS_ID,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l where LAB_OFFICE_ID ="
+			 * +OfficeId; java.sql.Connection cnn =
+			 * em.unwrap(java.sql.Connection.class); Statement st =
+			 * cnn.createStatement(); ResultSet rs = st.executeQuery(query);
+			 * 
+			 * return LabBranchDtoList;
+			 */
 			Query q = em
-					.createNativeQuery("SELECT * FROM LAB_BRANCH where LAB_OFFICE_ID =:OfficeId");
+					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND LAB_OFFICE_ID =:OfficeId");
 			q.setParameter("OfficeId", OfficeId);
 
 			labList = q.getResultList();
+
+			LabBranchDtoList = new ArrayList<LabBranchDto>(labList.size());
+			for (Object obj[] : labList) {
+				
+				LabBranchDto labBranchDto = new LabBranchDto();
+				if (obj[0] instanceof Number) {
+					labBranchDto
+							.setLabbranchCode(((Number) obj[0]).longValue()); // LAB_BRANCH_CD
+				}
+				if (obj[1] instanceof Number) {
+					labBranchDto.setLabOfficeId(((Number) obj[1]).longValue()); // LAB_OFFICE_ID
+				}
+				if (obj[2] instanceof String) {
+					labBranchDto.setLabName(((String) obj[2])); // LAB_NAME
+				}
+				if (obj[3] instanceof Number) {
+					labBranchDto.setStatus(((Number) obj[3]).intValue()); // STATUS
+				}
+				if (obj[4] instanceof String) {
+					labBranchDto.setLabBranchOwner((String) obj[4]); // LAB_BR_OWNER
+				}
+				if (obj[5] instanceof String) {
+					labBranchDto.getLabAddress().setAddressLine1((String) obj[5]); // ADD_LINE1
+				}
+				if (obj[6] instanceof String) {
+					labBranchDto.getLabAddress().setAddressLine2((String) obj[6]); // ADD_LINE2
+				}
+				if (obj[7] instanceof String) {
+					labBranchDto.getLabAddress().setAddressLine3((String) obj[7]); // ADD_LINE3
+				}
+				if (obj[8] instanceof String) {
+					labBranchDto.getLabAddress().setCity((String) obj[8]); // CITY
+				}
+				if (obj[9] instanceof String) {
+					labBranchDto.getLabAddress().setState((String) obj[9]); // STATE
+				}
+				if (obj[10] instanceof String) {
+					labBranchDto.getLabAddress().setZip((String) obj[10]); // CITY
+				}
+				if (obj[11] instanceof String) {
+					labBranchDto.getLabAddress().setCountry((String) obj[11]); // COUNTRY
+				}
+				if (obj[12] instanceof String) {
+					labBranchDto.setPrimaryMobileNo((String) obj[12]); // COUNTRY
+				}
+				if (obj[13] instanceof String) {
+					labBranchDto.setEmailID((String) obj[13]); // EMAIL_ID
+				}
+				if (obj[14] instanceof String) {
+					labBranchDto.setImg_path((String) obj[14]); // IMG_PATH
+				}
+				LabBranchDtoList.add(labBranchDto);
+
+			}
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
-		} finally {
+		} catch (Exception e) {
 
+			e.printStackTrace();
 		}
 
-		System.out.println("Get Entire Lab Branches List => " + labList);
-
-		return labList;
-
+		return LabBranchDtoList;
 	}
 
 	public Response updateLabBranch(LabBranch lab_branch) {
@@ -182,12 +239,43 @@ public class LabBranchImpl {
 
 			Query q = em
 					.createNativeQuery("UPDATE LAB_BRANCH set status=:status WHERE LAB_BRANCH_CD=:labBranchCode");
-			q.setParameter("status", 14);
+			q.setParameter("status", Constants.DELETED);
 			q.setParameter("labBranchCode", labBranchCode);
 
 			int updateCount = q.executeUpdate();
 
 			System.out.println("Number of LAB_BRANCH Deleted = " + updateCount);
+			em.getTransaction().commit();
+			resp.setERROR_CODE("0000");
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+
+		}
+		return resp;
+	}
+
+	public Response activateLabBranch(Long labBranchCode) {
+		Response resp = new Response();
+
+		System.out.println("Activating Lab Branch  =>" + labBranchCode);
+
+		try {
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+
+			Query q = em
+					.createNativeQuery("UPDATE LAB_BRANCH set status=:status WHERE LAB_BRANCH_CD=:labBranchCode");
+			q.setParameter("status", Constants.ACTIVE);
+			q.setParameter("labBranchCode", labBranchCode);
+
+			int updateCount = q.executeUpdate();
+
+			System.out.println("Number of LAB_BRANCH Activated = " + updateCount);
 			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");

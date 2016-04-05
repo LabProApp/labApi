@@ -78,4 +78,15 @@ public class LabOfficeService {
 		resp.setSTATUS("SUCCESS");
 		return resp;
 	}
+	@POST
+	@Path("/activateLabOffice/{labOfficeId}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Response activateLabOffice(@PathParam("labOfficeId") Long labOfficeId) {
+
+		LabOfficeImpl instance = LabOfficeImpl.getInstance();
+		Response resp = instance.activateLabOffice(labOfficeId);
+
+		resp.setSTATUS("SUCCESS");
+		return resp;
+	}
 }

@@ -39,7 +39,9 @@ public class TestsbyLab {
 	String status;
 	@Column(name = "HOME_PICK")
 	boolean isHomePick;
-
+	@Column(name = "FEE")
+	Integer fee;
+	
 	/**
 	 * @return the labOfficeId
 	 */
@@ -51,6 +53,7 @@ public class TestsbyLab {
 	 * @param labOfficeId
 	 *            the labOfficeId to set
 	 */
+	@XmlElement
 	public void setLabOfficeId(String labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
@@ -117,6 +120,22 @@ public class TestsbyLab {
 	@XmlElement
 	public void setHomePick(boolean isHomePick) {
 		this.isHomePick = isHomePick;
+	}
+
+	public Long getId() {
+		return Id;
+	}
+	@XmlElement
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public Integer getFee() {
+		return fee;
+	}
+	@XmlElement
+	public void setFee(Integer fee) {
+		this.fee = fee;
 	}
 
 }

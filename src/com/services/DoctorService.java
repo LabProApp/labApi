@@ -74,4 +74,16 @@ public class DoctorService {
 		return resp;
 
 	}
+	@POST
+	@Path("/activatedoctor/{doctorId}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Response activatedoctor(@PathParam("doctorId") Long doctorId) {
+
+		System.out.println("Delete doctor");
+		DoctorImpl doctorImpl = DoctorImpl.getInstance();
+		Response resp = doctorImpl.activatedoctor(doctorId);
+
+		return resp;
+
+	}
 }

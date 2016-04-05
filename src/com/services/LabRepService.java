@@ -79,4 +79,15 @@ public class LabRepService {
 		resp.setSTATUS("SUCCESS");
 		return resp;
 	}
+	@POST
+	@Path("/activateLabRep/{labBranchCode}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Response activateLabRep(@PathParam("labBranchCode") Long labBranchCode) {
+
+		LabRepImpl instance = LabRepImpl.getInstance();
+		Response resp = instance.activateLabRep(labBranchCode);
+
+		resp.setSTATUS("SUCCESS");
+		return resp;
+	}
 }

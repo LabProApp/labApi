@@ -11,6 +11,7 @@ import org.hibernate.HibernateException;
 
 import com.beans.Patient;
 import com.beans.Response;
+import com.common.Constants;
 
 public class PatientImpl {
 
@@ -172,5 +173,40 @@ public class PatientImpl {
 		}
 		return resp;
 
+	}
+
+	public Response activatepatient(Long patientId) {
+
+		Response resp = new Response();
+
+		
+		System.out.println("Activating patient  =>" + patientId);
+
+		try {
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+
+			Query q = em
+					.createNativeQuery("UPDATE PATIENT set status=:status WHERE PTNT_ID=:patientId");
+			q.setParameter("status",Constants.ACTIVE);
+			q.setParameter("patientId", patientId);
+
+			int updateCount = q.executeUpdate();
+
+			System.out.println("Number of Patients Activated = " + updateCount);
+			em.getTransaction().commit();
+			resp.setERROR_CODE("0000");
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			// em.close();
+		}
+		return resp;
+
+	
 	}
 }

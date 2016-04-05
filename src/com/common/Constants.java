@@ -10,5 +10,8 @@ public class Constants {
 	public static final String DOCTOR = "PATIENT";
 	public static final String LAB_OFFICE = "LAB_OFFICE";
 	public static final String LAB_BRANCH = "LAB_BRANCH";
+	public static Integer PENDNG_ACTIVATE=12;
+	public static Integer DELETED=14;
+	public static Integer ACTIVE=11;
 
 }
