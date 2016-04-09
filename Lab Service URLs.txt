@@ -14,7 +14,7 @@ http://localhost:8080/LabApi/api/laboffice/add/
 	<status>12</status>
 	<primaryMobileNo>92342343422</primaryMobileNo>
 	<secondaryMobileNo>2423451135</secondaryMobileNo>
-	<emailID>hitech@gmail.com</emailID>
+	<emailID>hitech@gmail.com</emailID> 
 	<labOwner>Munish Jindal</labOwner>
 	<labAddress>
 		<addressType>LAB_OFFICE</addressType>

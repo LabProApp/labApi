@@ -16,23 +16,24 @@ import org.hibernate.cfg.Configuration;
 
 import com.beans.Address;
 import com.beans.Patient;
-import com.beans.Tests;
+import com.beans.Speciality;
+import com.beans.Speciality;
 import com.beans.Response;
 import com.common.Constants;
 
-public class TestsImpl {
+public class SpecialityImpl {
 
-	private static TestsImpl instance;
+	private static SpecialityImpl instance;
 	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
 
-	private TestsImpl() {
+	private SpecialityImpl() {
 
 	}
 
-	public static TestsImpl getInstance() {
+	public static SpecialityImpl getInstance() {
 		if (instance == null)
-			instance = new TestsImpl();
+			instance = new SpecialityImpl();
 
 		try {
 			if (entityManagerFactory == null || em == null) {
@@ -50,13 +51,13 @@ public class TestsImpl {
 		return instance;
 	}
 
-	public Response add(Tests test) {
+	public Response add(Speciality spec) {
 		Response resp = new Response();
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
-			em.persist(test);
+			em.persist(spec);
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 			em.getTransaction().commit();
@@ -72,16 +73,16 @@ public class TestsImpl {
 		return resp;
 	}
 
-	public Tests get(Long testId) {
+	public Speciality get(Long specId) {
 
 		Response resp = new Response();
-		Tests test = null;
+		Speciality spec = null;
 
 		try {
-			test = em.find(Tests.class, testId);
-			if (test == null) {
-				test = new Tests();
-				test.setTestId(0L);
+			spec = em.find(Speciality.class, specId);
+			if (spec == null) {
+				spec = new Speciality();
+				spec.setTestId(0L);
 			}
 
 			resp.setERROR_CODE("0000");
@@ -94,16 +95,16 @@ public class TestsImpl {
 
 		}
 
-		return test;
+		return spec;
 
 	}
 
-	public List<Tests> gettestList() {
-		List<Tests> testList = new ArrayList<Tests>();
-		System.out.println("Get Entire test List");
+	public List<Speciality> getspecList() {
+		List<Speciality> specList = new ArrayList<Speciality>();
+		System.out.println("Get Entire spec List");
 
 		try {
-			testList = em.createQuery("SELECT t FROM Tests t").getResultList();
+			specList = em.createQuery("SELECT t FROM Speciality t").getResultList();
 
 		} catch (HibernateException e) {
 
@@ -112,21 +113,21 @@ public class TestsImpl {
 
 		}
 
-		System.out.println("Entire Tests List " + testList);
-		return testList;
+		System.out.println("Entire Speciality List " + specList);
+		return specList;
 
 	}
 
-	public Response updatetest(Tests test) {
+	public Response updatespec(Speciality spec) {
 		Response resp = new Response();
-		System.out.println("Update Tests ==>" + test);
+		System.out.println("Update Speciality ==>" + spec);
 
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
 
-			em.merge(test);
+			em.merge(spec);
 			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
@@ -142,20 +143,20 @@ public class TestsImpl {
 		return resp;
 	}
 
-	public Response deletetest(Long testId) {
+	public Response deletespec(Long specId) {
 		Response resp = new Response();
 
-		System.out.println("Delete test");
-		System.out.println("Deleting test  =>" + testId);
+		System.out.println("Delete spec");
+		System.out.println("Deleting spec  =>" + specId);
 
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
 			Query q = em
-					.createNativeQuery("UPDATE TESTS set status=:status WHERE TEST_ID=:testId");
+					.createNativeQuery("UPDATE TESTS set status=:status WHERE TEST_ID=:specId");
 			q.setParameter("status", Constants.DELETED);
-			q.setParameter("testId", testId);
+			q.setParameter("specId", specId);
 
 			int updateCount = q.executeUpdate();
 

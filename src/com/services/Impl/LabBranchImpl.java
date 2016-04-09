@@ -195,6 +195,82 @@ public class LabBranchImpl {
 		return LabBranchDtoList;
 	}
 
+	public List<LabBranchDto> getLabBranchByCity(String city,String state) {
+		List<Object[]> objList = null;
+		List<LabBranchDto> LabBranchDtoList = null;
+		System.out.println("Get Entire LabBranch List");
+
+		try {
+			
+			Query q = em.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND a.CITY =:city AND a.state = :state");
+			q.setParameter("city", city);
+			q.setParameter("state", state);
+
+			objList = q.getResultList();
+
+			LabBranchDtoList = new ArrayList<LabBranchDto>(objList.size());
+			for (Object obj[] : objList) {
+				
+				LabBranchDto labBranchDto = new LabBranchDto();
+				if (obj[0] instanceof Number) {
+					labBranchDto
+							.setLabbranchCode(((Number) obj[0]).longValue()); // LAB_BRANCH_CD
+				}
+				if (obj[1] instanceof Number) {
+					labBranchDto.setLabOfficeId(((Number) obj[1]).longValue()); // LAB_OFFICE_ID
+				}
+				if (obj[2] instanceof String) {
+					labBranchDto.setLabName(((String) obj[2])); // LAB_NAME
+				}
+				if (obj[3] instanceof Number) {
+					labBranchDto.setStatus(((Number) obj[3]).intValue()); // STATUS
+				}
+				if (obj[4] instanceof String) {
+					labBranchDto.setLabBranchOwner((String) obj[4]); // LAB_BR_OWNER
+				}
+				if (obj[5] instanceof String) {
+					labBranchDto.getLabAddress().setAddressLine1((String) obj[5]); // ADD_LINE1
+				}
+				if (obj[6] instanceof String) {
+					labBranchDto.getLabAddress().setAddressLine2((String) obj[6]); // ADD_LINE2
+				}
+				if (obj[7] instanceof String) {
+					labBranchDto.getLabAddress().setAddressLine3((String) obj[7]); // ADD_LINE3
+				}
+				if (obj[8] instanceof String) {
+					labBranchDto.getLabAddress().setCity((String) obj[8]); // CITY
+				}
+				if (obj[9] instanceof String) {
+					labBranchDto.getLabAddress().setState((String) obj[9]); // STATE
+				}
+				if (obj[10] instanceof String) {
+					labBranchDto.getLabAddress().setZip((String) obj[10]); // CITY
+				}
+				if (obj[11] instanceof String) {
+					labBranchDto.getLabAddress().setCountry((String) obj[11]); // COUNTRY
+				}
+				if (obj[12] instanceof String) {
+					labBranchDto.setPrimaryMobileNo((String) obj[12]); // COUNTRY
+				}
+				if (obj[13] instanceof String) {
+					labBranchDto.setEmailID((String) obj[13]); // EMAIL_ID
+				}
+				if (obj[14] instanceof String) {
+					labBranchDto.setImg_path((String) obj[14]); // IMG_PATH
+				}
+				LabBranchDtoList.add(labBranchDto);
+
+			}
+		} catch (HibernateException e) {
+
+			e.printStackTrace();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return LabBranchDtoList;
+	}
 	public Response updateLabBranch(LabBranch lab_branch) {
 
 		Response resp = new Response();

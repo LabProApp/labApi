@@ -10,11 +10,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.beans.Doctor;
 import com.beans.LabBranch;
 import com.beans.Response;
 import com.dto.LabBranchDto;
+import com.services.Impl.DoctorImpl;
 import com.services.Impl.LabBranchImpl;
 
 @Path("/labbranch")
@@ -56,6 +59,18 @@ public class LabBranchService {
 
 	}
 
+	@GET
+	@Path("/getLabBranchByCity")
+	@Produces(MediaType.APPLICATION_XML)
+	public List<LabBranchDto> getLabBranchByCity(
+			@QueryParam("city") String city, @QueryParam("state") String state) {
+
+		LabBranchImpl instance = LabBranchImpl.getInstance();
+		List<LabBranchDto> labList = instance.getLabBranchByCity(city, state);
+		return labList;
+
+	}
+
 	@POST
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -65,7 +80,6 @@ public class LabBranchService {
 		LabBranchImpl instance = LabBranchImpl.getInstance();
 		Response resp = instance.updateLabBranch(b);
 
-		
 		return resp;
 	}
 
@@ -77,17 +91,17 @@ public class LabBranchService {
 		LabBranchImpl instance = LabBranchImpl.getInstance();
 		Response resp = instance.deleteLabBranch(labBranchCode);
 
-	
 		return resp;
 	}
+
 	@Path("/activateLabBranch/{labBranchCode}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response activateLabBranch(@PathParam("labBranchCode") Long labBranchCode) {
+	public Response activateLabBranch(
+			@PathParam("labBranchCode") Long labBranchCode) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
 		Response resp = instance.activateLabBranch(labBranchCode);
 
-	
 		return resp;
 	}
 }

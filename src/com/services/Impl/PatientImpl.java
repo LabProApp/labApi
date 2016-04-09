@@ -155,7 +155,7 @@ public class PatientImpl {
 
 			Query q = em
 					.createNativeQuery("UPDATE PATIENT set status=:status WHERE PTNT_ID=:patientId");
-			q.setParameter("status", 14);
+			q.setParameter("status", Constants.DELETED);
 			q.setParameter("patientId", patientId);
 
 			int updateCount = q.executeUpdate();

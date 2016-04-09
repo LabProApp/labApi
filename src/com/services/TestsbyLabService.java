@@ -28,7 +28,7 @@ public class TestsbyLabService {
 		return resp;
 	}
 
-	@GET
+	/*@GET
 	@Path("/getLabsbyTests/{testsId}")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<TestsbyLab> getLabsbyTests(@PathParam("testsId") Long testsId) {
@@ -47,7 +47,7 @@ public class TestsbyLabService {
 		List<TestsbyLab> testList = testsImpl.getTestsbyLabOffice(labOfficeId);
 		return testList;
 
-	}
+	}*/
 
 	@GET
 	@Path("/getTestsbyLabBranch/{labBranchCd}")

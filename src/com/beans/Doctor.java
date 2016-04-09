@@ -29,9 +29,9 @@ public class Doctor {
 				+ doctorExperience + ", docAddress=" + docAddress
 				+ ", primaryMobileNo=" + primaryMobileNo
 				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
-				+ emailID + ", img_path=" + img_path + ", fee=" + fee + "]";
+				+ emailID + ", img_path=" + img_path + ", fee=" + fee + ", bookFlag=" + bookFlag+"]";
 	}
-
+ 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class Doctor {
 	@Column(name = "DOC_EXP")
 	String doctorExperience;
 	@OneToOne(cascade = CascadeType.ALL)
-	Address docAddress;
+	Address docAddress = new Address();
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")
@@ -64,7 +64,8 @@ public class Doctor {
 	String img_path;
 	@Column(name = "FEE")
 	Integer fee;
-	
+	@Column(name = "BOOK_FLAG")
+	Integer bookFlag;
 	
 	
 	public String getDoctorName() {
@@ -197,6 +198,14 @@ public class Doctor {
 	@XmlElement
 	public void setFee(Integer fee) {
 		this.fee = fee;
+	}
+
+	public Integer getBookFlag() {
+		return bookFlag;
+	}
+	@XmlElement
+	public void setBookFlag(Integer bookFlag) {
+		this.bookFlag = bookFlag;
 	}
 
 }

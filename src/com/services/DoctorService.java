@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Doctor;
@@ -50,6 +51,30 @@ public class DoctorService {
 
 	}
 
+	@GET
+	@Path("/getDoctorbyCity_Spec")
+	
+	@Produces(MediaType.APPLICATION_XML)
+	public List<Doctor> getDoctorbyCity_Spec(@QueryParam("city") String city,@QueryParam("state") String state,
+			@QueryParam("spec") String spec) {
+		List<Doctor> doctList;
+		DoctorImpl doctorImpl = DoctorImpl.getInstance();
+		doctList = doctorImpl.getDoctorbyCity_Spec(city,spec,state);
+		return doctList;
+
+	}
+	@GET
+	@Path("/getDoctorbyGPS_Spec")
+	@Produces(MediaType.APPLICATION_XML)
+	public List<Doctor> getDoctorbyGPS_Spec() {
+		List<Doctor> doctList;
+		DoctorImpl doctorImpl = DoctorImpl.getInstance();
+		doctList = doctorImpl.getDoctorbyGPS_Spec();
+		return doctList;
+
+	}
+	
+	
 	@POST
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_XML)

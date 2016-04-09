@@ -12,6 +12,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import com.beans.LabRep;
 import com.beans.Response;
+import com.common.Constants;
 
 public class LabRepImpl {
 
@@ -183,7 +184,7 @@ public class LabRepImpl {
 				resp.setERROR_MESSAGE("No Lab Rep with Id = " + labRepId);
 				return resp;
 			}
-			lab_rep.setStatus(14);
+			lab_rep.setStatus(Constants.DELETED);
 			session.update(lab_rep);
 			tx.commit();
 			resp.setSTATUS("SUCCESS");
@@ -198,8 +199,37 @@ public class LabRepImpl {
 		return resp;
 	}
 
-	public Response activateLabRep(Long labBranchCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public Response activateLabRep(Long labRepId) {
+
+		Response resp = new Response();
+
+		System.out.println("Deleting Lab Representative  =>" + labRepId);
+
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			LabRep lab_rep = (LabRep) session.get(LabRep.class,
+					labRepId);
+			if(lab_rep==null)
+			{
+				resp.setERROR_CODE("0001");
+				resp.setSTATUS("FAIL");
+				resp.setERROR_MESSAGE("No Lab Rep with Id = " + labRepId);
+				return resp;
+			}
+			lab_rep.setStatus(Constants.ACTIVE);
+			session.update(lab_rep);
+			tx.commit();
+			resp.setSTATUS("SUCCESS");
+		} catch (HibernateException e) {
+			resp.setSTATUS("FAIL");
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return resp;
 	}
 }
