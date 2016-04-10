@@ -1,3 +1,33 @@
+Users
+
+POST
+add-http://localhost:8080/LabApi/api/user/add/
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Users>
+    <emailId>nitin.poonam@gmail.com</emailId>
+    <mobile>9915105539</mobile>
+    <encPassword>mypassword</encPassword>
+    <status>12</status>
+    <userTyp>DOCTOR</userTyp>
+</Users>
+ 
+GET
+get-http://localhost:8080/LabApi/api/user/get?emailId=meetthenikhil@gmail.com
+get-http://localhost:8080/LabApi/api/user/get?emailId=nitin.poonam@gmail.com
+
+POST
+ACTIVATE USER
+http://localhost:8080/LabApi/api/user/activateuser?emailId=meetthenikhil@gmail.com
+
+POST
+DELETE USER
+http://localhost:8080/LabApi/api/user/activateuser?emailId=meetthenikhil@gmail.com
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 Lab Service URLs
 
 ------------------------------------------LAB OFFICE

@@ -13,5 +13,14 @@ public class Constants {
 	public static Integer PENDNG_ACTIVATE=12;
 	public static Integer DELETED=14;
 	public static Integer ACTIVE=11;
+	
+	
+	public static String RESP_SUCCESS="0000";
+	public static String RESP_FAIL="0001";
+	public static String RESP_NORECORD="0002";
+	public static String RESP_ALREADYEXISTS="0003";
+	
+	
+	
 
 }
