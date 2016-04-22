@@ -67,7 +67,6 @@ public class PatientImpl {
 			em.getTransaction().rollback();
 			e.printStackTrace();
 		}
-		
 
 		return resp;
 	}
@@ -179,7 +178,6 @@ public class PatientImpl {
 
 		Response resp = new Response();
 
-		
 		System.out.println("Activating patient  =>" + patientId);
 
 		try {
@@ -189,7 +187,7 @@ public class PatientImpl {
 
 			Query q = em
 					.createNativeQuery("UPDATE PATIENT set status=:status WHERE PTNT_ID=:patientId");
-			q.setParameter("status",Constants.ACTIVE);
+			q.setParameter("status", Constants.ACTIVE);
 			q.setParameter("patientId", patientId);
 
 			int updateCount = q.executeUpdate();
@@ -207,6 +205,5 @@ public class PatientImpl {
 		}
 		return resp;
 
-	
 	}
 }

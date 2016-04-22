@@ -1,3 +1,26 @@
+-------------------------------------------Speciality---------------------------------------------------------------------------------------------------------
+
+Speciality
+
+POST
+add-http://localhost:8080/LabApi/api/speciality/add/
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Speciality>
+    <specName>ENDOCRINOLOGIST</specName>
+    <search_tags>stomach,hormones,Metabolism</search_tags>
+    <status>11</status>
+</Speciality>
+
+GET LIST
+get-http://localhost:8080/LabApi/api/speciality/getList
+
+POST
+DELETE Speciality
+http://localhost:8080/LabApi/api/speciality/delete?specId=1
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
 Users
 
 POST
@@ -21,7 +44,7 @@ http://localhost:8080/LabApi/api/user/activateuser?emailId=meetthenikhil@gmail.c
 
 POST
 DELETE USER
-http://localhost:8080/LabApi/api/user/activateuser?emailId=meetthenikhil@gmail.com
+http://localhost:8080/LabApi/api/user/delete?emailId=meetthenikhil@gmail.com
 
 
 

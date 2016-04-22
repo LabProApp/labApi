@@ -12,64 +12,54 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
 @Entity
-@Table(name = "TESTS")
+@Table(name = "SPECIALITY")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "test")
+@XmlRootElement(name = "Speciality")
 public class Speciality {
 
 	@Override
 	public String toString() {
-		return "Tests [testId=" + testId + ", status=" + status + ", testName="
-				+ testName + ", shortName=" + shortName + ", lowerValue="
-				+ lowerValue + ", upperValue=" + upperValue + ", units="
-				+ units + ", testType=" + testType + ", bodyOrgan=" + bodyOrgan
-				+ ", description=" + description + ", procedure=" + procedure
-				+ ", imgPath=" + imgPath + "]";
+		return "Speciality [specId=" + specId + ", specName=" + specName
+				+ ", search_tags=" + search_tags + ", status=" + status + "]";
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TEST_ID", unique = true)
-	Long testId;
+	@Column(name = "SPEC_ID", unique = true)
+	Long specId;
+
+	@Column(name = "SPEC_NAME")
+	String specName;
+	@Column(name = "SEARCH_TAGS")
+	String search_tags;
 	@Column(name = "STATUS")
 	Integer status;
-	@Column(name = "TEST_NAME")
-	String testName;
-	@Column(name = "SHORT_NAME")
-	String shortName;
-	@Column(name = "LOWER_VALUE")
-	String lowerValue;
-	@Column(name = "UPPER_VALUE")
-	String upperValue;
-	@Column(name = "UNITS")
-	String units;
-	@Column(name = "TEST_TYPE")
-	String testType;
-	@Column(name = "BODY_ORGAN")
-	String bodyOrgan;
-	@Column(name = "DESCRIPTION")
-	String description;
-	@Column(name = "TEST_STEPS")
-	String procedure;
-	@Column(name = "IMG_PATH")
-	String imgPath;
 
-	public String getTestName() {
-		return testName;
+	public Long getSpecId() {
+		return specId;
 	}
 
 	@XmlElement
-	public void setTestName(String testName) {
-		this.testName = testName;
+	public void setSpecId(Long specId) {
+		this.specId = specId;
 	}
 
-	public Long getTestId() {
-		return testId;
+	public String getSpecName() {
+		return specName;
 	}
 
 	@XmlElement
-	public void setTestId(Long testId) {
-		this.testId = testId;
+	public void setSpecName(String specName) {
+		this.specName = specName;
+	}
+
+	public String getSearch_tags() {
+		return search_tags;
+	}
+
+	@XmlElement
+	public void setSearch_tags(String search_tags) {
+		this.search_tags = search_tags;
 	}
 
 	public Integer getStatus() {
@@ -79,87 +69,6 @@ public class Speciality {
 	@XmlElement
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getLowerValue() {
-		return lowerValue;
-	}
-
-	@XmlElement
-	public void setLowerValue(String lowerValue) {
-		this.lowerValue = lowerValue;
-	}
-
-	public String getUpperValue() {
-		return upperValue;
-	}
-
-	@XmlElement
-	public void setUpperValue(String upperValue) {
-		this.upperValue = upperValue;
-	}
-
-	public String getUnits() {
-		return units;
-	}
-
-	@XmlElement
-	public void setUnits(String units) {
-		this.units = units;
-	}
-
-	public String getTestType() {
-		return testType;
-	}
-
-	@XmlElement
-	public void setTestType(String testType) {
-		this.testType = testType;
-	}
-
-	public String getShortName() {
-		return shortName;
-	}
-
-	@XmlElement
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
-
-	public String getBodyOrgan() {
-		return bodyOrgan;
-	}
-
-	@XmlElement
-	public void setBodyOrgan(String bodyOrgan) {
-		this.bodyOrgan = bodyOrgan;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getProcedure() {
-		return procedure;
-	}
-
-	@XmlElement
-	public void setProcedure(String procedure) {
-		this.procedure = procedure;
-	}
-
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	@XmlElement
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 
 }

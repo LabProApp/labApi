@@ -11,10 +11,8 @@ import javax.persistence.Query;
 import org.hibernate.HibernateException;
 
 import com.beans.Doctor;
-import com.beans.QueryParam;
 import com.beans.Response;
 import com.common.Constants;
-import com.dto.LabBranchDto;
 
 public class DoctorImpl {
 

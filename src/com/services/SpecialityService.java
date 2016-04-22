@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
@@ -27,16 +28,19 @@ public class SpecialityService {
 		Response resp = specsImpl.add(spec);
 		return resp;
 	}
-
+	
 	@GET
-	@Path("/get/{specsId}")
+	@Path("/getspecsListbyTag")
 	@Produces(MediaType.APPLICATION_XML)
-	public Speciality get(@PathParam("specsId") Long specsId) {
+	public List<Speciality> getspecsListbyTag(
+			@QueryParam("searchString") String searchString) {
+		List<Speciality> testList;
 		SpecialityImpl specsImpl = SpecialityImpl.getInstance();
-		Speciality spec = specsImpl.get(specsId);
-		return spec;
+		testList = specsImpl.getspecsListbyTag(searchString);
+		return testList;
 
 	}
+	
 
 	@GET
 	@Path("/getList")

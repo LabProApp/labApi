@@ -9,15 +9,9 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
-import com.beans.Address;
-import com.beans.Patient;
-import com.beans.Tests;
 import com.beans.Response;
+import com.beans.Tests;
 import com.common.Constants;
 
 public class TestsImpl {

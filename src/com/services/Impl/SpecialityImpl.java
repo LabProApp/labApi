@@ -9,16 +9,9 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
-import com.beans.Address;
-import com.beans.Patient;
-import com.beans.Speciality;
-import com.beans.Speciality;
 import com.beans.Response;
+import com.beans.Speciality;
 import com.common.Constants;
 
 public class SpecialityImpl {
@@ -58,12 +51,12 @@ public class SpecialityImpl {
 				em.getTransaction().begin();
 			}
 			em.persist(spec);
-			resp.setERROR_CODE("0000");
+			resp.setERROR_CODE(Constants.RESP_SUCCESS);
 			resp.setSTATUS("SUCCESS");
 			em.getTransaction().commit();
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
+			resp.setERROR_CODE(Constants.RESP_FAIL);
 			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
@@ -73,29 +66,42 @@ public class SpecialityImpl {
 		return resp;
 	}
 
-	public Speciality get(Long specId) {
-
-		Response resp = new Response();
-		Speciality spec = null;
+	public List<Speciality> getspecsListbyTag(String searchString) {
+		List<Speciality> specList = null;
+		List<Object[]> objList;
+		System.out.println("Get Entire spec List");
 
 		try {
-			spec = em.find(Speciality.class, specId);
-			if (spec == null) {
-				spec = new Speciality();
-				spec.setTestId(0L);
+
+			Query q = em
+					.createNativeQuery("SELECT SPEC_ID,SPEC_NAME,SEARCH_TAGS FROM SPECIALITY WHERE SEARCH_TAGS like :searchString");
+			q.setParameter("searchString", "%" + searchString + "%");
+			objList = q.getResultList();
+			specList = new ArrayList<Speciality>(objList.size());
+			for (Object obj[] : objList) {
+
+				Speciality spec = new Speciality();
+				if (obj[0] instanceof Number) {
+					spec.setSpecId(((Number) obj[0]).longValue()); // SPEC_ID
+				}
+				if (obj[1] instanceof String) {
+					spec.setSpecName(((String) obj[1])); // SPEC_NAME
+				}
+				if (obj[2] instanceof String) {
+					spec.setSearch_tags(((String) obj[2])); // SEARCH_TAGS
+				}
+				specList.add(spec);
 			}
 
-			resp.setERROR_CODE("0000");
-			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
-			resp.setSTATUS("FAIL");
 
 			e.printStackTrace();
 		} finally {
 
 		}
 
-		return spec;
+		System.out.println("Entire Speciality List " + specList);
+		return specList;
 
 	}
 
@@ -104,7 +110,8 @@ public class SpecialityImpl {
 		System.out.println("Get Entire spec List");
 
 		try {
-			specList = em.createQuery("SELECT t FROM Speciality t").getResultList();
+			specList = em.createQuery("SELECT t FROM Speciality t")
+					.getResultList();
 
 		} catch (HibernateException e) {
 
@@ -129,11 +136,11 @@ public class SpecialityImpl {
 
 			em.merge(spec);
 			em.getTransaction().commit();
-			resp.setERROR_CODE("0000");
+			resp.setERROR_CODE(Constants.RESP_SUCCESS);
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
+			resp.setERROR_CODE(Constants.RESP_FAIL);
 			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
@@ -154,7 +161,7 @@ public class SpecialityImpl {
 				em.getTransaction().begin();
 			}
 			Query q = em
-					.createNativeQuery("UPDATE TESTS set status=:status WHERE TEST_ID=:specId");
+					.createNativeQuery("UPDATE SPECIALITY set status=:status WHERE SPEC_ID=:specId");
 			q.setParameter("status", Constants.DELETED);
 			q.setParameter("specId", specId);
 
@@ -162,7 +169,7 @@ public class SpecialityImpl {
 
 			System.out.println("Number of Patients Deleted = " + updateCount);
 			em.getTransaction().commit();
-			resp.setERROR_CODE("0000");
+			resp.setERROR_CODE(Constants.RESP_SUCCESS);
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");

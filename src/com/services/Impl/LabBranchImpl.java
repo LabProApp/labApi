@@ -111,7 +111,7 @@ public class LabBranchImpl {
 	}
 
 	public List<LabBranchDto> getLabList(Long OfficeId) {
-		List<Object[]> labList = null;
+		List<Object[]> objList = null;
 		List<LabBranchDto> LabBranchDtoList = null;
 		System.out.println("Get Entire LabBranch List");
 
@@ -129,10 +129,10 @@ public class LabBranchImpl {
 					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND LAB_OFFICE_ID =:OfficeId");
 			q.setParameter("OfficeId", OfficeId);
 
-			labList = q.getResultList();
+			objList = q.getResultList();
 
-			LabBranchDtoList = new ArrayList<LabBranchDto>(labList.size());
-			for (Object obj[] : labList) {
+			LabBranchDtoList = new ArrayList<LabBranchDto>(objList.size());
+			for (Object obj[] : objList) {
 				
 				LabBranchDto labBranchDto = new LabBranchDto();
 				if (obj[0] instanceof Number) {

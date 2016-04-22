@@ -13,7 +13,6 @@ import org.hibernate.HibernateException;
 import com.beans.Response;
 import com.beans.TestsbyLab;
 import com.common.Constants;
-import com.dto.LabBranchDto;
 import com.dto.TestByLabDto;
 
 public class TestsbyLabImpl {

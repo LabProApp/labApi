@@ -8,11 +8,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import com.beans.LabOffice;
-import com.beans.Patient;
 import com.beans.Response;
 import com.common.Constants;
 
