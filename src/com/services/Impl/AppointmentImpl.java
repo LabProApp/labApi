@@ -3,43 +3,45 @@ package com.services.Impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import com.beans.Appointment;
 import com.beans.Response;
 import com.beans.Schedule;
-import com.common.CommonUtilities;
 import com.common.Constants;
 
 public class AppointmentImpl {
 
 	private static AppointmentImpl instance;
-
-	private static SessionFactory factory;
+	private static EntityManagerFactory entityManagerFactory;
+	private static EntityManager em;
 
 	private AppointmentImpl() {
 
 	}
 
 	public static AppointmentImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new AppointmentImpl();
+		}
 
-		/*try {
-			if (factory == null) {
-				factory = new Configuration().configure()
-						.addPackage("com.beans")
-						.addAnnotatedClass(Schedule.class)
-						.buildSessionFactory();
+		try {
+			if (entityManagerFactory == null || em == null) {
+				entityManagerFactory = Persistence
+						.createEntityManagerFactory("mediapp");
+				em = entityManagerFactory.createEntityManager();
+
 			}
 
-		} catch (Throwable ex) {
-			System.err.println("Failed to create sessionFactory object." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}*/
+		} catch (Exception ex) {
+			System.err.println("Failed to create entityManagerFactory object."
+					+ ex);
+			ex.printStackTrace();
+		}
 		return instance;
 	}
 
@@ -47,84 +49,54 @@ public class AppointmentImpl {
 
 		System.out.println("Book Appointment " + appmnt);
 		// TODO Get Customer & Laboratory Details from appmnt Object
-		// Check if now flag is true if true put scheduleDate=now
+
 		// Check isHomePick flag is true , send a notification to Lab
 		// Representative
 
 		// Keep Initial acceptedStatus=WAITING
 
-		// Get the time window for which appointment is required
+		// Set the token_num for the time window for which appointment is
+		// required
 		// Check the number of Booked token < number of Available Tokens in
 		// Schedule.
-		// Update the corresponding tokens_booked by +1
+		// Update the corresponding tokens_booked - Concatenate the token_num to
+		// getMorning_tokens_booked
 
 		Response resp = new Response();
 
-		Session session = factory.openSession();
-		Transaction tx = null;
-		Long appmntId = null;
 		try {
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
 
 			ScheduleImpl schdleImpl = ScheduleImpl.getInstance();
 
 			Schedule schedule = schdleImpl.getSchedulebyScheduleId(appmnt
 					.getScheduleId());
 
-			switch (appmnt.getWhen()) {
+			switch (appmnt.getShift()) {
 
 			case Constants.MORNING:
-				if (schedule.getMorning_tokens_booked() < schedule
-						.getMorning_tokens_avlbl()) {
-					schedule.setMorning_tokens_booked(schedule
-							.getMorning_tokens_booked() + 1);
-					
-					appmnt.setStartTime(CommonUtilities.getStartTime(schedule));
-					appmnt.setEndTime(CommonUtilities.getEndTime(schedule));
-					
-					
-					
-					
-					
-				}
+
+				// appmnt.setStartTime(CommonUtilities.getStartTime(schedule));
+				// appmnt.setEndTime(CommonUtilities.getEndTime(schedule));
+
 			case Constants.EVENING:
-				if (schedule.getEvening_tokens_booked() < schedule
-						.getEvening_tokens_avlbl()) {
-					schedule.setEvening_tokens_booked(schedule
-							.getEvening_tokens_booked() + 1);
-				}
-			case Constants.AFTERNOON:
-				if (schedule.getAfternoon_tokens_booked() < schedule
-						.getAfternoon_tokens_avlbl()) {
-					schedule.setAfternoon_tokens_booked(schedule
-							.getAfternoon_tokens_booked() + 1);
-				}
-			case Constants.NIGHT:
-				if (schedule.getNight_tokens_booked() < schedule
-						.getNight_tokens_avlbl()) {
-					schedule.setNight_tokens_booked(schedule
-							.getNight_tokens_booked() + 1);
-				}
 
 			}
-		
-			
-			
 
-			tx = session.beginTransaction();
-			
-			session.update(schedule);
-			
-			appmntId = (Long) session.save(appmnt);
-			tx.commit();
-			System.out.println("Schedule Created - " + appmntId);
+			em.merge(schedule);
+
+			em.persist(appmnt);
+			em.getTransaction().commit();
+			System.out.println("Schedule Created - " + appmnt.getAppntmntId());
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-			if (tx != null)
-				tx.rollback();
+			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+
 		}
 
 		return resp;
@@ -170,6 +142,11 @@ public class AppointmentImpl {
 
 		resp.setSTATUS("SUCCESS");
 		return resp;
+	}
+
+	int count_bookedTokens(String bookedTokens) {
+
+		return 0;
 	}
 
 }

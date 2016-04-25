@@ -2,6 +2,7 @@ package com.common;
 
 import java.sql.Time;
 
+import com.beans.Appointment;
 import com.beans.Schedule;
 
 public class CommonUtilities {
@@ -31,6 +32,10 @@ public class CommonUtilities {
 		Time end =null; 
 		//= CommonUtilities.TimeAdd(appmnt.getStartTime(),CommonUtilities.TimeDiff(schedule.getMorning_time_end(),schedule.getMorning_time_start())/schedule.getMorning_tokens_avlbl()));
 		return null;
+	}
+	public static int getTokenNum(Schedule schedule, Appointment appmnt) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

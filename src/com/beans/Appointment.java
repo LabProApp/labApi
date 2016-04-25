@@ -1,7 +1,5 @@
 package com.beans;
 
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -20,173 +19,226 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Appointment")
 public class Appointment {
 
-	
-	//Entity to hold Appointment of Pateint with Doctor/Lab Branch 
+	// Entity to hold Appointment of Patient with Doctor/Lab Branch
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "APPMNT_ID", unique = true)
 	Long appntmntId;
+	@Column(name = "APPMNT_REF")
+	String appmnt_reference;
 	@Column(name = "SCHDLE_ID", unique = true)
 	Long scheduleId;
 	@Column(name = "DOC_ID")
 	Long docId;
-	@Column(name = "LAB_OFFICE_ID")
-	Long labOfficeId;
 	@Column(name = "LAB_BRANCH_CD")
 	Long branchCode;
 	@Column(name = "PTNT_ID")
 	Long ptntId;
-	@Column(name = "ACCEPTED_DT")
-	Date acceptedOn;
-	@Column(name = "SCHEDULE_DT")
-	Date scheduleDate;
+	@Column(name = "LAB_REP_ID")
+	Long labRepId;
 	@Column(name = "HOME_PICK")
 	boolean isHomePick;
-	@Column(name = "NOW")
-	boolean now;
+
+	@Column(name = "SCHEDULE_DT")
+	Date appmntDate;
 	@Column(name = "START_TIME")
-	Time startTime;
+	Date startTime;
 	@Column(name = "END_TIME")
-	Time endTime;
-	@Column(name = "STATUS")  // If Status is Booking_Cancelled then assign the same appointment to another patient.
-							// and make TEST_IDs & TEST_RESULTS_ID NULL
-	String status;
+	Date endTime;
+
+	@Column(name = "SHIFT")
+	String shift; // morning/afternoon/evening/night. Accordingly time will be
+					// calculated based on the token_num
+	@Column(name = "TOKEN_NUM")
+	Integer token_num;
+
 	@Column(name = "REFF_BY")
 	Long refferedByDoc; // Doc Id how reffered this patient
-	@Column(name = "REFFERED_DT")
-	Date refferedOn;
+
 	@Column(name = "DISEASE")
 	String diseases_description; // Field to be filled by Patient for
 									// problem/disease.
-	@Column(name = "WHEN")
-	String when;  // morning/afternoon/evening/night. Accordingly time will be calculated 
-	
-	@Column(name = "TOKEN_NUM")
-	Integer tooken_num;
+	@Column(name = "PRESCRIPTION")
+	String prescription; // Field to be filled by Patient for
+							// problem/disease.
+
 	@Column(name = "TEST_IDs")
-	ArrayList<Long> testIds;
-	@Column(name = "TEST_RESULTS_ID")
-	ArrayList<Long> testResultsIds;
+	String testIds; // || separated Test IDs
+	@Column(name = "TEST_RESULT_IDs")
+	String testResultIds; // || separated Test Results IDs
+
+	@Column(name = "STATUS")
+	Integer status;
+
 	public Long getAppntmntId() {
 		return appntmntId;
 	}
+
+	@XmlElement
 	public void setAppntmntId(Long appntmntId) {
 		this.appntmntId = appntmntId;
 	}
+
+	public String getAppmnt_reference() {
+		return appmnt_reference;
+	}
+
+	@XmlElement
+	public void setAppmnt_reference(String appmnt_reference) {
+		this.appmnt_reference = appmnt_reference;
+	}
+
 	public Long getScheduleId() {
 		return scheduleId;
 	}
+
+	@XmlElement
 	public void setScheduleId(Long scheduleId) {
 		this.scheduleId = scheduleId;
 	}
+
+	public Date getAppmntDate() {
+		return appmntDate;
+	}
+
+	@XmlElement
+	public void setAppmntDate(Date appmntDate) {
+		this.appmntDate = appmntDate;
+	}
+
 	public Long getDocId() {
 		return docId;
 	}
+
+	@XmlElement
 	public void setDocId(Long docId) {
 		this.docId = docId;
 	}
-	public Long getLabOfficeId() {
-		return labOfficeId;
-	}
-	public void setLabOfficeId(Long labOfficeId) {
-		this.labOfficeId = labOfficeId;
-	}
+
 	public Long getBranchCode() {
 		return branchCode;
 	}
+
+	@XmlElement
 	public void setBranchCode(Long branchCode) {
 		this.branchCode = branchCode;
 	}
+
 	public Long getPtntId() {
 		return ptntId;
 	}
+
+	@XmlElement
 	public void setPtntId(Long ptntId) {
 		this.ptntId = ptntId;
 	}
-	public Date getAcceptedOn() {
-		return acceptedOn;
-	}
-	public void setAcceptedOn(Date acceptedOn) {
-		this.acceptedOn = acceptedOn;
-	}
-	public Date getScheduleDate() {
-		return scheduleDate;
-	}
-	public void setScheduleDate(Date scheduleDate) {
-		this.scheduleDate = scheduleDate;
-	}
+
 	public boolean isHomePick() {
 		return isHomePick;
 	}
+
+	@XmlElement
 	public void setHomePick(boolean isHomePick) {
 		this.isHomePick = isHomePick;
 	}
-	public boolean isNow() {
-		return now;
+
+	public Long getLabRepId() {
+		return labRepId;
 	}
-	public void setNow(boolean now) {
-		this.now = now;
+
+	@XmlElement
+	public void setLabRepId(Long labRepId) {
+		this.labRepId = labRepId;
 	}
-	public Time getStartTime() {
+
+	public Date getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Time startTime) {
+
+	@XmlElement
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-	public Time getEndTime() {
+
+	public Date getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Time endTime) {
+
+	@XmlElement
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public String getStatus() {
+
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+
+	@XmlElement
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
+	public String getShift() {
+		return shift;
+	}
+
+	@XmlElement
+	public void setShift(String shift) {
+		this.shift = shift;
+	}
+
+	public Integer getToken_num() {
+		return token_num;
+	}
+
+	@XmlElement
+	public void setToken_num(Integer token_num) {
+		this.token_num = token_num;
+	}
+
 	public Long getRefferedByDoc() {
 		return refferedByDoc;
 	}
+
+	@XmlElement
 	public void setRefferedByDoc(Long refferedByDoc) {
 		this.refferedByDoc = refferedByDoc;
 	}
-	public Date getRefferedOn() {
-		return refferedOn;
-	}
-	public void setRefferedOn(Date refferedOn) {
-		this.refferedOn = refferedOn;
-	}
+
 	public String getDiseases_description() {
 		return diseases_description;
 	}
+
+	@XmlElement
 	public void setDiseases_description(String diseases_description) {
 		this.diseases_description = diseases_description;
 	}
-	public String getWhen() {
-		return when;
+
+	public String getPrescription() {
+		return prescription;
 	}
-	public void setWhen(String when) {
-		this.when = when;
+
+	@XmlElement
+	public void setPrescription(String prescription) {
+		this.prescription = prescription;
 	}
-	public Integer getTooken_num() {
-		return tooken_num;
-	}
-	public void setTooken_num(Integer tooken_num) {
-		this.tooken_num = tooken_num;
-	}
-	public ArrayList<Long> getTestIds() {
+
+	public String getTestIds() {
 		return testIds;
 	}
-	public void setTestIds(ArrayList<Long> testIds) {
+
+	@XmlElement
+	public void setTestIds(String testIds) {
 		this.testIds = testIds;
 	}
-	public ArrayList<Long> getTestResultsIds() {
-		return testResultsIds;
+
+	public String getTestResultIds() {
+		return testResultIds;
 	}
-	public void setTestResultsIds(ArrayList<Long> testResultsIds) {
-		this.testResultsIds = testResultsIds;
+
+	@XmlElement
+	public void setTestResultIds(String testResultIds) {
+		this.testResultIds = testResultIds;
 	}
-	
 
 }

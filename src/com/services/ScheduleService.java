@@ -55,19 +55,7 @@ public class ScheduleService {
 
 	}
 
-	@GET
-	@Path("/getScheduleListbyLabOffice")
-	@Produces(MediaType.APPLICATION_XML)
-	public List<Schedule> getScheduleListbyLabOffice(
-			@PathParam("LabOfficeId") Long LabOfficeId) {
-		List<Schedule> scheduleListbyLabOffice = new ArrayList<Schedule>();
-
-		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
-		scheduleListbyLabOffice = schduleImpl
-				.getScheduleListbyLabOffice(LabOfficeId);
-		return scheduleListbyLabOffice;
-
-	}
+	
 
 	@GET
 	@Path("/getScheduleListbyLabBranch")
@@ -106,18 +94,6 @@ public class ScheduleService {
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
 		scheduleListbyDoctor = schduleImpl.getScheduleListbyDoctor(DoctorId);
 		return scheduleListbyDoctor;
-
-	}
-	@GET
-	@Path("/getScheduleListbyHospital")
-	@Produces(MediaType.APPLICATION_XML)
-	public List<Schedule> getScheduleListbyHospital(
-			@PathParam("HospitalId") Long HospitalId) {
-		List<Schedule> scheduleListbyHospital = new ArrayList<Schedule>();
-
-		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
-		scheduleListbyHospital = schduleImpl.getScheduleListbyHospital(HospitalId);
-		return scheduleListbyHospital;
 
 	}
 	

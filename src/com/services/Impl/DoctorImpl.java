@@ -49,7 +49,7 @@ public class DoctorImpl {
 		Response resp = new Response();
 		System.out.println("Add Doctor =>" + doctor);
 
-		Long doctorId = null;
+		
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();

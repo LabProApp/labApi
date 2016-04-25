@@ -1,6 +1,6 @@
 package com.beans;
 
-import java.sql.Time;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -18,8 +19,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Schedule")
 public class Schedule {
 
-	// Entity to Hold Working Schedule Days & Time Window for Any Doctor/Lab Branch/Hospital 
-	
+	// Entity to Hold Working Schedule Days & Time Window for Any Doctor/Lab
+	// Branch/Hospital
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SCHDLE_ID", unique = true)
@@ -28,169 +30,216 @@ public class Schedule {
 	Long docId;
 	@Column(name = "LAB_BRANCH_CD")
 	Long branchCode;
-	
+	@Column(name = "LAB_REP_CD")
+	Long labRepId;
+	@Column(name = "WORKING_DAYS")
+	String working_days; // We can maintain a single row for each day since the
+							// schedule can be different for different day,
+							// If schedule is same for multiple days then we can
+							// keep them as || Separated Values -
+							// MON||TUE||WED||THURS||FRI||SAT||SUN
 
-	String working_days;  // || Separated Values - MON||TUE||WED||THURS||FRI||SAT||SUN
+	@Column(name = "MRNG_START")
+	Date morning_time_start; // Start Time of Morning Shift
+	@Column(name = "MRNG_END")
+	Date morning_time_end; // End Time of Morning Shift
+	@Column(name = "MRNG_TKNS_TOTAL")
+	// Number of Patients that can be Served in Morning,
+	Integer morning_tokens_total; // so that System can dynamically calculate
+									// TimeSlot for each Patient
 
-	
-	Time morning_time_start;  // Start Time of Morning Shift 
-	Time morning_time_end;	 //  End Time of Morning Shift
-	Integer morning_tokens_avlbl;	 //  Number of Patients that can be Served in Morning, 
-							//so that System can dynamically calculate TimeSlot for each Patient
-	Integer morning_tokens_booked;   // If morning_tokens_booked < morning_tokens_avlbl Then Booking is Open
-	
-	
-	Time afternoon_time_start;		// Start Time of AfterNoon Shift
-	Time afternoon_time_end;		// End Time of AfterNoon Shift
-	Integer afternoon_tokens_avlbl;   // Number of Patients that can be Served in Afternoon
-								      //so that System can dynamically calculate TimeSlot for each Patient
-	Integer afternoon_tokens_booked;   // If afternoon_tokens_avlbl < afternoon_tokens_booked Then Booking is Open
-	
-	
-	
-	
-	Time evening_time_start;		// Start Time of Evening Shift
-	Time evening_time_end;			// End Time of Evening Shift
-	Integer evening_tokens_avlbl;		// Number of Patients that can be Served in Evening
-									//so that System can dynamically calculate TimeSlot for each Patient
-	Integer evening_tokens_booked;  // If evening_tokens_avlbl < evening_tokens_booked Then Booking is Open
-	
-	
-	
-	Time night_time_start;		// Start Time of Night Shift 20:00
-	Time night_time_end;			// End Time of Night Shift 08:00
-	Integer night_tokens_avlbl;		// Number of Patients that can be Served in Night
-									//so that System can dynamically calculate TimeSlot for each Patient
-	Integer night_tokens_booked;  // If night_tokens_avlbl < night_tokens_booked Then Booking is Open
-	
+	@Column(name = "AFTRN_START")
+	Date afternoon_time_start; // Start Time of AfterNoon Shift
+	@Column(name = "AFTRN_END")
+	Date afternoon_time_end; // End Time of AfterNoon Shift
+	@Column(name = "AFTRN_TKNS_TOTAL")
+	Integer afternoon_tokens_total; // Number of Patients that can be Served in
+									// Afternoon
+									// so that System can dynamically calculate
+									// TimeSlot for each Patient
+
+	@Column(name = "EVNG_START")
+	Date evening_time_start; // Start Time of Evening Shift
+	@Column(name = "EVNG_END")
+	Date evening_time_end; // End Time of Evening Shift
+	@Column(name = "EVNG_TKNS_TOTAL")
+	Integer evening_tokens_total; // Number of Patients that can be Served in
+									// Evening so that System can dynamically
+									// calculate TimeSlot for each Patient
+
+	@Column(name = "NIGHT_START")
+	Date night_time_start; // Start Time of Night Shift 20:00
+	@Column(name = "NIGHT_END")
+	Date night_time_end; // End Time of Night Shift 08:00
+	@Column(name = "NIGHT_TKNS_TOTAL")
+	Integer night_tokens_total; // Number of Patients that can be Served in
+								// Night
+								// so that System can dynamically calculate
+								// TimeSlot for each Patient
+
+	@Column(name = "STATUS")
 	Integer status;
+
 	public Long getScheduleId() {
 		return scheduleId;
 	}
+
+	@XmlElement
 	public void setScheduleId(Long scheduleId) {
 		this.scheduleId = scheduleId;
 	}
+
 	public Long getDocId() {
 		return docId;
 	}
+
+	@XmlElement
 	public void setDocId(Long docId) {
 		this.docId = docId;
 	}
+
 	public Long getBranchCode() {
 		return branchCode;
 	}
+
+	@XmlElement
 	public void setBranchCode(Long branchCode) {
 		this.branchCode = branchCode;
 	}
+
+	public Long getLabRepId() {
+		return labRepId;
+	}
+
+	@XmlElement
+	public void setLabRepId(Long labRepId) {
+		this.labRepId = labRepId;
+	}
+
 	public String getWorking_days() {
 		return working_days;
 	}
+
+	@XmlElement
 	public void setWorking_days(String working_days) {
 		this.working_days = working_days;
 	}
-	public Time getMorning_time_start() {
+
+	public Date getMorning_time_start() {
 		return morning_time_start;
 	}
-	public void setMorning_time_start(Time morning_time_start) {
+
+	@XmlElement
+	public void setMorning_time_start(Date morning_time_start) {
 		this.morning_time_start = morning_time_start;
 	}
-	public Time getMorning_time_end() {
+
+	public Date getMorning_time_end() {
 		return morning_time_end;
 	}
-	public void setMorning_time_end(Time morning_time_end) {
+
+	@XmlElement
+	public void setMorning_time_end(Date morning_time_end) {
 		this.morning_time_end = morning_time_end;
 	}
-	public Integer getMorning_tokens_avlbl() {
-		return morning_tokens_avlbl;
+
+	public Integer getMorning_tokens_total() {
+		return morning_tokens_total;
 	}
-	public void setMorning_tokens_avlbl(Integer morning_tokens_avlbl) {
-		this.morning_tokens_avlbl = morning_tokens_avlbl;
+
+	@XmlElement
+	public void setMorning_tokens_total(Integer morning_tokens_total) {
+		this.morning_tokens_total = morning_tokens_total;
 	}
-	public Integer getMorning_tokens_booked() {
-		return morning_tokens_booked;
-	}
-	public void setMorning_tokens_booked(Integer morning_tokens_booked) {
-		this.morning_tokens_booked = morning_tokens_booked;
-	}
-	public Time getAfternoon_time_start() {
+
+	public Date getAfternoon_time_start() {
 		return afternoon_time_start;
 	}
-	public void setAfternoon_time_start(Time afternoon_time_start) {
+
+	@XmlElement
+	public void setAfternoon_time_start(Date afternoon_time_start) {
 		this.afternoon_time_start = afternoon_time_start;
 	}
-	public Time getAfternoon_time_end() {
+
+	public Date getAfternoon_time_end() {
 		return afternoon_time_end;
 	}
-	public void setAfternoon_time_end(Time afternoon_time_end) {
+
+	@XmlElement
+	public void setAfternoon_time_end(Date afternoon_time_end) {
 		this.afternoon_time_end = afternoon_time_end;
 	}
-	public Integer getAfternoon_tokens_avlbl() {
-		return afternoon_tokens_avlbl;
+
+	public Integer getAfternoon_tokens_total() {
+		return afternoon_tokens_total;
 	}
-	public void setAfternoon_tokens_avlbl(Integer afternoon_tokens_avlbl) {
-		this.afternoon_tokens_avlbl = afternoon_tokens_avlbl;
+
+	@XmlElement
+	public void setAfternoon_tokens_total(Integer afternoon_tokens_total) {
+		this.afternoon_tokens_total = afternoon_tokens_total;
 	}
-	public Integer getAfternoon_tokens_booked() {
-		return afternoon_tokens_booked;
-	}
-	public void setAfternoon_tokens_booked(Integer afternoon_tokens_booked) {
-		this.afternoon_tokens_booked = afternoon_tokens_booked;
-	}
-	public Time getEvening_time_start() {
+
+	public Date getEvening_time_start() {
 		return evening_time_start;
 	}
-	public void setEvening_time_start(Time evening_time_start) {
+
+	@XmlElement
+	public void setEvening_time_start(Date evening_time_start) {
 		this.evening_time_start = evening_time_start;
 	}
-	public Time getEvening_time_end() {
+
+	public Date getEvening_time_end() {
 		return evening_time_end;
 	}
-	public void setEvening_time_end(Time evening_time_end) {
+
+	@XmlElement
+	public void setEvening_time_end(Date evening_time_end) {
 		this.evening_time_end = evening_time_end;
 	}
-	public Integer getEvening_tokens_avlbl() {
-		return evening_tokens_avlbl;
+
+	public Integer getEvening_tokens_total() {
+		return evening_tokens_total;
 	}
-	public void setEvening_tokens_avlbl(Integer evening_tokens_avlbl) {
-		this.evening_tokens_avlbl = evening_tokens_avlbl;
+
+	@XmlElement
+	public void setEvening_tokens_total(Integer evening_tokens_total) {
+		this.evening_tokens_total = evening_tokens_total;
 	}
-	public Integer getEvening_tokens_booked() {
-		return evening_tokens_booked;
-	}
-	public void setEvening_tokens_booked(Integer evening_tokens_booked) {
-		this.evening_tokens_booked = evening_tokens_booked;
-	}
-	public Time getNight_time_start() {
+
+	public Date getNight_time_start() {
 		return night_time_start;
 	}
-	public void setNight_time_start(Time night_time_start) {
+
+	@XmlElement
+	public void setNight_time_start(Date night_time_start) {
 		this.night_time_start = night_time_start;
 	}
-	public Time getNight_time_end() {
+
+	public Date getNight_time_end() {
 		return night_time_end;
 	}
-	public void setNight_time_end(Time night_time_end) {
+
+	@XmlElement
+	public void setNight_time_end(Date night_time_end) {
 		this.night_time_end = night_time_end;
 	}
-	public Integer getNight_tokens_avlbl() {
-		return night_tokens_avlbl;
+
+	public Integer getNight_tokens_total() {
+		return night_tokens_total;
 	}
-	public void setNight_tokens_avlbl(Integer night_tokens_avlbl) {
-		this.night_tokens_avlbl = night_tokens_avlbl;
+
+	@XmlElement
+	public void setNight_tokens_total(Integer night_tokens_total) {
+		this.night_tokens_total = night_tokens_total;
 	}
-	public Integer getNight_tokens_booked() {
-		return night_tokens_booked;
-	}
-	public void setNight_tokens_booked(Integer night_tokens_booked) {
-		this.night_tokens_booked = night_tokens_booked;
-	}
+
 	public Integer getStatus() {
 		return status;
 	}
+
+	@XmlElement
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	
 
 }
