@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "LabBranch")
 public class LabBranch {
 
-	/*
+	/* 
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
@@ -50,15 +50,13 @@ public class LabBranch {
 	Address labAddress;
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
-	@Column(name = "SECOND_MOBILE")
-	String secondaryMobileNo;
+	
 	
 	@Column(name = "EMAIL_ID")
 	String emailID;
 	@Column(name = "IMG_PATH")
 	String img_path;
-	@Column(name = "BOOK_FLAG")
-	Boolean bookFlag;
+	
 	
 	public String getLabName() {
 		return labName;

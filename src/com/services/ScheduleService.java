@@ -9,32 +9,33 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
 import com.beans.Schedule;
 import com.services.Impl.ScheduleImpl;
 
-@Path("/Schedule")
+@Path("/schedule")
 public class ScheduleService {
 
 	@POST
 	@Path("/addSchedule")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response addSchedule(@PathParam("schdule") Schedule schdule) {
+	public Response addSchedule(Schedule schdule) {
 		Response resp = new Response();
 
 		System.out.println("Book Schedule " + schdule);
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
-		schduleImpl.addSchedule(schdule);
+		resp=schduleImpl.addSchedule(schdule);
 		return resp;
 	}
 
-	@GET
-	@Path("/deleteSchedule/{schduleId}")
+	@POST
+	@Path("/deleteSchedule")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteSchedule(@PathParam("schduleId") Long schduleId) {
+	public Response deleteSchedule(@QueryParam("schduleId") Long schduleId) {
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
 		Response resp = schduleImpl.deleteSchedule(schduleId);
@@ -43,14 +44,14 @@ public class ScheduleService {
 	}
 
 	@GET
-	@Path("/getSchedulebyScheduleId")
+	@Path("/get")
 	@Produces(MediaType.APPLICATION_XML)
 	public Schedule getSchedulebyScheduleId(
-			@PathParam("ScheduleId") Long ScheduleId) {
+			@QueryParam("scheduleId") Long scheduleId) {
 		Schedule schedule;
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
-		schedule = schduleImpl.getSchedulebyScheduleId(ScheduleId);
+		schedule = schduleImpl.getSchedulebyScheduleId(scheduleId);
 		return schedule;
 
 	}
@@ -61,7 +62,7 @@ public class ScheduleService {
 	@Path("/getScheduleListbyLabBranch")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<Schedule> getScheduleListbyLabBranch(
-			@PathParam("LabBranchCd") Long LabBranchCd) {
+			@QueryParam("LabBranchCd") Long LabBranchCd) {
 		List<Schedule> scheduleListbyLabBranch = new ArrayList<Schedule>();
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
@@ -75,7 +76,8 @@ public class ScheduleService {
 	@Path("/getScheduleListbyLabRep")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<Schedule> getScheduleListbyLabRep(
-			@PathParam("LabRepId") Long LabRepId) {
+			
+			@QueryParam("LabRepId") Long LabRepId) {
 		List<Schedule> scheduleListbyLabRep = new ArrayList<Schedule>();
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
@@ -88,7 +90,7 @@ public class ScheduleService {
 	@Path("/getScheduleListbyDoctor")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<Schedule> getScheduleListbyDoctor(
-			@PathParam("DoctorId") Long DoctorId) {
+			@QueryParam("DoctorId") Long DoctorId) {
 		List<Schedule> scheduleListbyDoctor = new ArrayList<Schedule>();
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
@@ -102,7 +104,7 @@ public class ScheduleService {
 	@Path("/updateSchedule")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response updateSchedule(@PathParam("schdule") Schedule schdule) {
+	public Response updateSchedule(Schedule schdule) {
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
 		Response resp = schduleImpl.updateSchedule(schdule);

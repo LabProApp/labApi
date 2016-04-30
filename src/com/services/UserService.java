@@ -69,11 +69,11 @@ public class UserService {
 	@Path("/activateuser")
 	@Produces(MediaType.APPLICATION_XML)
 	public Response activateuser(
-			@QueryParam("emailId") String emailId) {
+			@QueryParam("emailId") String emailId,@QueryParam("otp") String otp) {
 
 		System.out.println("Activate user");
 		UsersImpl userImpl = UsersImpl.getInstance();
-		Response resp = userImpl.activateuser(emailId);
+		Response resp = userImpl.activateuser(emailId,otp);
 
 		return resp;
 

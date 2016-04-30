@@ -1,6 +1,8 @@
 package com.services.Impl;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,6 +14,7 @@ import org.hibernate.HibernateException;
 
 import com.beans.Response;
 import com.beans.Users;
+import com.common.CommonUtilities;
 import com.common.Constants;
 
 public class UsersImpl {
@@ -69,6 +72,14 @@ public class UsersImpl {
 
 			}
 
+			String OTP = CommonUtilities.generateOTP();
+			user.setOtp(OTP);
+			try {
+				CommonUtilities.sendActivationLinkEmail(user.getEmailId(), OTP);
+			} catch (Exception me) {
+				me.printStackTrace();
+			}
+			user.setOtpSentTime(new Date());
 			em.persist(user);
 
 			resp.setERROR_CODE(Constants.RESP_SUCCESS);
@@ -77,7 +88,12 @@ public class UsersImpl {
 			em.getTransaction().commit();
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
-
+			resp.setERROR_CODE(Constants.RESP_DBERROR);
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		} catch (Exception e) {
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE(Constants.RESP_CONNERROR);
 			em.getTransaction().rollback();
 			e.printStackTrace();
 		}
@@ -93,7 +109,7 @@ public class UsersImpl {
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT ID,EMAIL_ID,MOBILE,ENC_PASSWD,USER_TYPE,STATUS FROM USERS where EMAIL_ID=:emailId");
+					.createNativeQuery("SELECT ID,EMAIL_ID,MOBILE,ENC_PASSWD,USER_TYPE,STATUS,OTP,OTP_TIME FROM USERS where EMAIL_ID=:emailId");
 			q.setParameter("emailId", emailId);
 
 			objlist = q.getResultList();
@@ -121,6 +137,12 @@ public class UsersImpl {
 				}
 				if (obj[5] instanceof Number) {
 					user.setStatus(((Number) obj[5]).intValue()); // STATUS
+				}
+				if (obj[6] instanceof String) {
+					user.setOtp(((String) obj[6])); // OTP
+				}
+				if (obj[7] instanceof Date) {
+					user.setOtpSentTime((Date) obj[7]); // OTP SetTime
 				}
 				userList.add(user);
 			}
@@ -152,6 +174,9 @@ public class UsersImpl {
 							+ user.getEmailId());
 
 					return resp;
+				}
+				if (usersList.size() == 1) {
+					user.setId(usersList.get(0).getId());
 				}
 
 			}
@@ -217,22 +242,30 @@ public class UsersImpl {
 
 	}
 
-	public Response activateuser(String emailId) {
+	public Response activateuser(String emailId, String otp) {
 
 		Response resp = new Response();
-		System.out.println("Activating user  =>" + emailId);
-
+		System.out.println("Activating user  =>" + emailId + " Otp " + otp);
+		String emailIdstr = null;
+		if (null != emailId) {
+			/*
+			 * byte[] decodedBytes = Base64.decodeBase64(emailId); emailIdstr =
+			 * new String(decodedBytes); System.out.println("decodedBytes " +
+			 * emailIdstr);
+			 */
+			emailIdstr = emailId;
+		}
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
 
-			List<Users> usersList = get(emailId);
+			List<Users> usersList = get(emailIdstr);
 			if (usersList != null) {
 				if (usersList.size() == 0) {
 					resp.setERROR_CODE(Constants.RESP_NORECORD);
 					resp.setSTATUS("FAIL");
-					resp.setERROR_MESSAGE("No User with EMAIL ID:" + emailId);
+					resp.setERROR_MESSAGE("No User with EMAIL ID:" + emailIdstr);
 
 					return resp;
 				}
@@ -240,21 +273,52 @@ public class UsersImpl {
 
 					Users user = usersList.get(0);
 					if (user.getStatus() == Constants.ACTIVE) {
-						resp.setERROR_CODE(Constants.RESP_FAIL);
+						resp.setERROR_CODE(Constants.RESP_ALREADYEXISTS);
 						resp.setSTATUS("FAIL");
-						resp.setERROR_MESSAGE("User with EMAIL ID:" + emailId
-								+ " Already Active");
+						resp.setERROR_MESSAGE("User with EMAIL ID:"
+								+ emailIdstr + " Already Active");
 
 						return resp;
 					}
+					long diff = (new Date()).getTime()
+							- user.getOtpSentTime().getTime();
+
+					long diffSeconds = diff / 1000 % 60;
+					long diffMinutes = diff / (60 * 1000) % 60;
+					long diffHours = diff / (60 * 60 * 1000) % 24;
+					long diffDays = diff / (24 * 60 * 60 * 1000);
+
+					System.out.print(diffDays + " days, ");
+					System.out.print(diffHours + " hours, ");
+					System.out.print(diffMinutes + " minutes, ");
+					System.out.print(diffSeconds + " seconds.");
+
+					if (diffMinutes > 30) {
+
+						resp.setERROR_CODE(Constants.RESP_OTP_EXPIRED);
+						resp.setSTATUS("FAIL");
+						resp.setERROR_MESSAGE("OTP has been Expired, Please generate a new one.");
+						return resp;
+
+					}
+					if (!otp.equalsIgnoreCase(user.getOtp())) {
+
+						resp.setERROR_CODE(Constants.RESP_NORECORD);
+						resp.setSTATUS("FAIL");
+						resp.setERROR_MESSAGE("OTP has not been matched, Please generate a new one.");
+						return resp;
+
+					}
+
 				}
+
 			}
 
 			Query q = em
-					.createNativeQuery("UPDATE USERS set status=:status WHERE EMAIL_ID=:emailId");
+					.createNativeQuery("UPDATE USERS set status=:status WHERE EMAIL_ID=:emailIdstr");
 
 			q.setParameter("status", Constants.ACTIVE);
-			q.setParameter("emailId", emailId);
+			q.setParameter("emailIdstr", emailIdstr);
 			int updateCount = q.executeUpdate();
 			System.out.println("Number of Users Activated = " + updateCount);
 			em.getTransaction().commit();

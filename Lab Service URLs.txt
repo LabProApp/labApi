@@ -1,3 +1,60 @@
+--------------------------------------------------------------------Schedule------------------------------------------------------------
+GET
+http://localhost:8080/LabApi/api/schedule/get?scheduleId=1
+
+GET
+http://localhost:8080/LabApi/api/schedule/getScheduleListbyDoctor?DoctorId=2
+
+GET
+http://localhost:8080/LabApi/api/schedule/getScheduleListbyLabBranch?LabBranchCd=2
+GET
+http://localhost:8080/LabApi/api/schedule/getScheduleListbyLabRep?LabRepId=3
+
+POST
+http://localhost:8080/LabApi/api/schedule/addSchedule
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Schedule>
+<docId>3</docId>
+	<working_days>MON||TUE||WED||THURS</working_days>
+	
+	<morning_time_start_str>08:00</morning_time_start_str>
+	<morning_time_end_str>12:00</morning_time_end_str>
+	<morning_tokens_total>16</morning_tokens_total>
+	
+	<afternoon_time_start_str>13:00</afternoon_time_start_str>
+	<afternoon_time_end_str>15:00</afternoon_time_end_str>
+	<afternoon_tokens_total>8</afternoon_tokens_total>
+	
+	<evening_time_start_str>16:00</evening_time_start_str>
+	<evening_time_end_str>18:00</evening_time_end_str>
+	<evening_tokens_total>8</evening_tokens_total>
+	<status>11</status>
+</Schedule>
+
+POST
+http://localhost:8080/LabApi/api/schedule/updateSchedule
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Schedule>
+    <afternoon_time_end>1970-01-01T00:15:00+05:30</afternoon_time_end>
+    <afternoon_time_start>1970-01-01T00:13:00+05:30</afternoon_time_start>
+    <afternoon_tokens_total>8</afternoon_tokens_total>
+    <docId>1</docId>
+    <evening_time_end>1970-01-01T00:20:00+05:30</evening_time_end>
+    <evening_time_start>1970-01-01T00:16:00+05:30</evening_time_start>
+    <evening_tokens_total>8</evening_tokens_total>
+    <morning_time_end>1970-01-01T00:10:00+05:30</morning_time_end>
+    <morning_time_start>1970-01-01T00:08:00+05:30</morning_time_start>
+    <morning_tokens_total>16</morning_tokens_total>
+    <night_time_end>1970-01-01T00:05:00+05:30</night_time_end>
+    <night_time_start>1970-01-01T00:20:00+05:30</night_time_start>
+    <night_tokens_total>20</night_tokens_total>
+    <scheduleId>3</scheduleId>
+    <status>11</status>
+    <working_days>MON||TUE||WED||SAT</working_days>
+</Schedule>
+
+
 -------------------------------------------Speciality---------------------------------------------------------------------------------------------------------
 
 Speciality

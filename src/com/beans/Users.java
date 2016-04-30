@@ -1,11 +1,14 @@
 package com.beans;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -17,11 +20,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Users")
 public class Users {
 
-	@Override 
+	@Override
 	public String toString() {
 		return "Users [Id=" + Id + ", emailId=" + emailId + ", mobile="
 				+ mobile + ", encPassword=" + encPassword + ", status="
-				+ status + ", userTyp=" + userTyp + "]";
+				+ status + ", userTyp=" + userTyp + ", otp=" + otp
+				+ ", otpSentTime=" + otpSentTime + "]";
 	}
 
 	@Id
@@ -38,6 +42,10 @@ public class Users {
 	Integer status;
 	@Column(name = "USER_TYPE")
 	String userTyp; // Doctor/Patient/Laboratory
+	@Column(name = "OTP")
+	String otp;
+	@Column(name = "OTP_TIME")
+	Date otpSentTime;
 
 	public Long getId() {
 		return Id;
@@ -48,7 +56,6 @@ public class Users {
 		Id = id;
 	}
 
-	
 	public String getMobile() {
 		return mobile;
 	}
@@ -88,9 +95,28 @@ public class Users {
 	public String getEmailId() {
 		return emailId;
 	}
+
 	@XmlElement
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	@XmlElement
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	public Date getOtpSentTime() {
+		return otpSentTime;
+	}
+
+	@XmlElement
+	public void setOtpSentTime(Date otpSentTime) {
+		this.otpSentTime = otpSentTime;
 	}
 
 }

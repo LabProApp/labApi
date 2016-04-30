@@ -116,15 +116,7 @@ public class LabBranchImpl {
 		System.out.println("Get Entire LabBranch List");
 
 		try {
-			/*
-			 * String query=
-			 * "SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,labAddress_ADDRESS_ID,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l where LAB_OFFICE_ID ="
-			 * +OfficeId; java.sql.Connection cnn =
-			 * em.unwrap(java.sql.Connection.class); Statement st =
-			 * cnn.createStatement(); ResultSet rs = st.executeQuery(query);
-			 * 
-			 * return LabBranchDtoList;
-			 */
+			
 			Query q = em
 					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND LAB_OFFICE_ID =:OfficeId");
 			q.setParameter("OfficeId", OfficeId);

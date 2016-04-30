@@ -28,12 +28,12 @@ public class LabRepService {
 	}
 
 	@GET
-	@Path("/get/{labbranchCode}")
+	@Path("/get/{labRepId}")
 	@Produces(MediaType.APPLICATION_XML)
-	public LabRep getLab(@PathParam("labbranchCode") Long labbranchCode) {
+	public LabRep getLab(@PathParam("labRepId") Long labRepId) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
-		LabRep lr = instance.getLab(labbranchCode);
+		LabRep lr = instance.getLab(labRepId);
 
 		return lr;
 

@@ -1,5 +1,6 @@
 package com.services.Impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,9 @@ import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
 
+import com.beans.Doctor;
+import com.beans.LabBranch;
+import com.beans.LabRep;
 import com.beans.Response;
 import com.beans.Schedule;
 import com.common.Constants;
@@ -24,8 +28,8 @@ public class ScheduleImpl {
 
 	private static String selectquery = "SELECT SCHDLE_ID,DOC_ID,LAB_BRANCH_CD,LAB_REP_CD,WORKING_DAYS,MRNG_START,MRNG_END,MRNG_TKNS_TOTAL,"
 			+ "AFTRN_START,AFTRN_END,AFTRN_TKNS_TOTAL,"
-			+ "EVNG_START,EVNG_END,EVNG_TKNS_TOTAL"
-			+ "NIGHT_START,NIGHT_END,NIGHT_TKNS_TOTAL,STATUS"
+			+ "EVNG_START,EVNG_END,EVNG_TKNS_TOTAL,"
+			+ "NIGHT_START,NIGHT_END,NIGHT_TKNS_TOTAL,STATUS "
 			+ "FROM SCHEDULE s ";
 
 	private ScheduleImpl() {
@@ -56,26 +60,158 @@ public class ScheduleImpl {
 		Response resp = new Response();
 		System.out.println("Add Schedule =>" + schedule);
 
+		if (null == schedule.getDocId() && null == schedule.getBranchCode()
+				&& null == schedule.getLabRepId()) {
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE(Constants.RESP_NORECORD);
+			resp.setERROR_MESSAGE("Schedule Must Configured for DOCTOR/LABORATORY/LAB REPRESENTATIVE");
+			return resp;
+		}
+		if (null != schedule.getDocId()) {
+
+			DoctorImpl dcl = DoctorImpl.getInstance();
+			Doctor doctor = dcl.get(schedule.getDocId());
+			if (doctor.getDocId() == 0) {
+				resp.setSTATUS("FAIL");
+				resp.setERROR_CODE(Constants.RESP_NORECORD);
+				resp.setERROR_MESSAGE("No Doctor " + schedule.getDocId()
+						+ " Exists");
+
+				return resp;
+
+			}
+
+			List<Schedule> scheduleList = getScheduleListbyDoctor(schedule
+					.getDocId());
+			if (scheduleList.size() > 0) {
+				resp.setSTATUS("FAIL");
+				resp.setERROR_CODE(Constants.RESP_ALREADYEXISTS);
+				resp.setERROR_MESSAGE("Schedule for Doctor  "
+						+ schedule.getDocId() + " Already Exists");
+
+				return resp;
+
+			}
+		}
+		if (null != schedule.getBranchCode()) {
+
+			LabBranchImpl lcl = LabBranchImpl.getInstance();
+			LabBranch labBranch = lcl.getLab(schedule.getBranchCode());
+			if (labBranch.getLabbranchCode() == 0) {
+				resp.setSTATUS("FAIL");
+				resp.setERROR_CODE(Constants.RESP_NORECORD);
+				resp.setERROR_MESSAGE("No Lab Branch "
+						+ schedule.getBranchCode() + " Exists");
+
+				return resp;
+
+			}
+			List<Schedule> scheduleList = getScheduleListbyLabBranch(schedule
+					.getBranchCode());
+			if (scheduleList.size() > 0) {
+				resp.setSTATUS("FAIL");
+				resp.setERROR_CODE(Constants.RESP_ALREADYEXISTS);
+				resp.setERROR_MESSAGE("Schedule for Lab Branch "
+						+ schedule.getBranchCode() + " Already Exists");
+
+				return resp;
+
+			}
+		}
+		if (null != schedule.getLabRepId()) {
+
+			LabRepImpl lcl = LabRepImpl.getInstance();
+			LabRep labrep = lcl.getLab(schedule.getLabRepId());
+			if (labrep.getLabRepresentativeId() == 0) {
+				resp.setSTATUS("FAIL");
+				resp.setERROR_CODE(Constants.RESP_NORECORD);
+				resp.setERROR_MESSAGE("No Lab Rep " + schedule.getLabRepId()
+						+ " Exists");
+
+				return resp;
+
+			}
+
+			List<Schedule> scheduleList = getScheduleListbyLabRep(schedule
+					.getLabRepId());
+			if (scheduleList.size() > 0) {
+				resp.setSTATUS("FAIL");
+				resp.setERROR_CODE(Constants.RESP_ALREADYEXISTS);
+				resp.setERROR_MESSAGE("Schedule for Lab Rep  "
+						+ schedule.getLabRepId() + " Already Exists");
+
+				return resp;
+
+			}
+		}
+
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
+
+			populates_times(schedule);
+
 			em.persist(schedule);
 			em.getTransaction().commit();
+			resp.setERROR_CODE("0000");
 
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0001");
+			resp.setERROR_MESSAGE(e.getMessage());
 			em.getTransaction().rollback();
 			e.printStackTrace();
-		} finally {
+		} catch (Exception e) {
+			resp.setERROR_MESSAGE(e.getMessage());
+			resp.setSTATUS("FAIL");
+			resp.setERROR_CODE("0001");
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}
+
+		finally {
 			// em.close();
 		}
 
 		return resp;
 	}
 
-	public Schedule getSchedulebyScheduleId(Long ScheduleId) {
+	private void populates_times(Schedule schedule) throws Exception {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+
+		if (null != schedule.getMorning_time_start_str())
+			schedule.setMorning_time_start(simpleDateFormat.parse(schedule
+					.getMorning_time_start_str()));
+		if (null != schedule.getAfternoon_time_end_str())
+			schedule.setMorning_time_end(simpleDateFormat.parse(schedule
+					.getMorning_time_end_str()));
+
+		if (null != schedule.getAfternoon_time_start_str())
+			schedule.setAfternoon_time_start(simpleDateFormat.parse(schedule
+					.getAfternoon_time_start_str()));
+		if (null != schedule.getAfternoon_time_end_str())
+			schedule.setAfternoon_time_end(simpleDateFormat.parse(schedule
+					.getAfternoon_time_end_str()));
+
+		if (null != schedule.getEvening_time_start_str())
+			schedule.setEvening_time_start(simpleDateFormat.parse(schedule
+					.getEvening_time_start_str()));
+		if (null != schedule.getEvening_time_end_str())
+			schedule.setEvening_time_end(simpleDateFormat.parse(schedule
+					.getEvening_time_end_str()));
+
+		if (null != schedule.getNight_time_start_str())
+			schedule.setNight_time_start(simpleDateFormat.parse(schedule
+					.getNight_time_start_str()));
+		if (null != schedule.getNight_time_end_str())
+			schedule.setNight_time_end(simpleDateFormat.parse(schedule
+					.getNight_time_end_str()));
+
+	}
+
+	public Schedule getSchedulebyScheduleId(Long scheduleId) {
 
 		Response resp = new Response();
 		Schedule Schedule = null;
@@ -84,19 +220,19 @@ public class ScheduleImpl {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
-			Schedule = (Schedule) em.find(Schedule.class, ScheduleId);
+			Schedule = (Schedule) em.find(Schedule.class, scheduleId);
 			if (Schedule == null) {
 				Schedule = new Schedule();
 				Schedule.setScheduleId(0L);
 			}
-
+			resp.setERROR_CODE("0000");
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
 
 			e.printStackTrace();
 		} finally {
-			em.close();
+
 		}
 
 		return Schedule;
@@ -111,6 +247,16 @@ public class ScheduleImpl {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
 			}
+			Schedule Schedule = (Schedule) em.find(Schedule.class,
+					schedule.getScheduleId());
+			if (Schedule == null) {
+				resp.setERROR_CODE("0001");
+				resp.setSTATUS("FAIL");
+				resp.setERROR_MESSAGE("No Schedule with Id = "
+						+ schedule.getScheduleId());
+				return resp;
+			}
+
 			em.merge(schedule);
 			em.getTransaction().commit();
 			resp.setERROR_CODE("0000");
@@ -120,7 +266,7 @@ public class ScheduleImpl {
 			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			// em.close();
+
 		}
 
 		return resp;
@@ -163,7 +309,8 @@ public class ScheduleImpl {
 
 		List<Object[]> objList = null;
 		List<Schedule> scheduleList = new ArrayList<Schedule>();
-		System.out.println("Get Entire Schedule List for a Lab Branch = " +labBranchCd);
+		System.out.println("Get Entire Schedule List for a Lab Branch = "
+				+ labBranchCd);
 
 		try {
 			Query q = em.createNativeQuery(selectquery
@@ -191,7 +338,7 @@ public class ScheduleImpl {
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ "where LAB_REP_CD =:labRepId");
+					+ " where LAB_REP_CD =:labRepId");
 			q.setParameter("labRepId", labRepId);
 			objList = q.getResultList();
 			scheduleList = populateScheduleList(objList);
@@ -222,7 +369,6 @@ public class ScheduleImpl {
 
 			e.printStackTrace();
 		} finally {
-			// em.close();
 		}
 
 		System.out.println("Entire Schedule List " + scheduleList);
@@ -231,9 +377,6 @@ public class ScheduleImpl {
 	}
 
 	private List<Schedule> populateScheduleList(List<Object[]> objList) {
-		// TODO Auto-generated method stub
-
-		
 
 		List<Schedule> scheduleList = new ArrayList<Schedule>(objList.size());
 		for (Object obj[] : objList) {
@@ -299,7 +442,7 @@ public class ScheduleImpl {
 			}
 			scheduleList.add(schedule);
 		}
-		return null;
+		return scheduleList;
 	}
 
 }
