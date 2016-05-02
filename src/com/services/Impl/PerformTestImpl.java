@@ -1,21 +1,30 @@
 package com.services.Impl;
 
+import javax.persistence.EntityManager;
+
 import com.beans.Appointment;
 import com.beans.Response;
+import com.dao.EmManager;
 
 public class PerformTestImpl {
 
-	private static PerformTestImpl instance;
+	private static EntityManager em;
+
+	public static PerformTestImpl instance;
 
 	private PerformTestImpl() {
 
 	}
 
 	public static PerformTestImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new PerformTestImpl();
+			em = EmManager.getInstance().getEm();
+		}
+
 		return instance;
 	}
+
 
 	public Response getReports(Appointment appmnt) {
 		Response resp = new Response();

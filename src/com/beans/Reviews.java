@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -34,26 +36,28 @@ public class Reviews {
 	@Id
 	@GeneratedValue
 	@Column(name = "REVIEW_ID")
-	String reviewId;
+	Long reviewId;
 	@Column(name = "PTNT_ID")
-	String ratingCustomerId;
+	Long ratingCustomerId;
 	@Column(name = "DOCTOR_ID")
-	String doctorId;
+	Long doctorId;
 	@Column(name = "LAB_OFFICE_ID")
-	String labOfficeId;
+	Long labOfficeId;
 	@Column(name = "LAB_BRANCH_CD")
-	String branchCode;
+	Long branchCode;
 	@Column(name = "RATING")
-	String star_rating;
+	Integer star_rating;
 	@Column(name = "RATING_DT")
 	Date ratingDate;
+	@Transient
+	String ratingDateStr;
 	@Column(name = "REVIEW")
 	String reviewDescription;
 
 	/**
 	 * @return the reviewId
 	 */
-	public String getReviewId() {
+	public Long getReviewId() {
 		return reviewId;
 	}
 
@@ -61,14 +65,15 @@ public class Reviews {
 	 * @param reviewId
 	 *            the reviewId to set
 	 */
-	public void setReviewId(String reviewId) {
+	@XmlElement
+	public void setReviewId(Long reviewId) {
 		this.reviewId = reviewId;
 	}
 
 	/**
 	 * @return the doctorId
 	 */
-	public String getDoctorId() {
+	public Long getDoctorId() {
 		return doctorId;
 	}
 
@@ -76,14 +81,15 @@ public class Reviews {
 	 * @param doctorId
 	 *            the doctorId to set
 	 */
-	public void setDoctorId(String doctorId) {
+	@XmlElement
+	public void setDoctorId(Long doctorId) {
 		this.doctorId = doctorId;
 	}
 
 	/**
 	 * @return the labOfficeId
 	 */
-	public String getLabOfficeId() {
+	public Long getLabOfficeId() {
 		return labOfficeId;
 	}
 
@@ -91,14 +97,15 @@ public class Reviews {
 	 * @param labOfficeId
 	 *            the labOfficeId to set
 	 */
-	public void setLabOfficeId(String labOfficeId) {
+	@XmlElement
+	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
 
 	/**
 	 * @return the branchCode
 	 */
-	public String getBranchCode() {
+	public Long getBranchCode() {
 		return branchCode;
 	}
 
@@ -106,14 +113,15 @@ public class Reviews {
 	 * @param branchCode
 	 *            the branchCode to set
 	 */
-	public void setBranchCode(String branchCode) {
+	@XmlElement
+	public void setBranchCode(Long branchCode) {
 		this.branchCode = branchCode;
 	}
 
 	/**
 	 * @return the star_rating
 	 */
-	public String getStar_rating() {
+	public Integer getStar_rating() {
 		return star_rating;
 	}
 
@@ -121,7 +129,8 @@ public class Reviews {
 	 * @param star_rating
 	 *            the star_rating to set
 	 */
-	public void setStar_rating(String star_rating) {
+	@XmlElement
+	public void setStar_rating(Integer star_rating) {
 		this.star_rating = star_rating;
 	}
 
@@ -136,6 +145,7 @@ public class Reviews {
 	 * @param ratingDate
 	 *            the ratingDate to set
 	 */
+
 	public void setRatingDate(Date ratingDate) {
 		this.ratingDate = ratingDate;
 	}
@@ -151,6 +161,7 @@ public class Reviews {
 	 * @param reviewDescription
 	 *            the reviewDescription to set
 	 */
+	@XmlElement
 	public void setReviewDescription(String reviewDescription) {
 		this.reviewDescription = reviewDescription;
 	}
@@ -158,7 +169,7 @@ public class Reviews {
 	/**
 	 * @return the ratingCustomerId
 	 */
-	public String getRatingCustomerId() {
+	public Long getRatingCustomerId() {
 		return ratingCustomerId;
 	}
 
@@ -166,8 +177,18 @@ public class Reviews {
 	 * @param ratingCustomerId
 	 *            the ratingCustomerId to set
 	 */
-	public void setRatingCustomerId(String ratingCustomerId) {
+	@XmlElement
+	public void setRatingCustomerId(Long ratingCustomerId) {
 		this.ratingCustomerId = ratingCustomerId;
+	}
+
+	public String getRatingDateStr() {
+		return ratingDateStr;
+	}
+
+	@XmlElement
+	public void setRatingDateStr(String ratingDateStr) {
+		this.ratingDateStr = ratingDateStr;
 	}
 
 }

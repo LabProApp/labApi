@@ -19,17 +19,14 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlRootElement(name = "LabOffice")
 public class LabOffice {
 
-	
-
 	@Override
 	public String toString() {
 		return "LabOffice [labOfficeId=" + labOfficeId + ", labName=" + labName
 				+ ", status=" + status + ", labAddress=" + labAddress
-				+ ", labOwner=" + labOwner + ", primaryMobileNo=" + primaryMobileNo
-				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
-				+ emailID + "]";
+				+ ", labOwner=" + labOwner + ", primaryMobileNo="
+				+ primaryMobileNo + ", secondaryMobileNo=" + secondaryMobileNo
+				+ ", emailID=" + emailID + "]";
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,16 +37,18 @@ public class LabOffice {
 	@Column(name = "STATUS")
 	Integer status;
 	@OneToOne(cascade = CascadeType.ALL)
-	Address labAddress;
+	Address labAddress = new Address();
 	@Column(name = "LAB_OWNER")
 	String labOwner;
-	
+
 	@Column(name = "PRIM_MOBILE")
-	String primaryMobileNo;
+	String primaryMobileNo; 
 	@Column(name = "SECOND_MOBILE")
 	String secondaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
+	@Column(name = "IMG_PATH")
+	String img_path;
 	public String getLabName() {
 		return labName;
 	}
@@ -95,7 +94,6 @@ public class LabOffice {
 		this.labOwner = labOwner;
 	}
 
-
 	public String getPrimaryMobileNo() {
 		return primaryMobileNo;
 	}
@@ -122,12 +120,20 @@ public class LabOffice {
 	}
 
 	/**
-	 * @param emailID the emailID to set
+	 * @param emailID
+	 *            the emailID to set
 	 */
 	@XmlElement
 	public void setEmailID(String emailID) {
 		this.emailID = emailID;
 	}
 
-	
+	public String getImg_path() {
+		return img_path;
+	}
+	@XmlElement
+	public void setImg_path(String img_path) {
+		this.img_path = img_path;
+	}
+
 }

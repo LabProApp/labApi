@@ -22,16 +22,18 @@ public class Users {
 
 	@Override
 	public String toString() {
-		return "Users [Id=" + Id + ", emailId=" + emailId + ", mobile="
-				+ mobile + ", encPassword=" + encPassword + ", status="
-				+ status + ", userTyp=" + userTyp + ", otp=" + otp
-				+ ", otpSentTime=" + otpSentTime + "]";
+		return "Users [Id=" + Id + ", name=" + name + ", emailId=" + emailId
+				+ ", mobile=" + mobile + ", encPassword=" + encPassword
+				+ ", status=" + status + ", userTyp=" + userTyp + ", otp="
+				+ otp + ", otpSentTime=" + otpSentTime + "]";
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
 	Long Id;
+	@Column(name = "NAME")
+	String name;
 	@Column(name = "EMAIL_ID", unique = true)
 	String emailId;
 	@Column(name = "MOBILE", unique = true)
@@ -117,6 +119,14 @@ public class Users {
 	@XmlElement
 	public void setOtpSentTime(Date otpSentTime) {
 		this.otpSentTime = otpSentTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+	@XmlElement
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

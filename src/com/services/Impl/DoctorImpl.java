@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
@@ -13,34 +11,24 @@ import org.hibernate.HibernateException;
 import com.beans.Doctor;
 import com.beans.Response;
 import com.common.Constants;
+import com.dao.EmManager;
 
 public class DoctorImpl {
 
-	private static DoctorImpl instance;
-	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
+
+	public static DoctorImpl instance;
 
 	private DoctorImpl() {
 
 	}
 
 	public static DoctorImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new DoctorImpl();
-
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
+			em = EmManager.getInstance().getEm();
 		}
+
 		return instance;
 	}
 
@@ -58,10 +46,10 @@ public class DoctorImpl {
 
 			em.getTransaction().commit();
 			resp.setSTATUS("SUCCESS");
-			resp.setERROR_CODE("0000");
+			resp.setERROR_CODE(Constants.RESP_SUCCESS);
 		} catch (HibernateException e) {
-			resp.setSTATUS("FAIL");
-			resp.setERROR_CODE("0002");
+			resp.setSTATUS(Constants.FAIL);
+			resp.setERROR_CODE(Constants.RESP_DBERROR);
 			em.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {

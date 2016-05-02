@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
@@ -13,34 +11,24 @@ import org.hibernate.HibernateException;
 import com.beans.Response;
 import com.beans.Tests;
 import com.common.Constants;
+import com.dao.EmManager;
 
 public class TestsImpl {
 
-	private static TestsImpl instance;
-	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
+
+	public static TestsImpl instance;
 
 	private TestsImpl() {
 
 	}
 
 	public static TestsImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new TestsImpl();
-
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
+			em = EmManager.getInstance().getEm();
 		}
+
 		return instance;
 	}
 

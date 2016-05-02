@@ -3,8 +3,6 @@ package com.services.Impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
@@ -12,33 +10,24 @@ import org.hibernate.HibernateException;
 import com.beans.LabOffice;
 import com.beans.Response;
 import com.common.Constants;
+import com.dao.EmManager;
 
 public class LabOfficeImpl {
 
-	private static LabOfficeImpl instance;
-	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
+
+	public static LabOfficeImpl instance;
 
 	private LabOfficeImpl() {
 
 	}
 
 	public static LabOfficeImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new LabOfficeImpl();
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
+			em = EmManager.getInstance().getEm();
 		}
+
 		return instance;
 	}
 

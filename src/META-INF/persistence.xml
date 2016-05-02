@@ -6,7 +6,19 @@
 	<persistence-unit name="mediapp" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
-		<properties>
+		  <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.connection.url" value="jdbc.url" />
+            <property name="hibernate.connection.username" value="jdbc.username" />
+            <property name="hibernate.connection.password" value="jdbc.password" />
+            
+            <property name="hibernate.jdbc.batch_size" value="30" />  
+            <property name="hibernate.order_inserts" value="true" />  
+            <property name="hibernate.order_updates" value="true" />
+            <property name="hibernate.connection.autocommit" value="false" />
+        </properties>
+		<!--  <properties>
 
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
@@ -17,7 +29,7 @@
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/LABDB" />
 
 
-			<!-- Ehcache related properties -->
+			
 			<property name="hibernate.cache.provider_class"
 				value="net.sf.ehcache.hibernate.SingletonEhCacheProvider" />
 			<property name="hibernate.cache.use_second_level_cache"
@@ -27,6 +39,6 @@
 			<property name="hibernate.order_inserts" value="true" />
 			<property name="hibernate.order_updates" value="true" />
 			<property name="hibernate.show_sql" value="true" />
-		</properties>
+		</properties>-->
 	</persistence-unit>
 </persistence>

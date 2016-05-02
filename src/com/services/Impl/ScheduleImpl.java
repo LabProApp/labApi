@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -18,13 +17,9 @@ import com.beans.LabRep;
 import com.beans.Response;
 import com.beans.Schedule;
 import com.common.Constants;
+import com.dao.EmManager;
 
 public class ScheduleImpl {
-
-	private static ScheduleImpl instance;
-
-	private static EntityManagerFactory entityManagerFactory;
-	private static EntityManager em;
 
 	private static String selectquery = "SELECT SCHDLE_ID,DOC_ID,LAB_BRANCH_CD,LAB_REP_CD,WORKING_DAYS,MRNG_START,MRNG_END,MRNG_TKNS_TOTAL,"
 			+ "AFTRN_START,AFTRN_END,AFTRN_TKNS_TOTAL,"
@@ -32,26 +27,22 @@ public class ScheduleImpl {
 			+ "NIGHT_START,NIGHT_END,NIGHT_TKNS_TOTAL,STATUS "
 			+ "FROM SCHEDULE s ";
 
+	
+
+	private static EntityManager em;
+
+	public static ScheduleImpl instance;
+
 	private ScheduleImpl() {
 
 	}
 
 	public static ScheduleImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new ScheduleImpl();
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
+			em = EmManager.getInstance().getEm();
 		}
+
 		return instance;
 	}
 

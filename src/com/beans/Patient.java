@@ -44,7 +44,7 @@ public class Patient {
 	Integer status;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	Address patientAddress;
+	Address patientAddress=new Address();
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	@Column(name = "SECOND_MOBILE")

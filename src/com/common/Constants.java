@@ -7,7 +7,7 @@ public class Constants {
 	public static final String EVENING = "EVENING";
 	public static final String NIGHT = "NIGHT";
 	public static final String PATIENT = "PATIENT";
-	public static final String DOCTOR = "PATIENT";
+	public static final String DOCTOR = "DOCTOR";
 	public static final String LAB_OFFICE = "LAB_OFFICE";
 	public static final String LAB_BRANCH = "LAB_BRANCH";
 	
@@ -24,6 +24,8 @@ public class Constants {
 	public static String RESP_DBERROR = "0010";
 	public static String RESP_CONNERROR = "0011";
 	public static final String RESP_OTP_EXPIRED = "0012";
+	public static final String FAIL = "FAIL";
+	public static final String SUCCESS = "SUCCESS";
 	
 	//Booking Statuses
 	public static Integer PEND_APPROVE = 1;

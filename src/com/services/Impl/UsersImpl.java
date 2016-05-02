@@ -1,27 +1,29 @@
 package com.services.Impl;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
 
+import com.beans.Doctor;
+import com.beans.LabBranch;
+import com.beans.LabOffice;
+import com.beans.Patient;
 import com.beans.Response;
 import com.beans.Users;
 import com.common.CommonUtilities;
 import com.common.Constants;
+import com.dao.EmManager;
 
 public class UsersImpl {
 
-	private static UsersImpl instance;
-	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
+
+	public static UsersImpl instance;
 
 	private UsersImpl() {
 
@@ -30,21 +32,9 @@ public class UsersImpl {
 	public static UsersImpl getInstance() {
 		if (instance == null) {
 			instance = new UsersImpl();
+			em = EmManager.getInstance().getEm();
 		}
 
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
-		}
 		return instance;
 	}
 
@@ -72,6 +62,7 @@ public class UsersImpl {
 
 			}
 
+			user.setStatus(Constants.PENDNG_ACTIVATE);
 			String OTP = CommonUtilities.generateOTP();
 			user.setOtp(OTP);
 			try {
@@ -109,7 +100,7 @@ public class UsersImpl {
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT ID,EMAIL_ID,MOBILE,ENC_PASSWD,USER_TYPE,STATUS,OTP,OTP_TIME FROM USERS where EMAIL_ID=:emailId");
+					.createNativeQuery("SELECT ID,EMAIL_ID,MOBILE,ENC_PASSWD,USER_TYPE,STATUS,OTP,OTP_TIME,NAME FROM USERS where EMAIL_ID=:emailId");
 			q.setParameter("emailId", emailId);
 
 			objlist = q.getResultList();
@@ -143,6 +134,9 @@ public class UsersImpl {
 				}
 				if (obj[7] instanceof Date) {
 					user.setOtpSentTime((Date) obj[7]); // OTP SetTime
+				}
+				if (obj[8] instanceof String) {
+					user.setName(((String) obj[8])); // Name
 				}
 				userList.add(user);
 			}
@@ -247,6 +241,7 @@ public class UsersImpl {
 		Response resp = new Response();
 		System.out.println("Activating user  =>" + emailId + " Otp " + otp);
 		String emailIdstr = null;
+		Users user = null;
 		if (null != emailId) {
 			/*
 			 * byte[] decodedBytes = Base64.decodeBase64(emailId); emailIdstr =
@@ -271,7 +266,7 @@ public class UsersImpl {
 				}
 				if (usersList.size() == 1) {
 
-					Users user = usersList.get(0);
+					user = usersList.get(0);
 					if (user.getStatus() == Constants.ACTIVE) {
 						resp.setERROR_CODE(Constants.RESP_ALREADYEXISTS);
 						resp.setSTATUS("FAIL");
@@ -321,6 +316,75 @@ public class UsersImpl {
 			q.setParameter("emailIdstr", emailIdstr);
 			int updateCount = q.executeUpdate();
 			System.out.println("Number of Users Activated = " + updateCount);
+
+			if (user.getUserTyp().equalsIgnoreCase(Constants.DOCTOR)) {
+				DoctorImpl dImpl = DoctorImpl.getInstance();
+				Doctor d = new Doctor();
+				d.setDoctorName(user.getName());
+				d.setPrimaryMobileNo(user.getMobile());
+				d.setEmailID(user.getEmailId());
+				d.setStatus(Constants.ACTIVE);
+				Response r = dImpl.add(d);
+				if (r.getSTATUS().equalsIgnoreCase(Constants.FAIL)) {
+
+					resp.setSTATUS("FAIL");
+					resp.setERROR_CODE(Constants.RESP_DBERROR);
+					em.getTransaction().rollback();
+
+				}
+			}
+
+			if (user.getUserTyp().equalsIgnoreCase(Constants.LAB_OFFICE)) {
+
+				LabOfficeImpl loImpl = LabOfficeImpl.getInstance();
+				LabOffice lo = new LabOffice();
+				lo.setLabName(user.getName());
+				lo.setPrimaryMobileNo(user.getMobile());
+				lo.setEmailID(user.getEmailId());
+				lo.setStatus(Constants.ACTIVE);
+				Response r = loImpl.addLabOffice(lo);
+				if (r.getSTATUS().equalsIgnoreCase(Constants.FAIL)) {
+
+					resp.setSTATUS("FAIL");
+					resp.setERROR_CODE(Constants.RESP_DBERROR);
+					em.getTransaction().rollback();
+
+				}
+			}
+			if (user.getUserTyp().equalsIgnoreCase(Constants.LAB_BRANCH)) {
+
+				LabBranchImpl lbImpl = LabBranchImpl.getInstance();
+				LabBranch lb = new LabBranch();
+				lb.setLabName(user.getName());
+				lb.setPrimaryMobileNo(user.getMobile());
+				lb.setEmailID(user.getEmailId());
+				lb.setStatus(Constants.ACTIVE);
+				Response r = lbImpl.addLab(lb);
+				if (r.getSTATUS().equalsIgnoreCase(Constants.FAIL)) {
+
+					resp.setSTATUS("FAIL");
+					resp.setERROR_CODE(Constants.RESP_DBERROR);
+					em.getTransaction().rollback();
+
+				}
+			}
+			if (user.getUserTyp().equalsIgnoreCase(Constants.PATIENT)) {
+				PatientImpl lbImpl = PatientImpl.getInstance();
+				Patient pt = new Patient();
+				pt.setPatientName(user.getName());
+				pt.setPrimaryMobileNo(user.getMobile());
+				pt.setEmailID(user.getEmailId());
+				pt.setStatus(Constants.ACTIVE);
+				Response r = lbImpl.add(pt);
+				if (r.getSTATUS().equalsIgnoreCase(Constants.FAIL)) {
+
+					resp.setSTATUS("FAIL");
+					resp.setERROR_CODE(Constants.RESP_DBERROR);
+					em.getTransaction().rollback();
+
+				}
+			}
+
 			em.getTransaction().commit();
 			resp.setERROR_CODE(Constants.RESP_SUCCESS);
 			resp.setSTATUS("SUCCESS");

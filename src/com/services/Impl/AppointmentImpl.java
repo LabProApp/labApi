@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.hibernate.HibernateException;
 
@@ -13,12 +11,13 @@ import com.beans.Appointment;
 import com.beans.Response;
 import com.beans.Schedule;
 import com.common.Constants;
+import com.dao.EmManager;
 
 public class AppointmentImpl {
 
-	private static AppointmentImpl instance;
-	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
+
+	public static AppointmentImpl instance;
 
 	private AppointmentImpl() {
 
@@ -27,21 +26,9 @@ public class AppointmentImpl {
 	public static AppointmentImpl getInstance() {
 		if (instance == null) {
 			instance = new AppointmentImpl();
+			em = EmManager.getInstance().getEm();
 		}
 
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
-		}
 		return instance;
 	}
 

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
@@ -13,37 +11,28 @@ import org.hibernate.HibernateException;
 import com.beans.Response;
 import com.beans.TestsbyLab;
 import com.common.Constants;
+import com.dao.EmManager;
 import com.dto.TestByLabDto;
 
 public class TestsbyLabImpl {
 
-	private static TestsbyLabImpl instance;
-	private static EntityManagerFactory entityManagerFactory;
 	private static EntityManager em;
+
+	public static TestsbyLabImpl instance;
 
 	private TestsbyLabImpl() {
 
 	}
 
 	public static TestsbyLabImpl getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new TestsbyLabImpl();
-
-		try {
-			if (entityManagerFactory == null || em == null) {
-				entityManagerFactory = Persistence
-						.createEntityManagerFactory("mediapp");
-				em = entityManagerFactory.createEntityManager();
-
-			}
-
-		} catch (Exception ex) {
-			System.err.println("Failed to create entityManagerFactory object."
-					+ ex);
-			ex.printStackTrace();
+			em = EmManager.getInstance().getEm();
 		}
+
 		return instance;
 	}
+	
 
 	public Response add(TestsbyLab testsbyLab) {
 

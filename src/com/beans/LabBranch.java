@@ -47,7 +47,7 @@ public class LabBranch {
 	@Column(name = "LAB_BR_OWNER")
 	String labBranchOwner;
 	@OneToOne(cascade = CascadeType.ALL)
-	Address labAddress;
+	Address labAddress=new Address();
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
 	
