@@ -11,8 +11,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
-import com.beans.Users;
-import com.services.Impl.UsersImpl;
+import com.beans.Reviews;
+import com.services.Impl.ReviewImpl;
 
 @Path("/review")
 public class ReviewService {
@@ -20,62 +20,33 @@ public class ReviewService {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
-	public Response add(Users user) {
+	public Response add(Reviews review) {
 
-		System.out.println("Add Users =>" + user);
-		UsersImpl userImpl = UsersImpl.getInstance();
-		Response resp = userImpl.add(user);
+		System.out.println("Add Reviews =>" + review);
+		ReviewImpl reviewImpl = ReviewImpl.getInstance();
+		Response resp = reviewImpl.add(review);
 		return resp;
 	}
 
 	@GET
-	@Path("/get")
+	@Path("/getReviewforDoctor")
 	@Produces(MediaType.APPLICATION_XML)
-	public List<Users> get(
-			@QueryParam("emailId") String emailId) {
-		UsersImpl userImpl = UsersImpl.getInstance();
-		List<Users> userList = userImpl.get(emailId);
-		return userList;
+	public List<Reviews> getReviewforDoctor(@QueryParam("docId") Long docId) {
+		ReviewImpl reviewImpl = ReviewImpl.getInstance();
+		List<Reviews> reviewList = reviewImpl.getReviewforDoctor(docId);
+		return reviewList;
 
 	}
 
-	@POST
-	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
+	@GET
+	@Path("/getReviewforLabBranch")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response updateuser(Users user) {
-
-		UsersImpl userImpl = UsersImpl.getInstance();
-		Response resp = userImpl.updateuser(user);
-		resp.setSTATUS("SUCCESS");
-		return resp;
-	}
-
-	@POST
-	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteuser(
-			@QueryParam("emailId") String emailId) {
-
-		System.out.println("Delete user");
-		UsersImpl userImpl = UsersImpl.getInstance();
-		Response resp = userImpl.deleteuser(emailId);
-
-		return resp;
+	public List<Reviews> getReviewforLabBranch(
+			@QueryParam("branchCd") Long branchCd) {
+		ReviewImpl reviewImpl = ReviewImpl.getInstance();
+		List<Reviews> reviewList = reviewImpl.getReviewforLabBranch(branchCd);
+		return reviewList;
 
 	}
 
-	@POST
-	@Path("/activateuser")
-	@Produces(MediaType.APPLICATION_XML)
-	public Response activateuser(
-			@QueryParam("emailId") String emailId,@QueryParam("otp") String otp) {
-
-		System.out.println("Activate user");
-		UsersImpl userImpl = UsersImpl.getInstance();
-		Response resp = userImpl.activateuser(emailId,otp);
-
-		return resp;
-
-	}
 }

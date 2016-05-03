@@ -1,5 +1,7 @@
 package com.beans;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -183,12 +185,29 @@ public class Reviews {
 	}
 
 	public String getRatingDateStr() {
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		try {
+			return format.format(this.getRatingDate());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return ratingDateStr;
 	}
 
 	@XmlElement
 	public void setRatingDateStr(String ratingDateStr) {
 		this.ratingDateStr = ratingDateStr;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		try {
+			this.setRatingDate(format.parse(this.ratingDateStr));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

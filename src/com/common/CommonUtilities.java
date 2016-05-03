@@ -56,16 +56,16 @@ public class CommonUtilities {
 
 	public static void sendActivationLinkEmail(String emailId, String link) throws MessagingException {
 
-		final String username = "meetthenikhil@gmail.com";
-		final String password = "neerav@2013";
+		final String username = Configuration.getInstance("server").getProperty("mail.smtp.user");
+		final String password = Configuration.getInstance("server").getProperty("mail.smtp.password");
 
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props,
+		/*Properties props = new Properties();
+		props.put("mail.smtp.auth", Configuration.getInstance("server").getProperty("mail.smtp.auth"));
+		props.put("mail.smtp.starttls.enable", Configuration.getInstance("server").getProperty("mail.smtp.starttls.enable"));
+		props.put("mail.smtp.host", Configuration.getInstance("server").getProperty("mail.smtp.host"));
+		props.put("mail.smtp.port", Configuration.getInstance("server").getProperty("mail.smtp.socketFactory.port"));
+*/
+		Session session = Session.getInstance(Configuration.getInstance("server"),
 				new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(username, password);
