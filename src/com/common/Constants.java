@@ -26,6 +26,7 @@ public class Constants {
 	public static final String RESP_OTP_EXPIRED = "0012";
 	public static final String FAIL = "FAIL";
 	public static final String SUCCESS = "SUCCESS";
+	public static final String RESP_MISSING_PARAMS = "0014";
 	
 	//Booking Statuses
 	public static Integer PEND_APPROVE = 1;

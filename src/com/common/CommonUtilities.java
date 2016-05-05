@@ -122,4 +122,12 @@ public class CommonUtilities {
 
 	}
 
+	public static boolean isEmpty(String value) {
+		if (null == value)
+			return true;
+		if (value.length() == 0)
+			return true;
+		return false;
+	}
+
 }
