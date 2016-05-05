@@ -11,9 +11,10 @@ public class S3Image {
 
 	String Id;
 	String img_type; // profile/extra
-	String user_type;
+	String user_type; //Doctor/Patient/Lab Branch/Lab Office/Test Result
 	String img_name;
 	byte[] image;
+	
 
 	public String getId() {
 		return Id;
