@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.LabOffice;
@@ -28,9 +29,9 @@ public class LabOfficeService {
 	}
 
 	@GET
-	@Path("/get/{labOfficeId}")
+	@Path("/get")
 	@Produces(MediaType.APPLICATION_XML)
-	public LabOffice getLabOffice(@PathParam("labOfficeId") Long labOfficeId) {
+	public LabOffice getLabOffice(@QueryParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
 		LabOffice lr = instance.getLabOffice(labOfficeId);
@@ -67,9 +68,9 @@ public class LabOfficeService {
 	}
 
 	@POST
-	@Path("/delete/{labOfficeId}")
+	@Path("/delete")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteLabOffice(@PathParam("labOfficeId") Long labOfficeId) {
+	public Response deleteLabOffice(@QueryParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
 		Response resp = instance.deleteLabOffice(labOfficeId);
@@ -78,9 +79,9 @@ public class LabOfficeService {
 		return resp;
 	}
 	@POST
-	@Path("/activateLabOffice/{labOfficeId}")
+	@Path("/activateLabOffice")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response activateLabOffice(@PathParam("labOfficeId") Long labOfficeId) {
+	public Response activateLabOffice(@QueryParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
 		Response resp = instance.activateLabOffice(labOfficeId);

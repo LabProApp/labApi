@@ -6,7 +6,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -66,9 +65,9 @@ public class SpecialityService {
 	}
 
 	@POST
-	@Path("/delete/{specsId}")
+	@Path("/delete")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deletespecs(@PathParam("specsId") Long specsId) {
+	public Response deletespecs(@QueryParam("specsId") Long specsId) {
 
 		System.out.println("Delete specs");
 		SpecialityImpl specsImpl = SpecialityImpl.getInstance();

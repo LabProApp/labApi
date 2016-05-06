@@ -6,8 +6,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.LabRep;
@@ -28,9 +28,9 @@ public class LabRepService {
 	}
 
 	@GET
-	@Path("/get/{labRepId}")
+	@Path("/get")
 	@Produces(MediaType.APPLICATION_XML)
-	public LabRep getLab(@PathParam("labRepId") Long labRepId) {
+	public LabRep getLab(@QueryParam("labRepId") Long labRepId) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
 		LabRep lr = instance.getLab(labRepId);
@@ -42,7 +42,7 @@ public class LabRepService {
 	@GET
 	@Path("/getList/labBranchCode")
 	@Produces(MediaType.APPLICATION_XML)
-	public List<LabRep> getLabRepList(@PathParam("labBranchCode") Long labBranchCode) {
+	public List<LabRep> getLabRepList(@QueryParam("labBranchCode") Long labBranchCode) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
 		List<LabRep> labList = instance.getLabRepList(labBranchCode);
@@ -67,9 +67,9 @@ public class LabRepService {
 	}
 
 	@POST
-	@Path("/delete/{labBranchCode}")
+	@Path("/delete")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deleteLab(@PathParam("labBranchCode") Long labBranchCode) {
+	public Response deleteLab(@QueryParam("labBranchCode") Long labBranchCode) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
 		Response resp = instance.deleteLabRep(labBranchCode);
@@ -78,9 +78,9 @@ public class LabRepService {
 		return resp;
 	}
 	@POST
-	@Path("/activateLabRep/{labBranchCode}")
+	@Path("/activateLabRep")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response activateLabRep(@PathParam("labBranchCode") Long labBranchCode) {
+	public Response activateLabRep(@QueryParam("labBranchCode") Long labBranchCode) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
 		Response resp = instance.activateLabRep(labBranchCode);

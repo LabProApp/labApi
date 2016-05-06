@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Patient;
@@ -29,9 +30,9 @@ public class PatientService {
 	}
 
 	@GET
-	@Path("/get/{patientId}")
+	@Path("/get")
 	@Produces(MediaType.APPLICATION_XML)
-	public Patient get(@PathParam("patientId") Long patientId) {
+	public Patient get(@QueryParam("patientId") Long patientId) {
 		PatientImpl patientImpl = PatientImpl.getInstance();
 		Patient ptnt = patientImpl.get(patientId);
 		return ptnt;
@@ -63,9 +64,9 @@ public class PatientService {
 	}
 
 	@POST
-	@Path("/delete/{patientId}")
+	@Path("/delete")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deletepatient(@PathParam("patientId") Long patientId) {
+	public Response deletepatient(@QueryParam("patientId") Long patientId) {
 
 		System.out.println("Delete patient");
 		PatientImpl patientImpl = PatientImpl.getInstance();
@@ -75,9 +76,9 @@ public class PatientService {
 
 	}
 	@POST
-	@Path("/activatepatient/{patientId}")
+	@Path("/activatepatient")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response activatepatient(@PathParam("patientId") Long patientId) {
+	public Response activatepatient(@QueryParam("patientId") Long patientId) {
 
 		System.out.println("Delete patient");
 		PatientImpl patientImpl = PatientImpl.getInstance();

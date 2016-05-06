@@ -6,7 +6,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -31,9 +30,9 @@ public class DoctorService {
 	}
 
 	@GET
-	@Path("/get/{doctorId}")
+	@Path("/get")
 	@Produces(MediaType.APPLICATION_XML)
-	public Doctor get(@PathParam("doctorId") Long doctorId) {
+	public Doctor get(@QueryParam("doctorId") Long doctorId) {
 		DoctorImpl doctorImpl = DoctorImpl.getInstance();
 		Doctor doct = doctorImpl.get(doctorId);
 		return doct;
@@ -88,9 +87,9 @@ public class DoctorService {
 	}
 
 	@POST
-	@Path("/delete/{doctorId}")
+	@Path("/delete")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deletedoctor(@PathParam("doctorId") Long doctorId) {
+	public Response deletedoctor(@QueryParam("doctorId") Long doctorId) {
 
 		System.out.println("Delete doctor");
 		DoctorImpl doctorImpl = DoctorImpl.getInstance();
@@ -100,9 +99,9 @@ public class DoctorService {
 
 	}
 	@POST
-	@Path("/activatedoctor/{doctorId}")
+	@Path("/activatedoctor")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response activatedoctor(@PathParam("doctorId") Long doctorId) {
+	public Response activatedoctor(@QueryParam("doctorId") Long doctorId) {
 
 		System.out.println("Delete doctor");
 		DoctorImpl doctorImpl = DoctorImpl.getInstance();

@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
@@ -29,9 +30,9 @@ public class TestsService {
 	}
 
 	@GET
-	@Path("/get/{testsId}")
+	@Path("/get")
 	@Produces(MediaType.APPLICATION_XML)
-	public Tests get(@PathParam("testsId") Long testsId) {
+	public Tests get(@QueryParam("testsId") Long testsId) {
 		TestsImpl testsImpl = TestsImpl.getInstance();
 		Tests cust = testsImpl.get(testsId);
 		return cust;
@@ -62,9 +63,9 @@ public class TestsService {
 	}
 
 	@POST
-	@Path("/delete/{testsId}")
+	@Path("/delete")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deletetests(@PathParam("testsId") Long testsId) {
+	public Response deletetests(@QueryParam("testsId") Long testsId) {
 
 		System.out.println("Delete tests");
 		TestsImpl testsImpl = TestsImpl.getInstance();

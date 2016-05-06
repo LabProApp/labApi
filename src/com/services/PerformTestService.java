@@ -6,6 +6,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Appointment;
@@ -42,9 +43,9 @@ public class PerformTestService {
 	}
 
 	@POST
-	@Path("/uploadReports/{appntId}")
+	@Path("/uploadReports")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response uploadReports(@PathParam("appntId") String appntId) {
+	public Response uploadReports(@QueryParam("appntId") String appntId) {
 
 		PerformTestImpl instance = PerformTestImpl.getInstance();
 

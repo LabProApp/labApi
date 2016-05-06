@@ -6,8 +6,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.beans.Response;
@@ -29,9 +29,9 @@ public class TestsbyLabService {
 	}
 
 	/*@GET
-	@Path("/getLabsbyTests/{testsId}")
+	@Path("/getLabsbyTests")
 	@Produces(MediaType.APPLICATION_XML)
-	public List<TestsbyLab> getLabsbyTests(@PathParam("testsId") Long testsId) {
+	public List<TestsbyLab> getLabsbyTests(@QueryParam("testsId") Long testsId) {
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
 		List<TestsbyLab> testList = testsImpl.getLabsbyTests(testsId);
 		return testList;
@@ -39,10 +39,10 @@ public class TestsbyLabService {
 	}
 
 	@GET
-	@Path("/getTestsbyLabOffice/{labOfficeId}")
+	@Path("/getTestsbyLabOffice")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<TestsbyLab> getTestsbyLabOffice(
-			@PathParam("labOfficeId") Long labOfficeId) {
+			@QueryParam("labOfficeId") Long labOfficeId) {
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
 		List<TestsbyLab> testList = testsImpl.getTestsbyLabOffice(labOfficeId);
 		return testList;
@@ -50,10 +50,10 @@ public class TestsbyLabService {
 	}*/
 
 	@GET
-	@Path("/getTestsbyLabBranch/{labBranchCd}")
+	@Path("/getTestsbyLabBranch")
 	@Produces(MediaType.APPLICATION_XML)
 	public  List<TestsbyLab> getTestsbyLabBranch(
-			@PathParam("labBranchCd") Long labBranchCd) {
+			@QueryParam("labBranchCd") Long labBranchCd) {
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
 		 List<TestsbyLab> testList = testsImpl.getTestsbyLabBranch(labBranchCd);
 		return testList;
@@ -73,9 +73,9 @@ public class TestsbyLabService {
 	}
 
 	@POST
-	@Path("/deletetestByLab/{id}")
+	@Path("/deletetestByLab")
 	@Produces(MediaType.APPLICATION_XML)
-	public Response deletetestByLab(@PathParam("id") Long id) {
+	public Response deletetestByLab(@QueryParam("id") Long id) {
 
 		System.out.println("Delete tests");
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
