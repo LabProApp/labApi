@@ -10,15 +10,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class S3Image {
 
 	String Id;
+	Integer img_num;
 	String img_type; // profile/extra
-	String user_type; //Doctor/Patient/Lab Branch/Lab Office/Test Result
+	String user_type; // Doctor/Patient/Lab Branch/Lab Office/Test Result
 	String img_name;
 	byte[] image;
-	
 
 	public String getId() {
 		return Id;
-	} 
+	}
 
 	@XmlElement
 	public void setId(String id) {
@@ -59,5 +59,14 @@ public class S3Image {
 	@XmlElement
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public Integer getImg_num() {
+		return img_num;
+	}
+
+	@XmlElement
+	public void setImg_num(Integer img_num) {
+		this.img_num = img_num;
 	}
 }

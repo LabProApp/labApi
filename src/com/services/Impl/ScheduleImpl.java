@@ -49,7 +49,7 @@ public class ScheduleImpl {
 	public Response addSchedule(Schedule schedule) {
 
 		Response resp = new Response();
-		System.out.println("Add Schedule =>" + schedule);
+		System.out.println("Add Schedule =>" + schedule.toString());
 
 		if (null == schedule.getDocId() && null == schedule.getBranchCode()
 				&& null == schedule.getLabRepId()) {
