@@ -24,7 +24,7 @@ public class Tests {
 				+ lowerValue + ", upperValue=" + upperValue + ", units="
 				+ units + ", testType=" + testType + ", bodyOrgan=" + bodyOrgan
 				+ ", description=" + description + ", procedure=" + procedure
-				+ ", imgPath=" + imgPath + "]";
+				+ "]";
 	}
 
 	@Id
@@ -51,8 +51,6 @@ public class Tests {
 	String description;
 	@Column(name = "TEST_STEPS")
 	String procedure;
-	@Column(name = "IMG_PATH")
-	String imgPath;
 
 	public String getTestName() {
 		return testName;
@@ -151,15 +149,6 @@ public class Tests {
 	@XmlElement
 	public void setProcedure(String procedure) {
 		this.procedure = procedure;
-	}
-
-	public String getImgPath() {
-		return imgPath;
-	}
-
-	@XmlElement
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 
 }

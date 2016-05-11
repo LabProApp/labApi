@@ -202,7 +202,7 @@ public class DoctorImpl {
 	public List<Doctor> getDoctorbyCity_Spec(String city,String spec,String state) {
 		// Return List of Doctor including DoctorId,Name, Hospital Name, Fee,
 		// Degree, Experience,Address,Primary/Secondary Mobile Number,Email
-		// ID,ImgPath,bookFlag
+		// ID,bookFlag
 
 		List<Object[]> docList = new ArrayList<Object[]>();
 		List<Doctor> DoctorDtoList = null;
@@ -210,7 +210,7 @@ public class DoctorImpl {
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT d.DOC_ID,d.DOC_NAME,d.STATUS,d.HOSP_NAME,d.DOC_DEGREE,d.DOC_SPEC,d.DOC_EXP,d.FEE,d.BOOK_FLAG,d.PRIM_MOBILE,d.SECOND_MOBILE,d.EMAIL_ID,d.IMG_PATH,a.ADDRESS_ID,a.ADD_LINE1,a.ADD_LINE2,a.ADD_LINE3,a.CITY,a.STATE,a.COUNTRY,a.ZIP FROM Doctor d,Address a where d.docAddress_ADDRESS_ID = a.ADDRESS_ID AND a.CITY like :city AND a.STATE like :state AND d.DOC_SPEC like :specialization AND d.STATUS = :status");
+					.createNativeQuery("SELECT d.DOC_ID,d.DOC_NAME,d.STATUS,d.HOSP_NAME,d.DOC_DEGREE,d.DOC_SPEC,d.DOC_EXP,d.FEE,d.BOOK_FLAG,d.PRIM_MOBILE,d.SECOND_MOBILE,d.EMAIL_ID,a.ADDRESS_ID,a.ADD_LINE1,a.ADD_LINE2,a.ADD_LINE3,a.CITY,a.STATE,a.COUNTRY,a.ZIP FROM Doctor d,Address a where d.docAddress_ADDRESS_ID = a.ADDRESS_ID AND a.CITY like :city AND a.STATE like :state AND d.DOC_SPEC like :specialization AND d.STATUS = :status");
 		
 			q.setParameter("city", city);
 			q.setParameter("state", state);
@@ -262,33 +262,31 @@ public class DoctorImpl {
 				if (obj[11] instanceof String) {
 					doctor.setEmailID(((String) obj[11])); // EMAIL_ID
 				}
-				if (obj[12] instanceof String) {
-					doctor.setImg_path(((String) obj[12])); // IMG_PATH
-				}
-				if (obj[13] instanceof Number) {
+				
+				if (obj[12] instanceof Number) {
 					doctor.getDocAddress().setAddressId(
-							((Number) obj[13]).longValue()); // ADDRESS_ID
+							((Number) obj[12]).longValue()); // ADDRESS_ID
+				}
+				if (obj[13] instanceof String) {
+					doctor.getDocAddress().setAddressLine1(((String) obj[13])); // ADD_LINE1
 				}
 				if (obj[14] instanceof String) {
-					doctor.getDocAddress().setAddressLine1(((String) obj[14])); // ADD_LINE1
+					doctor.getDocAddress().setAddressLine2(((String) obj[14])); // ADD_LINE2
 				}
 				if (obj[15] instanceof String) {
-					doctor.getDocAddress().setAddressLine2(((String) obj[15])); // ADD_LINE2
+					doctor.getDocAddress().setAddressLine3(((String) obj[15])); // ADD_LINE3
 				}
 				if (obj[16] instanceof String) {
-					doctor.getDocAddress().setAddressLine3(((String) obj[16])); // ADD_LINE3
+					doctor.getDocAddress().setCity(((String) obj[16])); // CITY
 				}
 				if (obj[17] instanceof String) {
-					doctor.getDocAddress().setCity(((String) obj[17])); // CITY
+					doctor.getDocAddress().setState(((String) obj[17])); // STATE
 				}
 				if (obj[18] instanceof String) {
-					doctor.getDocAddress().setState(((String) obj[18])); // STATE
+					doctor.getDocAddress().setCountry(((String) obj[18])); // COUNTRY
 				}
 				if (obj[19] instanceof String) {
-					doctor.getDocAddress().setCountry(((String) obj[19])); // COUNTRY
-				}
-				if (obj[20] instanceof String) {
-					doctor.getDocAddress().setZip(((String) obj[20])); // ZIP
+					doctor.getDocAddress().setZip(((String) obj[19])); // ZIP
 				}
 				DoctorDtoList.add(doctor);
 

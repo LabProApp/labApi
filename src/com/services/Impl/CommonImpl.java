@@ -71,8 +71,8 @@ public class CommonImpl {
 				
 				Doctor d = new Doctor();
 				Query q = em
-						.createNativeQuery("UPDATE DOCTOR set IMG_PATH=:img_path WHERE DOC_ID=:doctorId");
-				q.setParameter("img_path", img.getImg_name());
+						.createNativeQuery("UPDATE DOCTOR set IMG_PATH"+img.getImg_num()+"=:img_path WHERE DOC_ID=:doctorId");
+				q.setParameter("img_path", img_name);
 				q.setParameter("doctorId", img.getId());
 
 				int updateCount = q.executeUpdate();
@@ -83,16 +83,38 @@ public class CommonImpl {
 			}
 			if (img.getUser_type().equalsIgnoreCase(Constants.LAB_BRANCH)) {
 
+				Patient d = new Patient();
+				Query q = em
+						.createNativeQuery("UPDATE LAB_BRANCH set IMG_PATH"+img.getImg_num()+"=:img_path  WHERE LAB_BRANCH_CD=:branchCd");
+				q.setParameter("img_path", img_name);
+				q.setParameter("branchCd", img.getId());
+
+				int updateCount = q.executeUpdate();
+
+				System.out.println("Number of Lab Branch Updated = "
+						+ updateCount);
+
 			}
 			if (img.getUser_type().equalsIgnoreCase(Constants.LAB_OFFICE)) {
+
+				Patient d = new Patient();
+				Query q = em
+						.createNativeQuery("UPDATE LAB_OFFICE set IMG_PATH"+img.getImg_num()+"=:img_path  WHERE LAB_OFFICE_ID=:OfficeId");
+				q.setParameter("img_path", img_name);
+				q.setParameter("OfficeId", img.getId());
+
+				int updateCount = q.executeUpdate();
+
+				System.out.println("Number of Lab Office Updated = "
+						+ updateCount);
 
 			}
 			if (img.getUser_type().equalsIgnoreCase(Constants.PATIENT)) {
 
 				Patient d = new Patient();
 				Query q = em
-						.createNativeQuery("UPDATE PATIENT set IMG_PATH=:img_path WHERE PTNT_ID=:ptntId");
-				q.setParameter("img_path", img.getImg_name());
+						.createNativeQuery("UPDATE PATIENT set IMG_PATH"+img.getImg_num()+"=:img_path  WHERE PTNT_ID=:ptntId");
+				q.setParameter("img_path", img_name);
 				q.setParameter("ptntId", img.getId());
 
 				int updateCount = q.executeUpdate();

@@ -18,8 +18,8 @@ import com.services.Impl.UsersImpl;
 public class UserService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response add(Users user) {
 
 		System.out.println("Add Users =>" + user);
@@ -30,7 +30,7 @@ public class UserService {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Users> get(
 			@QueryParam("emailId") String emailId) {
 		UsersImpl userImpl = UsersImpl.getInstance();
@@ -41,8 +41,8 @@ public class UserService {
 
 	@POST
 	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateuser(Users user) {
 
 		UsersImpl userImpl = UsersImpl.getInstance();
@@ -53,7 +53,7 @@ public class UserService {
 
 	@POST
 	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteuser(
 			@QueryParam("emailId") String emailId) {
 
@@ -67,7 +67,7 @@ public class UserService {
 
 	@POST
 	@Path("/activateuser")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response activateuser(
 			@QueryParam("emailId") String emailId,@QueryParam("otp") String otp) {
 

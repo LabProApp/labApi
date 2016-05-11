@@ -31,7 +31,7 @@ public class LabBranch {
 				+ labOfficeId + ", labName=" + labName + ", status=" + status
 				+ ", labBranchOwner=" + labBranchOwner + ", labAddress="
 				+ labAddress + ", primaryMobileNo=" + primaryMobileNo
-				+ ", emailID=" + emailID + ", img_path=" + img_path + "]";
+				+ ", emailID=" + emailID +  "]";
 	}
 
 	@Id
@@ -54,8 +54,7 @@ public class LabBranch {
 	
 	@Column(name = "EMAIL_ID")
 	String emailID;
-	@Column(name = "IMG_PATH")
-	String img_path;
+	
 	
 	
 	public String getLabName() {
@@ -151,13 +150,6 @@ public class LabBranch {
 		this.emailID = emailID;
 	}
 
-	public String getImg_path() {
-		return img_path;
-	}
-	@XmlElement
-	public void setImg_path(String img_path) {
-		this.img_path = img_path;
-	}
-
+	
 	
 }

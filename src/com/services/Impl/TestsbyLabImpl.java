@@ -105,7 +105,7 @@ public class TestsbyLabImpl {
 		System.out.println("Get Entire LabBranch List");
 		try {
 			Query q = em
-					.createNativeQuery("SELECT lb.LAB_BRANCH_CD,lb.LAB_NAME,lb.LAB_BR_OWNER,lb.PRIM_MOBILE,lb.EMAIL_ID,lb.IMG_PATH,"
+					.createNativeQuery("SELECT lb.LAB_BRANCH_CD,lb.LAB_NAME,lb.LAB_BR_OWNER,lb.PRIM_MOBILE,lb.EMAIL_ID,"
 							+ "a.ADD_LINE1,a.ADD_LINE2,a.ADD_LINE3,a.CITY,a.STATE,a.ZIP,a.COUNTRY"
 							+ "t.TEST_NAME,t.LOWER_VALUE,tl.TEST_TYPE,tl.DESCRIPTION,tl.TEST_STEPS"
 							+ "tl.HOME_PICK,tl.FEE,tl.UPPER_VALUE,tl.UNITS,"

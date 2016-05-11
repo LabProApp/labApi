@@ -47,8 +47,7 @@ public class LabOffice {
 	String secondaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
-	@Column(name = "IMG_PATH")
-	String img_path;
+	
 	public String getLabName() {
 		return labName;
 	}
@@ -128,12 +127,5 @@ public class LabOffice {
 		this.emailID = emailID;
 	}
 
-	public String getImg_path() {
-		return img_path;
-	}
-	@XmlElement
-	public void setImg_path(String img_path) {
-		this.img_path = img_path;
-	}
-
+	
 }

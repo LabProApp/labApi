@@ -114,7 +114,7 @@ public class LabRepImpl {
 			}
 
 			Query query = em
-					.createNativeQuery("SELECT  LAB_REP_ID,PRIM_MOBILE,REP_NAME,LAB_BRANCH_CD,STATUS,IMG_PATH FROM LAB_REP where LAB_BRANCH_CD =:LabBranchCode");
+					.createNativeQuery("SELECT  LAB_REP_ID,PRIM_MOBILE,REP_NAME,LAB_BRANCH_CD,STATUS FROM LAB_REP where LAB_BRANCH_CD =:LabBranchCode");
 			query.setParameter("LabBranchCode", LabBranchCode);
 			objList = query.getResultList();
 

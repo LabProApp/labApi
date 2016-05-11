@@ -407,7 +407,7 @@ POST -- http://localhost:8080/LabApi/api/test/add
 	<description>D.L.C test is to check if body is Infected from Virus.
 	</description>
 	<procedure>Blood Sample is taken from body</procedure>
-	<imgPath>c://images//tests//dlc.png</imgPath>
+	
 	<status>11</status>
 
 </test>
@@ -419,7 +419,7 @@ POST -- http://localhost:8080/LabApi/api/tests/update
     <bodyOrgan>Infection</bodyOrgan>
     <description>D.L.C test is to check if body is Infected from Virus.
 	</description>
-    <imgPath>c://images//tests//dlc.png</imgPath>
+    
     <lowerValue>1</lowerValue>
     <procedure>Blood Sample is taken from body</procedure>
     <shortName>D.L.C</shortName>

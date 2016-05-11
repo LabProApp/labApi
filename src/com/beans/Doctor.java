@@ -29,7 +29,7 @@ public class Doctor {
 				+ doctorExperience + ", docAddress=" + docAddress
 				+ ", primaryMobileNo=" + primaryMobileNo
 				+ ", secondaryMobileNo=" + secondaryMobileNo + ", emailID="
-				+ emailID + ", img_path=" + img_path + ", fee=" + fee + ", bookFlag=" + bookFlag+"]";
+				+ emailID + ", fee=" + fee + ", bookFlag=" + bookFlag+"]";
 	}
  
 	
@@ -60,8 +60,7 @@ public class Doctor {
 	String secondaryMobileNo;
 	@Column(name = "EMAIL_ID")
 	String emailID;
-	@Column(name = "IMG_PATH")
-	String img_path;
+	
 	@Column(name = "FEE")
 	Integer fee;
 	@Column(name = "BOOK_FLAG")
@@ -184,14 +183,7 @@ public class Doctor {
 		this.emailID = emailID;
 	}
 
-	public String getImg_path() {
-		return img_path;
-	}
-	@XmlElement
-	public void setImg_path(String img_path) {
-		this.img_path = img_path;
-	}
-
+	
 	public Integer getFee() {
 		return fee;
 	}

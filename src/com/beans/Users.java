@@ -9,15 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 @Entity
 @Table(name = "USERS")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Users")
+//@XmlAccessorType(XmlAccessType.NONE)
+//@XmlRootElement(name = "Users")
 public class Users {
 
 	@Override
@@ -53,7 +48,7 @@ public class Users {
 		return Id;
 	}
 
-	@XmlElement
+	
 	public void setId(Long id) {
 		Id = id;
 	}
@@ -62,7 +57,7 @@ public class Users {
 		return mobile;
 	}
 
-	@XmlElement
+	
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
@@ -71,7 +66,7 @@ public class Users {
 		return encPassword;
 	}
 
-	@XmlElement
+	
 	public void setEncPassword(String encPassword) {
 		this.encPassword = encPassword;
 	}
@@ -80,7 +75,7 @@ public class Users {
 		return status;
 	}
 
-	@XmlElement
+	
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -89,7 +84,7 @@ public class Users {
 		return userTyp;
 	}
 
-	@XmlElement
+	
 	public void setUserTyp(String userTyp) {
 		this.userTyp = userTyp;
 	}
@@ -98,7 +93,7 @@ public class Users {
 		return emailId;
 	}
 
-	@XmlElement
+	
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
@@ -107,7 +102,7 @@ public class Users {
 		return otp;
 	}
 
-	@XmlElement
+	
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
@@ -116,7 +111,7 @@ public class Users {
 		return otpSentTime;
 	}
 
-	@XmlElement
+	
 	public void setOtpSentTime(Date otpSentTime) {
 		this.otpSentTime = otpSentTime;
 	}
@@ -124,7 +119,7 @@ public class Users {
 	public String getName() {
 		return name;
 	}
-	@XmlElement
+	
 	public void setName(String name) {
 		this.name = name;
 	}
