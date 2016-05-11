@@ -8,15 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "APPOINTMENT")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Appointment")
 public class Appointment {
 
 	// Entity to hold Appointment of Patient with Doctor/Lab Branch
@@ -74,7 +68,6 @@ public class Appointment {
 		return appntmntId;
 	}
 
-	@XmlElement
 	public void setAppntmntId(Long appntmntId) {
 		this.appntmntId = appntmntId;
 	}
@@ -83,7 +76,6 @@ public class Appointment {
 		return appmnt_reference;
 	}
 
-	@XmlElement
 	public void setAppmnt_reference(String appmnt_reference) {
 		this.appmnt_reference = appmnt_reference;
 	}
@@ -92,7 +84,6 @@ public class Appointment {
 		return scheduleId;
 	}
 
-	@XmlElement
 	public void setScheduleId(Long scheduleId) {
 		this.scheduleId = scheduleId;
 	}
@@ -101,7 +92,6 @@ public class Appointment {
 		return appmntDate;
 	}
 
-	@XmlElement
 	public void setAppmntDate(Date appmntDate) {
 		this.appmntDate = appmntDate;
 	}
@@ -110,7 +100,6 @@ public class Appointment {
 		return docId;
 	}
 
-	@XmlElement
 	public void setDocId(Long docId) {
 		this.docId = docId;
 	}
@@ -119,7 +108,6 @@ public class Appointment {
 		return branchCode;
 	}
 
-	@XmlElement
 	public void setBranchCode(Long branchCode) {
 		this.branchCode = branchCode;
 	}
@@ -128,7 +116,6 @@ public class Appointment {
 		return ptntId;
 	}
 
-	@XmlElement
 	public void setPtntId(Long ptntId) {
 		this.ptntId = ptntId;
 	}
@@ -137,7 +124,6 @@ public class Appointment {
 		return isHomePick;
 	}
 
-	@XmlElement
 	public void setHomePick(boolean isHomePick) {
 		this.isHomePick = isHomePick;
 	}
@@ -146,7 +132,6 @@ public class Appointment {
 		return labRepId;
 	}
 
-	@XmlElement
 	public void setLabRepId(Long labRepId) {
 		this.labRepId = labRepId;
 	}
@@ -155,7 +140,6 @@ public class Appointment {
 		return startTime;
 	}
 
-	@XmlElement
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
@@ -164,7 +148,6 @@ public class Appointment {
 		return endTime;
 	}
 
-	@XmlElement
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
@@ -173,7 +156,6 @@ public class Appointment {
 		return status;
 	}
 
-	@XmlElement
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -182,7 +164,6 @@ public class Appointment {
 		return shift;
 	}
 
-	@XmlElement
 	public void setShift(String shift) {
 		this.shift = shift;
 	}
@@ -191,7 +172,6 @@ public class Appointment {
 		return token_num;
 	}
 
-	@XmlElement
 	public void setToken_num(Integer token_num) {
 		this.token_num = token_num;
 	}
@@ -200,7 +180,6 @@ public class Appointment {
 		return refferedByDoc;
 	}
 
-	@XmlElement
 	public void setRefferedByDoc(Long refferedByDoc) {
 		this.refferedByDoc = refferedByDoc;
 	}
@@ -209,7 +188,6 @@ public class Appointment {
 		return diseases_description;
 	}
 
-	@XmlElement
 	public void setDiseases_description(String diseases_description) {
 		this.diseases_description = diseases_description;
 	}
@@ -218,7 +196,6 @@ public class Appointment {
 		return prescription;
 	}
 
-	@XmlElement
 	public void setPrescription(String prescription) {
 		this.prescription = prescription;
 	}
@@ -227,7 +204,6 @@ public class Appointment {
 		return testIds;
 	}
 
-	@XmlElement
 	public void setTestIds(String testIds) {
 		this.testIds = testIds;
 	}
@@ -236,7 +212,6 @@ public class Appointment {
 		return testResultIds;
 	}
 
-	@XmlElement
 	public void setTestResultIds(String testResultIds) {
 		this.testResultIds = testResultIds;
 	}

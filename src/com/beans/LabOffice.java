@@ -8,15 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 @Table(name = "LAB_OFFICE")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "LabOffice")
+
 public class LabOffice {
 
 	@Override
@@ -52,7 +47,7 @@ public class LabOffice {
 		return labName;
 	}
 
-	@XmlElement
+	
 	public void setLabName(String labName) {
 		this.labName = labName;
 	}
@@ -61,7 +56,7 @@ public class LabOffice {
 		return labOfficeId;
 	}
 
-	@XmlElement
+	
 	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
@@ -70,7 +65,7 @@ public class LabOffice {
 		return status;
 	}
 
-	@XmlElement
+	
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -79,7 +74,7 @@ public class LabOffice {
 		return labAddress;
 	}
 
-	@XmlElement
+	
 	public void setLabAddress(Address labAddress) {
 		this.labAddress = labAddress;
 	}
@@ -88,7 +83,7 @@ public class LabOffice {
 		return labOwner;
 	}
 
-	@XmlElement
+	
 	public void setLabOwner(String labOwner) {
 		this.labOwner = labOwner;
 	}
@@ -97,7 +92,7 @@ public class LabOffice {
 		return primaryMobileNo;
 	}
 
-	@XmlElement
+	
 	public void setPrimaryMobileNo(String primaryMobileNo) {
 		this.primaryMobileNo = primaryMobileNo;
 	}
@@ -106,7 +101,7 @@ public class LabOffice {
 		return secondaryMobileNo;
 	}
 
-	@XmlElement
+	
 	public void setSecondaryMobileNo(String secondaryMobileNo) {
 		this.secondaryMobileNo = secondaryMobileNo;
 	}
@@ -122,7 +117,7 @@ public class LabOffice {
 	 * @param emailID
 	 *            the emailID to set
 	 */
-	@XmlElement
+	
 	public void setEmailID(String emailID) {
 		this.emailID = emailID;
 	}

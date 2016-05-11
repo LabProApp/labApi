@@ -11,8 +11,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
-//@XmlAccessorType(XmlAccessType.NONE)
-//@XmlRootElement(name = "Users")
 public class Users {
 
 	@Override
@@ -48,7 +46,6 @@ public class Users {
 		return Id;
 	}
 
-	
 	public void setId(Long id) {
 		Id = id;
 	}
@@ -57,7 +54,6 @@ public class Users {
 		return mobile;
 	}
 
-	
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
@@ -66,7 +62,6 @@ public class Users {
 		return encPassword;
 	}
 
-	
 	public void setEncPassword(String encPassword) {
 		this.encPassword = encPassword;
 	}
@@ -75,7 +70,6 @@ public class Users {
 		return status;
 	}
 
-	
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -84,7 +78,6 @@ public class Users {
 		return userTyp;
 	}
 
-	
 	public void setUserTyp(String userTyp) {
 		this.userTyp = userTyp;
 	}
@@ -93,7 +86,6 @@ public class Users {
 		return emailId;
 	}
 
-	
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
@@ -102,7 +94,6 @@ public class Users {
 		return otp;
 	}
 
-	
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
@@ -111,7 +102,6 @@ public class Users {
 		return otpSentTime;
 	}
 
-	
 	public void setOtpSentTime(Date otpSentTime) {
 		this.otpSentTime = otpSentTime;
 	}
@@ -119,7 +109,7 @@ public class Users {
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}

@@ -8,30 +8,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "LAB_BRANCH")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "LabBranch")
 public class LabBranch {
 
-	/* 
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	
+
 	@Override
 	public String toString() {
 		return "LabBranch [labbranchCode=" + labbranchCode + ", labOfficeId="
 				+ labOfficeId + ", labName=" + labName + ", status=" + status
 				+ ", labBranchOwner=" + labBranchOwner + ", labAddress="
 				+ labAddress + ", primaryMobileNo=" + primaryMobileNo
-				+ ", emailID=" + emailID +  "]";
+				+ ", emailID=" + emailID + "]";
 	}
 
 	@Id
@@ -47,21 +41,17 @@ public class LabBranch {
 	@Column(name = "LAB_BR_OWNER")
 	String labBranchOwner;
 	@OneToOne(cascade = CascadeType.ALL)
-	Address labAddress=new Address();
+	Address labAddress = new Address();
 	@Column(name = "PRIM_MOBILE")
 	String primaryMobileNo;
-	
-	
+
 	@Column(name = "EMAIL_ID")
 	String emailID;
-	
-	
-	
+
 	public String getLabName() {
 		return labName;
 	}
 
-	@XmlElement
 	public void setLabName(String labName) {
 		this.labName = labName;
 	}
@@ -70,7 +60,6 @@ public class LabBranch {
 		return labOfficeId;
 	}
 
-	@XmlElement
 	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
@@ -79,7 +68,6 @@ public class LabBranch {
 		return status;
 	}
 
-	@XmlElement
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -99,7 +87,7 @@ public class LabBranch {
 	 * @param labbranchCode
 	 *            the labbranchCode to set
 	 */
-	@XmlElement
+
 	public void setLabbranchCode(Long labbranchCode) {
 		this.labbranchCode = labbranchCode;
 	}
@@ -115,12 +103,11 @@ public class LabBranch {
 	 * @param primaryMobileNo3
 	 *            the primaryMobileNo3 to set
 	 */
-	@XmlElement
+
 	public void setPrimaryMobileNo(String primaryMobileNo) {
 		this.primaryMobileNo = primaryMobileNo;
 	}
 
-	@XmlElement
 	public void setLabBranchOwner(String labBranchOwner) {
 		this.labBranchOwner = labBranchOwner;
 	}
@@ -129,7 +116,6 @@ public class LabBranch {
 		return labAddress;
 	}
 
-	@XmlElement
 	public void setLabAddress(Address labAddress) {
 		this.labAddress = labAddress;
 	}
@@ -145,11 +131,9 @@ public class LabBranch {
 	 * @param emailID
 	 *            the emailID to set
 	 */
-	@XmlElement
+
 	public void setEmailID(String emailID) {
 		this.emailID = emailID;
 	}
 
-	
-	
 }

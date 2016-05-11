@@ -6,15 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 @Table(name = "SPECIALITY")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Speciality")
 public class Speciality {
 
 	@Override
@@ -39,7 +33,6 @@ public class Speciality {
 		return specId;
 	}
 
-	@XmlElement
 	public void setSpecId(Long specId) {
 		this.specId = specId;
 	}
@@ -48,7 +41,6 @@ public class Speciality {
 		return specName;
 	}
 
-	@XmlElement
 	public void setSpecName(String specName) {
 		this.specName = specName;
 	}
@@ -57,7 +49,6 @@ public class Speciality {
 		return search_tags;
 	}
 
-	@XmlElement
 	public void setSearch_tags(String search_tags) {
 		this.search_tags = search_tags;
 	}
@@ -66,7 +57,6 @@ public class Speciality {
 		return status;
 	}
 
-	@XmlElement
 	public void setStatus(Integer status) {
 		this.status = status;
 	}

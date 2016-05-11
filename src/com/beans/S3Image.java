@@ -1,12 +1,5 @@
 package com.beans;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "S3Image")
 public class S3Image {
 
 	String Id;
@@ -20,7 +13,6 @@ public class S3Image {
 		return Id;
 	}
 
-	@XmlElement
 	public void setId(String id) {
 		Id = id;
 	}
@@ -29,7 +21,6 @@ public class S3Image {
 		return img_type;
 	}
 
-	@XmlElement
 	public void setImg_type(String img_type) {
 		this.img_type = img_type;
 	}
@@ -38,7 +29,6 @@ public class S3Image {
 		return user_type;
 	}
 
-	@XmlElement
 	public void setUser_type(String user_type) {
 		this.user_type = user_type;
 	}
@@ -47,7 +37,6 @@ public class S3Image {
 		return img_name;
 	}
 
-	@XmlElement
 	public void setImg_name(String img_name) {
 		this.img_name = img_name;
 	}
@@ -56,7 +45,6 @@ public class S3Image {
 		return image;
 	}
 
-	@XmlElement
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
@@ -65,7 +53,6 @@ public class S3Image {
 		return img_num;
 	}
 
-	@XmlElement
 	public void setImg_num(Integer img_num) {
 		this.img_num = img_num;
 	}

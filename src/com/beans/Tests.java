@@ -6,15 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 @Table(name = "TESTS")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "test")
 public class Tests {
 
 	@Override
@@ -56,7 +50,6 @@ public class Tests {
 		return testName;
 	}
 
-	@XmlElement
 	public void setTestName(String testName) {
 		this.testName = testName;
 	}
@@ -65,7 +58,6 @@ public class Tests {
 		return testId;
 	}
 
-	@XmlElement
 	public void setTestId(Long testId) {
 		this.testId = testId;
 	}
@@ -74,7 +66,6 @@ public class Tests {
 		return status;
 	}
 
-	@XmlElement
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -83,7 +74,6 @@ public class Tests {
 		return lowerValue;
 	}
 
-	@XmlElement
 	public void setLowerValue(String lowerValue) {
 		this.lowerValue = lowerValue;
 	}
@@ -92,7 +82,6 @@ public class Tests {
 		return upperValue;
 	}
 
-	@XmlElement
 	public void setUpperValue(String upperValue) {
 		this.upperValue = upperValue;
 	}
@@ -101,7 +90,6 @@ public class Tests {
 		return units;
 	}
 
-	@XmlElement
 	public void setUnits(String units) {
 		this.units = units;
 	}
@@ -110,7 +98,6 @@ public class Tests {
 		return testType;
 	}
 
-	@XmlElement
 	public void setTestType(String testType) {
 		this.testType = testType;
 	}
@@ -119,7 +106,6 @@ public class Tests {
 		return shortName;
 	}
 
-	@XmlElement
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
 	}
@@ -128,7 +114,6 @@ public class Tests {
 		return bodyOrgan;
 	}
 
-	@XmlElement
 	public void setBodyOrgan(String bodyOrgan) {
 		this.bodyOrgan = bodyOrgan;
 	}
@@ -137,7 +122,6 @@ public class Tests {
 		return description;
 	}
 
-	@XmlElement
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -146,7 +130,6 @@ public class Tests {
 		return procedure;
 	}
 
-	@XmlElement
 	public void setProcedure(String procedure) {
 		this.procedure = procedure;
 	}

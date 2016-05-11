@@ -6,15 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "ADDRESS")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Address")
 public class Address {
 
 	@Override
@@ -58,7 +52,7 @@ public class Address {
 	 * @param addressId
 	 *            the addressId to set
 	 */
-	@XmlElement
+
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
@@ -67,7 +61,6 @@ public class Address {
 		return addressLine1;
 	}
 
-	@XmlElement
 	public void setAddressLine1(String addressLine1) {
 		this.addressLine1 = addressLine1;
 	}
@@ -76,7 +69,6 @@ public class Address {
 		return addressLine2;
 	}
 
-	@XmlElement
 	public void setAddressLine2(String addressLine2) {
 		this.addressLine2 = addressLine2;
 	}
@@ -85,7 +77,6 @@ public class Address {
 		return addressLine3;
 	}
 
-	@XmlElement
 	public void setAddressLine3(String addressLine3) {
 		this.addressLine3 = addressLine3;
 	}
@@ -94,7 +85,6 @@ public class Address {
 		return city;
 	}
 
-	@XmlElement
 	public void setCity(String city) {
 		this.city = city;
 	}
@@ -103,7 +93,6 @@ public class Address {
 		return state;
 	}
 
-	@XmlElement
 	public void setState(String state) {
 		this.state = state;
 	}
@@ -112,7 +101,6 @@ public class Address {
 		return zip;
 	}
 
-	@XmlElement
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
@@ -121,7 +109,6 @@ public class Address {
 		return country;
 	}
 
-	@XmlElement
 	public void setCountry(String country) {
 		this.country = country;
 	}
@@ -130,7 +117,6 @@ public class Address {
 		return addressType;
 	}
 
-	@XmlElement
 	public void setAddressType(String addressType) {
 		this.addressType = addressType;
 	}

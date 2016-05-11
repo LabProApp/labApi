@@ -6,15 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "TESTS_LAB")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "TestsbyLab")
 public class TestsbyLab {
 
 	@Override
@@ -23,12 +17,12 @@ public class TestsbyLab {
 				+ labbranchCode + ", testId=" + testId + ", status=" + status
 				+ ", isHomePick=" + isHomePick + "]";
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true)
 	Long Id;
-	
+
 	@Column(name = "LAB_OFFICE_ID")
 	String labOfficeId;
 	@Column(name = "LAB_BRANCH_CD")
@@ -41,7 +35,7 @@ public class TestsbyLab {
 	boolean isHomePick;
 	@Column(name = "FEE")
 	Integer fee;
-	
+
 	/**
 	 * @return the labOfficeId
 	 */
@@ -53,7 +47,7 @@ public class TestsbyLab {
 	 * @param labOfficeId
 	 *            the labOfficeId to set
 	 */
-	@XmlElement
+
 	public void setLabOfficeId(String labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
@@ -69,7 +63,7 @@ public class TestsbyLab {
 	 * @param labbranchCode
 	 *            the labbranchCode to set
 	 */
-	@XmlElement
+
 	public void setLabbranchCode(String labbranchCode) {
 		this.labbranchCode = labbranchCode;
 	}
@@ -85,7 +79,7 @@ public class TestsbyLab {
 	 * @param testId
 	 *            the testId to set
 	 */
-	@XmlElement
+
 	public void setTestId(String testId) {
 		this.testId = testId;
 	}
@@ -101,7 +95,7 @@ public class TestsbyLab {
 	 * @param status
 	 *            the status to set
 	 */
-	@XmlElement
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
@@ -117,7 +111,7 @@ public class TestsbyLab {
 	 * @param isHomePick
 	 *            the isHomePick to set
 	 */
-	@XmlElement
+
 	public void setHomePick(boolean isHomePick) {
 		this.isHomePick = isHomePick;
 	}
@@ -125,7 +119,7 @@ public class TestsbyLab {
 	public Long getId() {
 		return Id;
 	}
-	@XmlElement
+
 	public void setId(Long id) {
 		Id = id;
 	}
@@ -133,7 +127,7 @@ public class TestsbyLab {
 	public Integer getFee() {
 		return fee;
 	}
-	@XmlElement
+
 	public void setFee(Integer fee) {
 		this.fee = fee;
 	}

@@ -10,15 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "REVIEWS")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "Reviews")
 public class Reviews {
 
 	/*
@@ -67,7 +61,7 @@ public class Reviews {
 	 * @param reviewId
 	 *            the reviewId to set
 	 */
-	@XmlElement
+
 	public void setReviewId(Long reviewId) {
 		this.reviewId = reviewId;
 	}
@@ -83,7 +77,7 @@ public class Reviews {
 	 * @param doctorId
 	 *            the doctorId to set
 	 */
-	@XmlElement
+
 	public void setDoctorId(Long doctorId) {
 		this.doctorId = doctorId;
 	}
@@ -99,7 +93,7 @@ public class Reviews {
 	 * @param labOfficeId
 	 *            the labOfficeId to set
 	 */
-	@XmlElement
+
 	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
@@ -115,7 +109,7 @@ public class Reviews {
 	 * @param branchCode
 	 *            the branchCode to set
 	 */
-	@XmlElement
+
 	public void setBranchCode(Long branchCode) {
 		this.branchCode = branchCode;
 	}
@@ -131,7 +125,7 @@ public class Reviews {
 	 * @param star_rating
 	 *            the star_rating to set
 	 */
-	@XmlElement
+
 	public void setStar_rating(Integer star_rating) {
 		this.star_rating = star_rating;
 	}
@@ -163,7 +157,7 @@ public class Reviews {
 	 * @param reviewDescription
 	 *            the reviewDescription to set
 	 */
-	@XmlElement
+
 	public void setReviewDescription(String reviewDescription) {
 		this.reviewDescription = reviewDescription;
 	}
@@ -179,7 +173,7 @@ public class Reviews {
 	 * @param ratingCustomerId
 	 *            the ratingCustomerId to set
 	 */
-	@XmlElement
+
 	public void setRatingCustomerId(Long ratingCustomerId) {
 		this.ratingCustomerId = ratingCustomerId;
 	}
@@ -197,7 +191,6 @@ public class Reviews {
 		return ratingDateStr;
 	}
 
-	@XmlElement
 	public void setRatingDateStr(String ratingDateStr) {
 		this.ratingDateStr = ratingDateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");

@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
-@Table(name = "IMAGES")
+//@Entity
+//@Table(name = "IMAGES")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Images")
 public class Images {
