@@ -69,7 +69,7 @@ public class LabRepImpl {
 		return resp;
 	}
 
-	public LabRep getLab(Long labRepId) {
+	public LabRep get(Long labRepId) {
 		LabRep lab_rep = null;
 		Response resp = new Response();
 
@@ -114,9 +114,30 @@ public class LabRepImpl {
 			}
 
 			Query query = em
-					.createNativeQuery("SELECT  LAB_REP_ID,PRIM_MOBILE,REP_NAME,LAB_BRANCH_CD,STATUS FROM LAB_REP where LAB_BRANCH_CD =:LabBranchCode");
+					.createNativeQuery("SELECT  LAB_REP_ID,PRIM_MOBILE,REP_NAME,LAB_BRANCH_CD,STATUS FROM LAB_BRANCH_REP where LAB_BRANCH_CD =:LabBranchCode");
 			query.setParameter("LabBranchCode", LabBranchCode);
 			objList = query.getResultList();
+			labRepList = new ArrayList<LabRep>(objList.size());
+			for (Object obj[] : objList) {
+
+				LabRep lr = new LabRep();
+				if (obj[0] instanceof Number) {
+					lr.setLabRepresentativeId(((Number) obj[0]).longValue()); // LAB_REP_ID
+				}
+				if (obj[1] instanceof String) {
+					lr.setPrimaryMobileNo((String) obj[1]); // PRIM_MOBILE
+				}
+				if (obj[2] instanceof String) {
+					lr.setRepName((String) obj[2]); // REP_NAME
+				}
+				if (obj[3] instanceof Number) {
+					lr.setLabbranchCode(((Number) obj[3]).longValue()); // LAB_BRANCH_CD
+				}
+				if (obj[4] instanceof Number) {
+					lr.setStatus(((Number) obj[4]).intValue()); // STATUS
+				}
+				labRepList.add(lr);
+			}
 
 		} catch (HibernateException e) {
 
@@ -162,7 +183,7 @@ public class LabRepImpl {
 		return resp;
 	}
 
-	public Response deleteLabRep(Long labRepId) {
+	public Response delete(Long labRepId) {
 		Response resp = new Response();
 
 		System.out.println("Deleting Lab Representative  =>" + labRepId);

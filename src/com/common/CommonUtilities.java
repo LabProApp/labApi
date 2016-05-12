@@ -20,52 +20,71 @@ import com.beans.Schedule;
 
 public class CommonUtilities {
 
-	public static final String MORNING = "MORNING";
-	public static final String AFTERNOON = "AFTERNOON";
-	public static final String EVENING = "EVENING";
-	public static final String NIGHT = "NIGHT";
+	public static void main(String[] args) {
+		CommonUtilities cu = new CommonUtilities();
+		try {
+			cu.sendActivationLinkEmail("nikhil@finxera.com", cu.generateOTP());
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static Integer TimeDiff(Time time_end, Time time_start) {
-	
+
 		return null;
 	}
 
 	public static Time TimeAdd(Time startTime, int minutes) {
-	
+
 		return null;
 	}
 
 	public static Time getStartTime(Schedule schedule) {
 		Time start = null;
-		// schedule.getMorning_time_start())(schedule.getMorning_tokens_booked()/schedule.getMorning_tokens_avlbl());
+
 		return start;
 
 	}
 
 	public static Time getEndTime(Schedule schedule) {
-		
-		// =
-		// CommonUtilities.TimeAdd(appmnt.getStartTime(),CommonUtilities.TimeDiff(schedule.getMorning_time_end(),schedule.getMorning_time_start())/schedule.getMorning_tokens_avlbl()));
+
 		return null;
 	}
 
 	public static int getTokenNum(Schedule schedule, Appointment appmnt) {
-		
+
 		return 0;
 	}
 
-	public static void sendActivationLinkEmail(String emailId, String link) throws MessagingException {
+	public void sendActivationLinkEmail(String emailId, String link)
+			throws MessagingException {
 
-		final String username = Configuration.getInstance("server").getProperty("mail.smtp.user");
-		final String password = Configuration.getInstance("server").getProperty("mail.smtp.password");
+		final String username = Configuration.getInstance("server")
+				.getProperty("mail.smtp.user");
+		final String password = Configuration.getInstance("server")
+				.getProperty("mail.smtp.password");
 
-		/*Properties props = new Properties();
-		props.put("mail.smtp.auth", Configuration.getInstance("server").getProperty("mail.smtp.auth"));
-		props.put("mail.smtp.starttls.enable", Configuration.getInstance("server").getProperty("mail.smtp.starttls.enable"));
-		props.put("mail.smtp.host", Configuration.getInstance("server").getProperty("mail.smtp.host"));
-		props.put("mail.smtp.port", Configuration.getInstance("server").getProperty("mail.smtp.socketFactory.port"));
-*/
-		Session session = Session.getInstance(Configuration.getInstance("server"),
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", Configuration.getInstance("server")
+				.getProperty("mail.smtp.auth"));
+		props.put(
+				"mail.smtp.starttls.enable",
+				Configuration.getInstance("server").getProperty(
+						"mail.smtp.starttls.enable"));
+		props.put("mail.smtp.host", Configuration.getInstance("server")
+				.getProperty("mail.smtp.host"));
+		props.put("mail.smtp.port", Configuration.getInstance("server")
+				.getProperty("mail.smtp.socketFactory.port"));
+
+		/*
+		 * Session session = Session.getInstance(
+		 * Configuration.getInstance("server"), new javax.mail.Authenticator() {
+		 * protected PasswordAuthentication getPasswordAuthentication() { return
+		 * new PasswordAuthentication(username, password); } });
+		 */
+
+		Session session = Session.getInstance(props,
 				new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(username, password);
@@ -81,15 +100,18 @@ public class CommonUtilities {
 			message.setSubject("DOCLAB User Activation");
 			message.setText("Dear User,"
 					+ "Please Use below One Time Password to Activate your user.\n\n"
-					+ link + "\n\n"
-							+ ""
-							+ "Please note OTP is valid only for 30 minutes\n\n Thanks\nCustomer Service Team");
-
+					+ link
+					+ "\n\n"
+					+ ""
+					+ "Please note OTP is valid only for 30 minutes\n\n Thanks\nCustomer Service Team");
+			System.out.println(session.toString());
+			System.out.println(message.toString());
 			Transport.send(message);
 
 			System.out.println("Done");
 
 		} catch (MessagingException e) {
+			System.out.println("OTP Mail Send Error " + e.getMessage());
 			throw e;
 		}
 

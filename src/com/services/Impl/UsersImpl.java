@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -65,10 +66,12 @@ public class UsersImpl {
 			user.setStatus(Constants.PENDNG_ACTIVATE);
 			String OTP = CommonUtilities.generateOTP();
 			user.setOtp(OTP);
+			CommonUtilities cu = new CommonUtilities();
 			try {
-				CommonUtilities.sendActivationLinkEmail(user.getEmailId(), OTP);
-			} catch (Exception me) {
-				me.printStackTrace();
+				cu.sendActivationLinkEmail("rupinder@finxera.com",OTP);
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			user.setOtpSentTime(new Date());
 			em.persist(user);

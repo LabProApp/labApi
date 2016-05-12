@@ -21,7 +21,7 @@ public class LabBranchDto {
 
 	String emailID;
 
-	String img_path;
+	
 
 	public String getLabName() {
 		return labName;
@@ -93,14 +93,7 @@ public class LabBranchDto {
 		this.emailID = emailID;
 	}
 
-	public String getImg_path() {
-		return img_path;
-	}
-
 	
-	public void setImg_path(String img_path) {
-		this.img_path = img_path;
-	}
 
 	public Address getLabAddress() {
 		return labAddress;

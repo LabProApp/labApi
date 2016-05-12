@@ -30,17 +30,17 @@ public class LabRepService {
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public LabRep getLab(@QueryParam("labRepId") Long labRepId) {
+	public LabRep get(@QueryParam("labRepId") Long labRepId) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
-		LabRep lr = instance.getLab(labRepId);
+		LabRep lr = instance.get(labRepId);
 
 		return lr;
 
 	}
 
 	@GET
-	@Path("/getList/labBranchCode")
+	@Path("/getList")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<LabRep> getLabRepList(@QueryParam("labBranchCode") Long labBranchCode) {
 
@@ -57,7 +57,7 @@ public class LabRepService {
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateLab(LabRep b) {
+	public Response update(LabRep b) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
 		Response resp = instance.updateLab(b);
@@ -69,10 +69,10 @@ public class LabRepService {
 	@POST
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteLab(@QueryParam("labBranchCode") Long labBranchCode) {
+	public Response delete(@QueryParam("labBranchCode") Long labBranchCode) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
-		Response resp = instance.deleteLabRep(labBranchCode);
+		Response resp = instance.delete(labBranchCode);
 
 		resp.setSTATUS("SUCCESS");
 		return resp;

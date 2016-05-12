@@ -112,7 +112,7 @@ public class ScheduleImpl {
 		if (null != schedule.getLabRepId()) {
 
 			LabRepImpl lcl = LabRepImpl.getInstance();
-			LabRep labrep = lcl.getLab(schedule.getLabRepId());
+			LabRep labrep = lcl.get(schedule.getLabRepId());
 			if (labrep.getLabRepresentativeId() == 0) {
 				resp.setSTATUS("FAIL");
 				resp.setERROR_CODE(Constants.RESP_NORECORD);

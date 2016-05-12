@@ -107,7 +107,7 @@ public class LabBranchImpl {
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND LAB_OFFICE_ID =:OfficeId");
+					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND LAB_OFFICE_ID =:OfficeId");
 			q.setParameter("OfficeId", OfficeId);
 
 			objList = q.getResultList();
@@ -162,9 +162,6 @@ public class LabBranchImpl {
 				if (obj[13] instanceof String) {
 					labBranchDto.setEmailID((String) obj[13]); // EMAIL_ID
 				}
-				if (obj[14] instanceof String) {
-					labBranchDto.setImg_path((String) obj[14]); // IMG_PATH
-				}
 				LabBranchDtoList.add(labBranchDto);
 
 			}
@@ -187,7 +184,7 @@ public class LabBranchImpl {
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID,IMG_PATH FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND a.CITY =:city AND a.state = :state");
+					.createNativeQuery("SELECT LAB_BRANCH_CD,LAB_OFFICE_ID,LAB_NAME,STATUS,LAB_BR_OWNER,ADD_LINE1,ADD_LINE2,ADD_LINE3,CITY,STATE,ZIP,COUNTRY,PRIM_MOBILE,EMAIL_ID FROM LAB_BRANCH l,ADDRESS a where ADDRESS_ID=labAddress_ADDRESS_ID AND a.CITY =:city AND a.state = :state");
 			q.setParameter("city", city);
 			q.setParameter("state", state);
 
@@ -243,9 +240,7 @@ public class LabBranchImpl {
 				if (obj[13] instanceof String) {
 					labBranchDto.setEmailID((String) obj[13]); // EMAIL_ID
 				}
-				if (obj[14] instanceof String) {
-					labBranchDto.setImg_path((String) obj[14]); // IMG_PATH
-				}
+				
 				LabBranchDtoList.add(labBranchDto);
 
 			}

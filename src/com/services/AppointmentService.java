@@ -22,7 +22,7 @@ public class AppointmentService {
 	@Path("/bookAppointment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response BookAppointment(@QueryParam("appmnt") Appointment appmnt) {
+	public Response bookAppointment(Appointment appmnt) {
 		Response resp = new Response();
 
 		System.out.println("Book Appointment " + appmnt);
@@ -106,7 +106,7 @@ public class AppointmentService {
 	@Path("/updateAppointment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateAppointment(@QueryParam("appmnt") Appointment appmnt) {
+	public Response updateAppointment(Appointment appmnt) {
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
 		Response resp = appmntImpl.updateAppointment(appmnt);
