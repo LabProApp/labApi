@@ -19,8 +19,8 @@ import com.services.Impl.LabOfficeImpl;
 public class LabOfficeService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response addLab(LabOffice b) {
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
 		Response resp = instance.addLabOffice(b);
@@ -30,7 +30,7 @@ public class LabOfficeService {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public LabOffice getLabOffice(@QueryParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
@@ -42,7 +42,7 @@ public class LabOfficeService {
 
 	@GET
 	@Path("/getList")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<LabOffice> getLabOfficeList() {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
@@ -56,8 +56,8 @@ public class LabOfficeService {
 
 	@POST
 	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateLabOffice(LabOffice b) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
@@ -69,7 +69,7 @@ public class LabOfficeService {
 
 	@POST
 	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteLabOffice(@QueryParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();
@@ -80,7 +80,7 @@ public class LabOfficeService {
 	}
 	@POST
 	@Path("/activateLabOffice")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response activateLabOffice(@QueryParam("labOfficeId") Long labOfficeId) {
 
 		LabOfficeImpl instance = LabOfficeImpl.getInstance();

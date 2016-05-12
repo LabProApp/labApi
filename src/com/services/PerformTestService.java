@@ -17,8 +17,8 @@ import com.services.Impl.PerformTestImpl;
 public class PerformTestService {
 	@GET
 	@Path("/getReports")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getReports(Appointment appmnt) {
 
 		PerformTestImpl instance = PerformTestImpl.getInstance();
@@ -31,8 +31,8 @@ public class PerformTestService {
 
 	@POST
 	@Path("/updateStatus")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateStatus(Appointment appmnt) {
 		PerformTestImpl instance = PerformTestImpl.getInstance();
 
@@ -44,7 +44,7 @@ public class PerformTestService {
 
 	@POST
 	@Path("/uploadReports")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response uploadReports(@QueryParam("appntId") String appntId) {
 
 		PerformTestImpl instance = PerformTestImpl.getInstance();

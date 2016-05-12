@@ -19,8 +19,8 @@ import com.services.Impl.LabBranchImpl;
 public class LabBranchService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response addLab(LabBranch b) {
 		LabBranchImpl instance = LabBranchImpl.getInstance();
 		Response resp = instance.addLab(b);
@@ -30,7 +30,7 @@ public class LabBranchService {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public LabBranch getLab(@QueryParam("labbranchCode") Long labbranchCode) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
@@ -42,7 +42,7 @@ public class LabBranchService {
 
 	@GET
 	@Path("/getLabList")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<LabBranchDto> getLabList(@QueryParam("OfficeId") Long OfficeId) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
@@ -56,7 +56,7 @@ public class LabBranchService {
 
 	@GET
 	@Path("/getLabBranchByCity")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<LabBranchDto> getLabBranchByCity(
 			@QueryParam("city") String city, @QueryParam("state") String state) {
 
@@ -68,8 +68,8 @@ public class LabBranchService {
 
 	@POST
 	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateLabBranch(LabBranch b) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
@@ -80,7 +80,7 @@ public class LabBranchService {
 
 	@POST
 	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteLab(@QueryParam("labBranchCode") Long labBranchCode) {
 
 		LabBranchImpl instance = LabBranchImpl.getInstance();
@@ -90,7 +90,7 @@ public class LabBranchService {
 	}
 
 	@Path("/activateLabBranch")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response activateLabBranch(
 			@QueryParam("labBranchCode") Long labBranchCode) {
 

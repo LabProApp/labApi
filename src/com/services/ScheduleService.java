@@ -20,8 +20,8 @@ public class ScheduleService {
 
 	@POST
 	@Path("/addSchedule")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response addSchedule(Schedule schdule) {
 		Response resp = new Response();
 
@@ -33,7 +33,7 @@ public class ScheduleService {
 
 	@POST
 	@Path("/deleteSchedule")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteSchedule(@QueryParam("schduleId") Long schduleId) {
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();
@@ -44,7 +44,7 @@ public class ScheduleService {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Schedule getSchedulebyScheduleId(
 			@QueryParam("scheduleId") Long scheduleId) {
 		Schedule schedule;
@@ -59,7 +59,7 @@ public class ScheduleService {
 
 	@GET
 	@Path("/getScheduleListbyLabBranch")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Schedule> getScheduleListbyLabBranch(
 			@QueryParam("LabBranchCd") Long LabBranchCd) {
 		List<Schedule> scheduleListbyLabBranch = new ArrayList<Schedule>();
@@ -73,7 +73,7 @@ public class ScheduleService {
 
 	@GET
 	@Path("/getScheduleListbyLabRep")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Schedule> getScheduleListbyLabRep(
 			
 			@QueryParam("LabRepId") Long LabRepId) {
@@ -87,7 +87,7 @@ public class ScheduleService {
 
 	@GET
 	@Path("/getScheduleListbyDoctor")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Schedule> getScheduleListbyDoctor(
 			@QueryParam("DoctorId") Long DoctorId) {
 		List<Schedule> scheduleListbyDoctor = new ArrayList<Schedule>();
@@ -101,8 +101,8 @@ public class ScheduleService {
 
 	@POST
 	@Path("/updateSchedule")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateSchedule(Schedule schdule) {
 
 		ScheduleImpl schduleImpl = ScheduleImpl.getInstance();

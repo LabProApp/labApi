@@ -1,14 +1,8 @@
 package com.dto;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.beans.Address;
 
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlRootElement(name = "LabBranchDto")
+
 public class LabBranchDto {
 
 	Long labbranchCode;
@@ -33,7 +27,7 @@ public class LabBranchDto {
 		return labName;
 	}
 
-	@XmlElement
+	
 	public void setLabName(String labName) {
 		this.labName = labName;
 	}
@@ -42,7 +36,7 @@ public class LabBranchDto {
 		return labOfficeId;
 	}
 
-	@XmlElement
+	
 	public void setLabOfficeId(Long labOfficeId) {
 		this.labOfficeId = labOfficeId;
 	}
@@ -51,7 +45,7 @@ public class LabBranchDto {
 		return status;
 	}
 
-	@XmlElement
+	
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
@@ -71,7 +65,7 @@ public class LabBranchDto {
 	 * @param labbranchCode
 	 *            the labbranchCode to set
 	 */
-	@XmlElement
+	
 	public void setLabbranchCode(Long labbranchCode) {
 		this.labbranchCode = labbranchCode;
 	}
@@ -94,7 +88,7 @@ public class LabBranchDto {
 	 * @param emailID
 	 *            the emailID to set
 	 */
-	@XmlElement
+	
 	public void setEmailID(String emailID) {
 		this.emailID = emailID;
 	}
@@ -103,7 +97,7 @@ public class LabBranchDto {
 		return img_path;
 	}
 
-	@XmlElement
+	
 	public void setImg_path(String img_path) {
 		this.img_path = img_path;
 	}
@@ -112,17 +106,17 @@ public class LabBranchDto {
 		return labAddress;
 	}
 
-	@XmlElement
+	
 	public void setLabAddress(Address labAddress) {
 		this.labAddress = labAddress;
 	}
 
-	@XmlElement
+	
 	public void setLabBranchOwner(String labBranchOwner) {
 		this.labBranchOwner = labBranchOwner;
 	}
 
-	@XmlElement
+	
 	public void setPrimaryMobileNo(String primaryMobileNo) {
 		this.primaryMobileNo = primaryMobileNo;
 	}

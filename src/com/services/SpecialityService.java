@@ -18,8 +18,8 @@ import com.services.Impl.SpecialityImpl;
 public class SpecialityService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML) 
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON) 
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response add(Speciality spec) {
 
 		System.out.println("Add Speciality =>" + spec);
@@ -30,7 +30,7 @@ public class SpecialityService {
 	
 	@GET
 	@Path("/getspecsListbyTag")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Speciality> getspecsListbyTag(
 			@QueryParam("searchString") String searchString) {
 		List<Speciality> testList;
@@ -43,7 +43,7 @@ public class SpecialityService {
 
 	@GET
 	@Path("/getList")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Speciality> getspecsList() {
 		List<Speciality> testList;
 		SpecialityImpl specsImpl = SpecialityImpl.getInstance();
@@ -54,8 +54,8 @@ public class SpecialityService {
 
 	@POST
 	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatespecs(Speciality spec) {
 
 		SpecialityImpl specsImpl = SpecialityImpl.getInstance();
@@ -66,7 +66,7 @@ public class SpecialityService {
 
 	@POST
 	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletespecs(@QueryParam("specsId") Long specsId) {
 
 		System.out.println("Delete specs");

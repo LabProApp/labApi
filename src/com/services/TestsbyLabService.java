@@ -18,8 +18,8 @@ import com.services.Impl.TestsbyLabImpl;
 public class TestsbyLabService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response add(TestsbyLab tests_lab) {
 
 		System.out.println("Add TestsbyLab =>" + tests_lab);
@@ -30,7 +30,7 @@ public class TestsbyLabService {
 
 	/*@GET
 	@Path("/getLabsbyTests")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<TestsbyLab> getLabsbyTests(@QueryParam("testsId") Long testsId) {
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
 		List<TestsbyLab> testList = testsImpl.getLabsbyTests(testsId);
@@ -40,7 +40,7 @@ public class TestsbyLabService {
 
 	@GET
 	@Path("/getTestsbyLabOffice")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<TestsbyLab> getTestsbyLabOffice(
 			@QueryParam("labOfficeId") Long labOfficeId) {
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
@@ -51,7 +51,7 @@ public class TestsbyLabService {
 
 	@GET
 	@Path("/getTestsbyLabBranch")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public  List<TestsbyLab> getTestsbyLabBranch(
 			@QueryParam("labBranchCd") Long labBranchCd) {
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
@@ -62,8 +62,8 @@ public class TestsbyLabService {
 
 	@POST
 	@Path("/updatetestsByLab")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatetestsByLab(TestsbyLab testsbyLab) {
 
 		TestsbyLabImpl testsImpl = TestsbyLabImpl.getInstance();
@@ -74,7 +74,7 @@ public class TestsbyLabService {
 
 	@POST
 	@Path("/deletetestByLab")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletetestByLab(@QueryParam("id") Long id) {
 
 		System.out.println("Delete tests");

@@ -18,8 +18,8 @@ import com.services.Impl.TestsImpl;
 public class TestsResultService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response add(Tests cust) {
 
 		System.out.println("Add Tests =>" + cust);
@@ -30,7 +30,7 @@ public class TestsResultService {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Tests get(@QueryParam("testsId") Long testsId) {
 		TestsImpl testsImpl = TestsImpl.getInstance();
 		Tests cust = testsImpl.get(testsId);
@@ -40,7 +40,7 @@ public class TestsResultService {
 
 	@GET
 	@Path("/getList")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Tests> gettestsList() {
 		List<Tests> testList;
 		TestsImpl testsImpl = TestsImpl.getInstance();
@@ -51,8 +51,8 @@ public class TestsResultService {
 
 	@POST
 	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatetests(Tests cust) {
 
 		TestsImpl testsImpl = TestsImpl.getInstance();
@@ -63,7 +63,7 @@ public class TestsResultService {
 
 	@POST
 	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletetests(@QueryParam("testsId") Long testsId) {
 
 		System.out.println("Delete tests");

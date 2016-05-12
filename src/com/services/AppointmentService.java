@@ -20,8 +20,8 @@ public class AppointmentService {
 
 	@POST
 	@Path("/bookAppointment")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response BookAppointment(@QueryParam("appmnt") Appointment appmnt) {
 		Response resp = new Response();
 
@@ -33,7 +33,7 @@ public class AppointmentService {
 
 	@GET
 	@Path("/cancelAppointment")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response cancelAppointment(@QueryParam("appntId") Long appntId) {
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();
@@ -44,7 +44,7 @@ public class AppointmentService {
 
 	@GET
 	@Path("/getAppointListbyLabOffice")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Appointment> getAppointListbyLabOffice(@QueryParam("LabId") Long LabId) {
 		List<Appointment> AppointListbyLab = new ArrayList<Appointment>();
 
@@ -55,7 +55,7 @@ public class AppointmentService {
 	}
 	@GET
 	@Path("/getAppointListbyLabBranch")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Appointment> getAppointListbyLabBranch(@QueryParam("LabId") Long LabId) {
 		List<Appointment> AppointListbyLab = new ArrayList<Appointment>();
 
@@ -67,7 +67,7 @@ public class AppointmentService {
 
 	@GET
 	@Path("/getAppointListbyLabRep")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Appointment> getAppointListbyLabRep(@QueryParam("LabId") Long LabId) {
 		List<Appointment> AppointListbyLab = new ArrayList<Appointment>();
 
@@ -79,7 +79,7 @@ public class AppointmentService {
 
 	@GET
 	@Path("/getAppointListbyCustomer")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Appointment> getAppointListbyCustomer(
 			@QueryParam("CustomerId") Long CustomerId) {
 		List<Appointment> AppointListbyCustomer = new ArrayList<Appointment>();
@@ -91,7 +91,7 @@ public class AppointmentService {
 	}
 	@GET
 	@Path("/getAppointListbyDoctor")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Appointment> getAppointListbyDoctor(
 			@QueryParam("DoctorId") Long DoctorId) {
 		List<Appointment> AppointListbyCustomer = new ArrayList<Appointment>();
@@ -104,8 +104,8 @@ public class AppointmentService {
 
 	@POST
 	@Path("/updateAppointment")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateAppointment(@QueryParam("appmnt") Appointment appmnt) {
 
 		AppointmentImpl appmntImpl = AppointmentImpl.getInstance();

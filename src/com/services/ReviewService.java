@@ -18,8 +18,8 @@ import com.services.Impl.ReviewImpl;
 public class ReviewService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response add(Reviews review) {
 
 		System.out.println("Add Reviews =>" + review);
@@ -30,7 +30,7 @@ public class ReviewService {
 
 	@GET
 	@Path("/getReviewforDoctor")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Reviews> getReviewforDoctor(@QueryParam("docId") Long docId) {
 		ReviewImpl reviewImpl = ReviewImpl.getInstance();
 		List<Reviews> reviewList = reviewImpl.getReviewforDoctor(docId);
@@ -40,7 +40,7 @@ public class ReviewService {
 
 	@GET
 	@Path("/getReviewforLabBranch")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Reviews> getReviewforLabBranch(
 			@QueryParam("branchCd") Long branchCd) {
 		ReviewImpl reviewImpl = ReviewImpl.getInstance();

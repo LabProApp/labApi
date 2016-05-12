@@ -16,8 +16,8 @@ import com.services.Impl.CommonImpl;
 public class CommonService {
 	@POST
 	@Path("/upload_s3")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response upload_s3(S3Image img) {
  
 		System.out.println("Add Images =>" + img);
@@ -27,8 +27,8 @@ public class CommonService {
 	}
 	@GET
 	@Path("/download_s3")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public S3Image download_s3(@QueryParam("img_name") String img_name) {
  
 		System.out.println("Download Image =>" + img_name);

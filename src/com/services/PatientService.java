@@ -19,8 +19,8 @@ import com.services.Impl.PatientImpl;
 public class PatientService {
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response add(Patient ptnt) {
 
 		System.out.println("Add Patient =>" + ptnt);
@@ -31,7 +31,7 @@ public class PatientService {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Patient get(@QueryParam("patientId") Long patientId) {
 		PatientImpl patientImpl = PatientImpl.getInstance();
 		Patient ptnt = patientImpl.get(patientId);
@@ -41,7 +41,7 @@ public class PatientService {
 
 	@GET
 	@Path("/getList")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Patient> getpatientList() {
 		List<Patient> ptntList;
 		PatientImpl patientImpl = PatientImpl.getInstance();
@@ -53,8 +53,8 @@ public class PatientService {
 
 	@POST
 	@Path("/update")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatepatient(Patient ptnt) {
 
 		PatientImpl patientImpl = PatientImpl.getInstance();
@@ -65,7 +65,7 @@ public class PatientService {
 
 	@POST
 	@Path("/delete")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletepatient(@QueryParam("patientId") Long patientId) {
 
 		System.out.println("Delete patient");
@@ -77,7 +77,7 @@ public class PatientService {
 	}
 	@POST
 	@Path("/activatepatient")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response activatepatient(@QueryParam("patientId") Long patientId) {
 
 		System.out.println("Delete patient");
