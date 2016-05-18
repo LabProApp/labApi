@@ -68,7 +68,7 @@ public class UsersImpl {
 			user.setOtp(OTP);
 			CommonUtilities cu = new CommonUtilities();
 			try {
-				cu.sendActivationLinkEmail("rupinder@finxera.com",OTP);
+				cu.sendActivationLinkEmail(user.getEmailId(), OTP);
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -101,7 +101,10 @@ public class UsersImpl {
 		List<Object[]> objlist = null;
 		List<Users> userList = null;
 		try {
-
+			if (!em.getTransaction().isActive()) {
+				em.getTransaction().begin();
+			}
+			
 			Query q = em
 					.createNativeQuery("SELECT ID,EMAIL_ID,MOBILE,ENC_PASSWD,USER_TYPE,STATUS,OTP,OTP_TIME,NAME FROM USERS where EMAIL_ID=:emailId");
 			q.setParameter("emailId", emailId);
@@ -388,7 +391,7 @@ public class UsersImpl {
 				}
 			}
 
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 			resp.setERROR_CODE(Constants.RESP_SUCCESS);
 			resp.setSTATUS("SUCCESS");
 		} catch (HibernateException e) {
@@ -400,5 +403,85 @@ public class UsersImpl {
 		}
 		return resp;
 
+	}
+
+	public Response validateLogin(Users user) {
+		Response resp = new Response();
+		List<Users> userlist = this.get(user.getEmailId());
+		if (userlist.size() == 0) {
+
+			resp.setERROR_CODE(Constants.RESP_NORECORD);
+			resp.setSTATUS("FAIL");
+			resp.setERROR_MESSAGE("No User with EMAIL ID:" + user.getEmailId());
+			return resp;
+
+		}
+		Users u = userlist.get(0);
+		if (u.getStatus() != Constants.ACTIVE) {
+			resp.setERROR_CODE(Constants.RESP_USERNOTACTIVE);
+			resp.setSTATUS("FAIL");
+			resp.setERROR_MESSAGE("User with EMAIL ID:" + user.getEmailId() +" Not Active ");
+			return resp;
+
+		}
+		if (user.getEncPassword().equalsIgnoreCase(u.getEncPassword())) {
+			resp.setERROR_CODE(Constants.RESP_SUCCESS);
+			resp.setSTATUS("SUCCESS");
+			resp.setERROR_MESSAGE("USER VALIDATED");
+			return resp;
+		} else {
+			resp.setERROR_CODE(Constants.RESP_FAIL);
+			resp.setSTATUS("FAIL");
+			resp.setERROR_MESSAGE("USER NOT VALIDATED");
+			return resp;
+		}
+
+	}
+
+	public Response resendOTP(String emailId, String mobileNumber) {
+		Response resp = new Response();
+		List<Users> userlist = this.get(emailId);
+		if (userlist.size() == 0) {
+
+			resp.setERROR_CODE(Constants.RESP_NORECORD);
+			resp.setSTATUS("FAIL");
+			resp.setERROR_MESSAGE("No User with EMAIL ID:" + emailId);
+			return resp;
+
+		}
+		Users u = userlist.get(0);
+
+		if (u.getStatus() == Constants.ACTIVE) {
+			resp.setERROR_CODE(Constants.RESP_USERALREADYACTIVE);
+			resp.setSTATUS("FAIL");
+			resp.setERROR_MESSAGE("User with EMAIL ID:" + emailId
+					+ " Already Active");
+			return resp;
+
+		}
+		if (!em.getTransaction().isActive()) {
+			em.getTransaction().begin();
+		}
+		String OTP = CommonUtilities.generateOTP();
+		u.setOtp(OTP);
+		CommonUtilities cu = new CommonUtilities();
+		try {
+			cu.sendActivationLinkEmail(emailId, OTP);
+			u.setOtpSentTime(new Date());
+			em.merge(u);
+			resp.setERROR_CODE(Constants.RESP_SUCCESS);
+			resp.setSTATUS("SUCCESS");
+			em.getTransaction().commit();
+		} catch (MessagingException e) {
+			resp.setERROR_CODE(Constants.RESP_FAIL);
+			resp.setSTATUS("SUCCESS");
+			e.printStackTrace();
+		} catch (Exception e) {
+			resp.setERROR_CODE(Constants.RESP_FAIL);
+			resp.setSTATUS("SUCCESS");
+
+			e.printStackTrace();
+		}
+		return resp;
 	}
 }

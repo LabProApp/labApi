@@ -31,10 +31,11 @@ public class UserService {
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Users> get(
-			@QueryParam("emailId") String emailId) {
+	public List<Users> get(@QueryParam("emailId") String emailId) {
 		UsersImpl userImpl = UsersImpl.getInstance();
 		List<Users> userList = userImpl.get(emailId);
+		if (userList.size() >= 0)
+			userList.get(0).setEncPassword(null);
 		return userList;
 
 	}
@@ -52,10 +53,34 @@ public class UserService {
 	}
 
 	@POST
+	@Path("/resendOTP")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response resendOTP(@QueryParam("emailId") String emailId,
+			@QueryParam("mobileNumber") String mobileNumber) {
+
+		UsersImpl userImpl = UsersImpl.getInstance();
+		Response resp = userImpl.resendOTP(emailId, mobileNumber);
+		resp.setSTATUS("SUCCESS");
+		return resp;
+	}
+
+	@POST
+	@Path("/validateLogin")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response validateLogin(Users user) {
+
+		UsersImpl userImpl = UsersImpl.getInstance();
+		Response resp = userImpl.validateLogin(user);
+
+		return resp;
+	}
+
+	@POST
 	@Path("/delete")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteuser(
-			@QueryParam("emailId") String emailId) {
+	public Response deleteuser(@QueryParam("emailId") String emailId) {
 
 		System.out.println("Delete user");
 		UsersImpl userImpl = UsersImpl.getInstance();
@@ -68,12 +93,12 @@ public class UserService {
 	@POST
 	@Path("/activateuser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response activateuser(
-			@QueryParam("emailId") String emailId,@QueryParam("otp") String otp) {
+	public Response activateuser(@QueryParam("emailId") String emailId,
+			@QueryParam("otp") String otp) {
 
 		System.out.println("Activate user");
 		UsersImpl userImpl = UsersImpl.getInstance();
-		Response resp = userImpl.activateuser(emailId,otp);
+		Response resp = userImpl.activateuser(emailId, otp);
 
 		return resp;
 

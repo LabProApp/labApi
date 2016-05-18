@@ -21,6 +21,8 @@ public class Constants {
 	public static String RESP_FAIL = "0001";
 	public static String RESP_NORECORD = "0002";
 	public static String RESP_ALREADYEXISTS = "0003";
+	public static String RESP_USERNOTACTIVE = "0004";
+	public static String RESP_USERALREADYACTIVE = "0005";
 	public static String RESP_DBERROR = "0010";
 	public static String RESP_CONNERROR = "0011";
 	public static final String RESP_OTP_EXPIRED = "0012";
