@@ -98,7 +98,7 @@ public class UsersImpl {
 	public List<Users> get(String emailId) {
 		Response resp = new Response();
 
-		List<Object[]> objlist = null;
+		//List<Object[]> objlist = null;
 		List<Users> userList = null;
 		try {
 			if (!em.getTransaction().isActive()) {
@@ -106,10 +106,11 @@ public class UsersImpl {
 			}
 			
 			Query q = em
-					.createNativeQuery("SELECT ID,EMAIL_ID,MOBILE,ENC_PASSWD,USER_TYPE,STATUS,OTP,OTP_TIME,NAME FROM USERS where EMAIL_ID=:emailId");
+					.createNativeQuery("SELECT * FROM USERS where EMAIL_ID=:emailId",Users.class);
 			q.setParameter("emailId", emailId);
 
-			objlist = q.getResultList();
+			userList= q.getResultList();
+			/*objlist = q.getResultList();
 
 			userList = new ArrayList<Users>(objlist.size());
 			for (Object obj[] : objlist) {
@@ -145,7 +146,7 @@ public class UsersImpl {
 					user.setName(((String) obj[8])); // Name
 				}
 				userList.add(user);
-			}
+			}*/
 
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");

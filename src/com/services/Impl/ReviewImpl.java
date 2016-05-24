@@ -1,7 +1,5 @@
 package com.services.Impl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,7 +14,9 @@ import com.dao.EmManager;
 
 public class ReviewImpl {
 
-	String query = "SELECT REVIEW_ID,PTNT_ID,DOCTOR_ID,LAB_OFFICE_ID,LAB_BRANCH_CD,RATING,RATING_DT,REVIEW FROM REVIEWS ";
+	// String query =
+	// "SELECT REVIEW_ID,PTNT_ID,DOCTOR_ID,LAB_OFFICE_ID,LAB_BRANCH_CD,RATING,RATING_DT,REVIEW FROM REVIEWS ";
+	String query = "SELECT * FROM REVIEWS ";
 
 	private static EntityManager em;
 
@@ -70,15 +70,16 @@ public class ReviewImpl {
 	public List<Reviews> getReviewforDoctor(Long docId) {
 		Response resp = new Response();
 
-		List<Object[]> objlist = null;
+		//List<Object[]> objlist = null;
 		List<Reviews> reviewList = null;
 		try {
 
-			Query q = em.createNativeQuery(query + "where DOCTOR_ID=:docId");
+			Query q = em.createNativeQuery(query + "where DOCTOR_ID=:docId",
+					Reviews.class);
 			q.setParameter("docId", docId);
-
-			objlist = q.getResultList();
-			reviewList = populateReviewList(objlist);
+			reviewList = q.getResultList();
+			// objlist = q.getResultList();
+			// reviewList = populateReviewList(objlist);
 
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -91,18 +92,20 @@ public class ReviewImpl {
 		return reviewList;
 
 	}
+
 	public List<Reviews> getReviewforLabBranch(Long branchCd) {
 		Response resp = new Response();
 
-		List<Object[]> objlist = null;
+	//	List<Object[]> objlist = null;
 		List<Reviews> reviewList = null;
 		try {
 
-			Query q = em.createNativeQuery(query + "where LAB_BRANCH_CD=:branchCd");
+			Query q = em.createNativeQuery(query
+					+ "where LAB_BRANCH_CD=:branchCd", Reviews.class);
 			q.setParameter("branchCd", branchCd);
-
-			objlist = q.getResultList();
-			reviewList = populateReviewList(objlist);
+			reviewList = q.getResultList();
+			// objlist = q.getResultList();
+			// reviewList = populateReviewList(objlist);
 
 		} catch (HibernateException e) {
 			resp.setSTATUS("FAIL");
@@ -116,7 +119,7 @@ public class ReviewImpl {
 
 	}
 
-	private List<Reviews> populateReviewList(List<Object[]> objlist) {
+	/*private List<Reviews> populateReviewList(List<Object[]> objlist) {
 		List<Reviews> reviewList = new ArrayList<Reviews>(objlist.size());
 		for (Object obj[] : objlist) {
 
@@ -149,8 +152,8 @@ public class ReviewImpl {
 			}
 			reviewList.add(review);
 		}
-		// TODO Auto-generated method stub
+		
 		return reviewList;
-	}
+	}*/
 
 }

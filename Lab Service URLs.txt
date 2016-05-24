@@ -423,4 +423,7 @@ POST -- http://localhost:8080/LabApi/api/tests/update
 
 
 
+------------------------------------------------------------------------------------Reviews ----------------------------------------------------------------------
+http://localhost:8080/LabApi/api/review/getReviewforLabBranch?branchCd=1
 
+http://localhost:8080/LabApi/api/review/getReviewforDoctor?docId=1

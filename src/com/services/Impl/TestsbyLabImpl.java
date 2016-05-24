@@ -32,7 +32,6 @@ public class TestsbyLabImpl {
 
 		return instance;
 	}
-	
 
 	public Response add(TestsbyLab testsbyLab) {
 
@@ -127,12 +126,12 @@ public class TestsbyLabImpl {
 
 				TestByLabDto tlDto = new TestByLabDto();
 				if (obj[0] instanceof Number) {
-					tlDto.getLb().setLabbranchCode(((Number) obj[0]).longValue()); // LAB_BRANCH_CD
+					tlDto.getLb().setLabbranchCode(
+							((Number) obj[0]).longValue()); // LAB_BRANCH_CD
 				}
 				if (obj[1] instanceof Number) {
 					tlDto.getLb().setLabName(((String) obj[1])); // LAB_NAME
 				}
-				
 
 				testByLabDtoList.add(tlDto);
 			}
@@ -156,7 +155,9 @@ public class TestsbyLabImpl {
 		System.out.println("Get Entire TestsbyLab List");
 		try {
 			Query q = em
-					.createNativeQuery("SELECT * FROM TESTS_LAB where LAB_BRANCH_CD =:labBranchCd");
+					.createNativeQuery(
+							"SELECT * FROM TESTS_LAB where LAB_BRANCH_CD =:labBranchCd",
+							TestsbyLab.class);
 			q.setParameter("labBranchCd", labBranchCd);
 			testList = q.getResultList();
 		} catch (HibernateException e) {

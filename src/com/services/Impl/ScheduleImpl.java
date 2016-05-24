@@ -1,12 +1,9 @@
 package com.services.Impl;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
@@ -21,13 +18,14 @@ import com.dao.EmManager;
 
 public class ScheduleImpl {
 
-	private static String selectquery = "SELECT SCHDLE_ID,DOC_ID,LAB_BRANCH_CD,LAB_REP_CD,WORKING_DAYS,MRNG_START,MRNG_END,MRNG_TKNS_TOTAL,"
-			+ "AFTRN_START,AFTRN_END,AFTRN_TKNS_TOTAL,"
-			+ "EVNG_START,EVNG_END,EVNG_TKNS_TOTAL,"
-			+ "NIGHT_START,NIGHT_END,NIGHT_TKNS_TOTAL,STATUS "
-			+ "FROM SCHEDULE s ";
-
-	
+	/*
+	 * private static String selectquery =
+	 * "SELECT SCHDLE_ID,DOC_ID,LAB_BRANCH_CD,LAB_REP_CD,WORKING_DAYS,MRNG_START,MRNG_END,MRNG_TKNS_TOTAL,"
+	 * + "AFTRN_START,AFTRN_END,AFTRN_TKNS_TOTAL," +
+	 * "EVNG_START,EVNG_END,EVNG_TKNS_TOTAL," +
+	 * "NIGHT_START,NIGHT_END,NIGHT_TKNS_TOTAL,STATUS " + "FROM SCHEDULE s ";
+	 */
+	private static String selectquery = "SELECT * FROM SCHEDULE s ";
 
 	private static EntityManager em;
 
@@ -299,16 +297,19 @@ public class ScheduleImpl {
 	public List<Schedule> getScheduleListbyLabBranch(Long labBranchCd) {
 
 		List<Object[]> objList = null;
-		List<Schedule> scheduleList = new ArrayList<Schedule>();
+		List<Schedule> scheduleList = null;
 		System.out.println("Get Entire Schedule List for a Lab Branch = "
 				+ labBranchCd);
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ " where LAB_BRANCH_CD =:labBranchCd");
+					+ " where LAB_BRANCH_CD =:labBranchCd",Schedule.class);
 			q.setParameter("labBranchCd", labBranchCd);
-			objList = q.getResultList();
-			scheduleList = populateScheduleList(objList);
+			scheduleList = q.getResultList();
+			/*
+			 * objList = q.getResultList(); scheduleList =
+			 * populateScheduleList(objList);
+			 */
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
@@ -324,15 +325,18 @@ public class ScheduleImpl {
 	public List<Schedule> getScheduleListbyLabRep(Long labRepId) {
 
 		List<Object[]> objList = null;
-		List<Schedule> scheduleList = new ArrayList<Schedule>();
+		List<Schedule> scheduleList = null;
 		System.out.println("Get Entire Schedule List");
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ " where LAB_REP_CD =:labRepId");
+					+ " where LAB_REP_CD =:labRepId",Schedule.class);
 			q.setParameter("labRepId", labRepId);
-			objList = q.getResultList();
-			scheduleList = populateScheduleList(objList);
+			scheduleList = q.getResultList();
+			/*
+			 * objList = q.getResultList(); scheduleList =
+			 * populateScheduleList(objList);
+			 */
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
@@ -345,17 +349,19 @@ public class ScheduleImpl {
 	}
 
 	public List<Schedule> getScheduleListbyDoctor(Long doctorId) {
-		List<Object[]> objList = null;
-		List<Schedule> scheduleList = new ArrayList<Schedule>();
+	//	List<Object[]> objList = null;
+		List<Schedule> scheduleList = null;
 		System.out.println("Get Entire Schedule List");
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ " where DOC_ID =:DoctorId");
+					+ " where DOC_ID =:DoctorId",Schedule.class);
 			q.setParameter("DoctorId", doctorId);
-
-			objList = q.getResultList();
-			scheduleList = populateScheduleList(objList);
+			scheduleList = q.getResultList();
+			/*
+			 * objList = q.getResultList(); scheduleList =
+			 * populateScheduleList(objList);
+			 */
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
@@ -367,7 +373,7 @@ public class ScheduleImpl {
 
 	}
 
-	private List<Schedule> populateScheduleList(List<Object[]> objList) {
+	/*private List<Schedule> populateScheduleList(List<Object[]> objList) {
 
 		List<Schedule> scheduleList = new ArrayList<Schedule>(objList.size());
 		for (Object obj[] : objList) {
@@ -434,6 +440,6 @@ public class ScheduleImpl {
 			scheduleList.add(schedule);
 		}
 		return scheduleList;
-	}
+	}*/
 
 }

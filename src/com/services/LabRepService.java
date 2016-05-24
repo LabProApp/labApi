@@ -42,10 +42,10 @@ public class LabRepService {
 	@GET
 	@Path("/getList")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<LabRep> getLabRepList(@QueryParam("labBranchCode") Long labBranchCode) {
+	public List<LabRep> getList(@QueryParam("labBranchCode") Long labBranchCode) {
 
 		LabRepImpl instance = LabRepImpl.getInstance();
-		List<LabRep> labList = instance.getLabRepList(labBranchCode);
+		List<LabRep> labList = instance.getList(labBranchCode);
 
 		System.out.println("Get Entire Lab List => " + labList);
 

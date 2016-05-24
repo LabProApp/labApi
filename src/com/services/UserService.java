@@ -34,7 +34,7 @@ public class UserService {
 	public List<Users> get(@QueryParam("emailId") String emailId) {
 		UsersImpl userImpl = UsersImpl.getInstance();
 		List<Users> userList = userImpl.get(emailId);
-		if (userList.size() >= 0)
+		if (userList.size() > 0)
 			userList.get(0).setEncPassword(null);
 		return userList;
 

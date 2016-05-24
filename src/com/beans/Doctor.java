@@ -44,6 +44,7 @@ public class Doctor {
 	String doctorSpecialization;
 	@Column(name = "DOC_EXP")
 	String doctorExperience;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	Address docAddress = new Address();
 	@Column(name = "PRIM_MOBILE")

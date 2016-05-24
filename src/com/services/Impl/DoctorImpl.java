@@ -37,7 +37,6 @@ public class DoctorImpl {
 		Response resp = new Response();
 		System.out.println("Add Doctor =>" + doctor);
 
-		
 		try {
 			if (!em.getTransaction().isActive()) {
 				em.getTransaction().begin();
@@ -199,7 +198,8 @@ public class DoctorImpl {
 
 	}
 
-	public List<Doctor> getDoctorbyCity_Spec(String city,String spec,String state) {
+	public List<Doctor> getDoctorbyCity_Spec(String city, String spec,
+			String state) {
 		// Return List of Doctor including DoctorId,Name, Hospital Name, Fee,
 		// Degree, Experience,Address,Primary/Secondary Mobile Number,Email
 		// ID,bookFlag
@@ -210,18 +210,16 @@ public class DoctorImpl {
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT d.DOC_ID,d.DOC_NAME,d.STATUS,d.HOSP_NAME,d.DOC_DEGREE,d.DOC_SPEC,d.DOC_EXP,d.FEE,d.BOOK_FLAG,d.PRIM_MOBILE,d.SECOND_MOBILE,d.EMAIL_ID,a.ADDRESS_ID,a.ADD_LINE1,a.ADD_LINE2,a.ADD_LINE3,a.CITY,a.STATE,a.COUNTRY,a.ZIP FROM Doctor d,Address a where d.docAddress_ADDRESS_ID = a.ADDRESS_ID AND a.CITY like :city AND a.STATE like :state AND d.DOC_SPEC like :specialization AND d.STATUS = :status");
-		
+					.createNativeQuery("SELECT d.DOC_ID,d.DOC_NAME,d.STATUS,d.HOSP_NAME,d.DOC_DEGREE,d.DOC_SPEC,d.DOC_EXP,d.FEE,d.BOOK_FLAG,d.PRIM_MOBILE,d.SECOND_MOBILE,d.EMAIL_ID,a.ADDRESS_ID,a.ADD_LINE1,a.ADD_LINE2,a.ADD_LINE3,a.CITY,a.STATE,a.COUNTRY,a.ZIP,d.DOC_BRANCH_CD FROM Doctor d,Address a where d.docAddress_ADDRESS_ID = a.ADDRESS_ID AND a.CITY like :city AND a.STATE like :state AND d.DOC_SPEC like :specialization AND d.STATUS = :status");
+
 			q.setParameter("city", city);
 			q.setParameter("state", state);
 			q.setParameter("specialization", spec);
-			
+
 			q.setParameter("status", Constants.ACTIVE);
 
 			docList = q.getResultList();
-
 			DoctorDtoList = new ArrayList<Doctor>(docList.size());
-
 			for (Object obj[] : docList) {
 
 				Doctor doctor = new Doctor();
@@ -262,7 +260,7 @@ public class DoctorImpl {
 				if (obj[11] instanceof String) {
 					doctor.setEmailID(((String) obj[11])); // EMAIL_ID
 				}
-				
+
 				if (obj[12] instanceof Number) {
 					doctor.getDocAddress().setAddressId(
 							((Number) obj[12]).longValue()); // ADDRESS_ID
@@ -288,6 +286,10 @@ public class DoctorImpl {
 				if (obj[19] instanceof String) {
 					doctor.getDocAddress().setZip(((String) obj[19])); // ZIP
 				}
+				if (obj[20] instanceof Number) {
+					doctor.setBranchCode(((Number) obj[20]).longValue()); // DOC_BRANCH_CD
+				}
+
 				DoctorDtoList.add(doctor);
 
 			}

@@ -56,15 +56,17 @@ public class SpecialityImpl {
 
 	public List<Speciality> getspecsListbyTag(String searchString) {
 		List<Speciality> specList = null;
-		List<Object[]> objList;
+	//	List<Object[]> objList;
 		System.out.println("Get Entire spec List");
 
 		try {
 
 			Query q = em
-					.createNativeQuery("SELECT SPEC_ID,SPEC_NAME,SEARCH_TAGS FROM SPECIALITY WHERE SEARCH_TAGS like :searchString");
+					.createNativeQuery("SELECT * FROM SPECIALITY WHERE SEARCH_TAGS like :searchString",Speciality.class);
 			q.setParameter("searchString", "%" + searchString + "%");
-			objList = q.getResultList();
+			
+			specList= q.getResultList();
+		/*	objList = q.getResultList();
 			specList = new ArrayList<Speciality>(objList.size());
 			for (Object obj[] : objList) {
 
@@ -79,7 +81,7 @@ public class SpecialityImpl {
 					spec.setSearch_tags(((String) obj[2])); // SEARCH_TAGS
 				}
 				specList.add(spec);
-			}
+			}*/
 
 		} catch (HibernateException e) {
 

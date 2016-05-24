@@ -100,7 +100,7 @@ public class LabRepImpl {
 
 	}
 
-	public List<LabRep> getLabRepList(Long LabBranchCode) {
+	public List<LabRep> getList(Long LabBranchCode) {
 
 		// TODO: Fetch this List for a Particular Lab BRanch Code
 		List<LabRep> labRepList = new ArrayList<LabRep>();
@@ -114,9 +114,12 @@ public class LabRepImpl {
 			}
 
 			Query query = em
-					.createNativeQuery("SELECT  LAB_REP_ID,PRIM_MOBILE,REP_NAME,LAB_BRANCH_CD,STATUS FROM LAB_BRANCH_REP where LAB_BRANCH_CD =:LabBranchCode");
+					.createNativeQuery("SELECT * FROM LAB_BRANCH_REP where LAB_BRANCH_CD =:LabBranchCode",LabRep.class);
 			query.setParameter("LabBranchCode", LabBranchCode);
-			objList = query.getResultList();
+			
+			labRepList = query.getResultList();
+			
+			/*objList = query.getResultList();
 			labRepList = new ArrayList<LabRep>(objList.size());
 			for (Object obj[] : objList) {
 
@@ -137,7 +140,7 @@ public class LabRepImpl {
 					lr.setStatus(((Number) obj[4]).intValue()); // STATUS
 				}
 				labRepList.add(lr);
-			}
+			}*/
 
 		} catch (HibernateException e) {
 
