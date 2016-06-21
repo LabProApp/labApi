@@ -1,5 +1,6 @@
 package com.beans;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.common.CommonUtilities;
 
 @Entity
 @Table(name = "SCHEDULE")
@@ -153,6 +156,14 @@ public class Schedule {
 
 	public void setMorning_time_start_str(String morning_time_start_str) {
 		this.morning_time_start_str = morning_time_start_str;
+		
+		try {
+			this.setMorning_time_start(CommonUtilities.simpleDateFormat.parse(morning_time_start_str));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Date getMorning_time_end() {
@@ -169,6 +180,12 @@ public class Schedule {
 
 	public void setMorning_time_end_str(String morning_time_end_str) {
 		this.morning_time_end_str = morning_time_end_str;
+		try {
+			this.setMorning_time_end(CommonUtilities.simpleDateFormat.parse(morning_time_end_str));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Integer getMorning_tokens_total() {
@@ -193,6 +210,12 @@ public class Schedule {
 
 	public void setAfternoon_time_start_str(String afternoon_time_start_str) {
 		this.afternoon_time_start_str = afternoon_time_start_str;
+		try {
+			this.setAfternoon_time_start(CommonUtilities.simpleDateFormat.parse(afternoon_time_start_str));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Date getAfternoon_time_end() {

@@ -30,7 +30,8 @@ public class AWS_S3util {
 		AWS_S3util sc = new AWS_S3util();
 		Images s3img = new Images();
 		try {
-			InputStream is = is = new FileInputStream(
+			
+			/*InputStream is = is = new FileInputStream(
 					"/Users/nikhil/Profile-APR.pdf");
 
 			byte[] bytes = IOUtils.toByteArray(is);
@@ -39,13 +40,15 @@ public class AWS_S3util {
 			s3img.setImgTyp("profile");
 			s3img.setEntityTyp(Constants.DOCTOR);
 			Response resp = sc.upload_s3File(bytes,
-					"DOCTOR/profile/Profile-APR.pdf");
+					"DOCTOR/profile/Profile-APR.pdf");*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
+	
+	
 
 	public Images download_s3File(String keyName) {
 		String bucketName = Configuration.getInstance("server").getProperty(

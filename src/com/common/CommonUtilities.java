@@ -3,6 +3,7 @@ package com.common;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -29,7 +30,7 @@ public class CommonUtilities {
 			e.printStackTrace();
 		}
 	}
-
+	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
 	public static Integer TimeDiff(Time time_end, Time time_start) {
 
 		return null;

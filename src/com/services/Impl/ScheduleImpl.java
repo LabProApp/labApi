@@ -1,6 +1,7 @@
 package com.services.Impl;
 
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -167,37 +168,42 @@ public class ScheduleImpl {
 		return resp;
 	}
 
-	private void populates_times(Schedule schedule) throws Exception {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+	private void populates_times(Schedule schedule) {
+		try {
 
-		if (null != schedule.getMorning_time_start_str())
-			schedule.setMorning_time_start(simpleDateFormat.parse(schedule
-					.getMorning_time_start_str()));
-		if (null != schedule.getAfternoon_time_end_str())
-			schedule.setMorning_time_end(simpleDateFormat.parse(schedule
-					.getMorning_time_end_str()));
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
 
-		if (null != schedule.getAfternoon_time_start_str())
-			schedule.setAfternoon_time_start(simpleDateFormat.parse(schedule
-					.getAfternoon_time_start_str()));
-		if (null != schedule.getAfternoon_time_end_str())
-			schedule.setAfternoon_time_end(simpleDateFormat.parse(schedule
-					.getAfternoon_time_end_str()));
+			if (null != schedule.getMorning_time_start_str())
+				schedule.setMorning_time_start(simpleDateFormat.parse(schedule
+						.getMorning_time_start_str()));
+			if (null != schedule.getAfternoon_time_end_str())
+				schedule.setMorning_time_end(simpleDateFormat.parse(schedule
+						.getMorning_time_end_str()));
 
-		if (null != schedule.getEvening_time_start_str())
-			schedule.setEvening_time_start(simpleDateFormat.parse(schedule
-					.getEvening_time_start_str()));
-		if (null != schedule.getEvening_time_end_str())
-			schedule.setEvening_time_end(simpleDateFormat.parse(schedule
-					.getEvening_time_end_str()));
+			if (null != schedule.getAfternoon_time_start_str())
+				schedule.setAfternoon_time_start(simpleDateFormat
+						.parse(schedule.getAfternoon_time_start_str()));
+			if (null != schedule.getAfternoon_time_end_str())
+				schedule.setAfternoon_time_end(simpleDateFormat.parse(schedule
+						.getAfternoon_time_end_str()));
 
-		if (null != schedule.getNight_time_start_str())
-			schedule.setNight_time_start(simpleDateFormat.parse(schedule
-					.getNight_time_start_str()));
-		if (null != schedule.getNight_time_end_str())
-			schedule.setNight_time_end(simpleDateFormat.parse(schedule
-					.getNight_time_end_str()));
+			if (null != schedule.getEvening_time_start_str())
+				schedule.setEvening_time_start(simpleDateFormat.parse(schedule
+						.getEvening_time_start_str()));
+			if (null != schedule.getEvening_time_end_str())
+				schedule.setEvening_time_end(simpleDateFormat.parse(schedule
+						.getEvening_time_end_str()));
 
+			if (null != schedule.getNight_time_start_str())
+				schedule.setNight_time_start(simpleDateFormat.parse(schedule
+						.getNight_time_start_str()));
+			if (null != schedule.getNight_time_end_str())
+				schedule.setNight_time_end(simpleDateFormat.parse(schedule
+						.getNight_time_end_str()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Schedule getSchedulebyScheduleId(Long scheduleId) {
@@ -303,13 +309,15 @@ public class ScheduleImpl {
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ " where LAB_BRANCH_CD =:labBranchCd",Schedule.class);
+					+ " where LAB_BRANCH_CD =:labBranchCd", Schedule.class);
 			q.setParameter("labBranchCd", labBranchCd);
 			scheduleList = q.getResultList();
-			/*
-			 * objList = q.getResultList(); scheduleList =
-			 * populateScheduleList(objList);
-			 */
+
+			for (Iterator<Schedule> iterator = scheduleList.iterator(); iterator
+					.hasNext();) {
+				Schedule schedule = (Schedule) iterator.next();
+				populates_times(schedule);
+			}
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
@@ -330,7 +338,7 @@ public class ScheduleImpl {
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ " where LAB_REP_CD =:labRepId",Schedule.class);
+					+ " where LAB_REP_CD =:labRepId", Schedule.class);
 			q.setParameter("labRepId", labRepId);
 			scheduleList = q.getResultList();
 			/*
@@ -349,13 +357,13 @@ public class ScheduleImpl {
 	}
 
 	public List<Schedule> getScheduleListbyDoctor(Long doctorId) {
-	//	List<Object[]> objList = null;
+		// List<Object[]> objList = null;
 		List<Schedule> scheduleList = null;
 		System.out.println("Get Entire Schedule List");
 
 		try {
 			Query q = em.createNativeQuery(selectquery
-					+ " where DOC_ID =:DoctorId",Schedule.class);
+					+ " where DOC_ID =:DoctorId", Schedule.class);
 			q.setParameter("DoctorId", doctorId);
 			scheduleList = q.getResultList();
 			/*
@@ -373,73 +381,46 @@ public class ScheduleImpl {
 
 	}
 
-	/*private List<Schedule> populateScheduleList(List<Object[]> objList) {
-
-		List<Schedule> scheduleList = new ArrayList<Schedule>(objList.size());
-		for (Object obj[] : objList) {
-			Schedule schedule = new Schedule();
-			if (obj[0] instanceof Number) {
-				schedule.setScheduleId(((Number) obj[0]).longValue()); // SCHDLE_ID
-			}
-			if (obj[1] instanceof Number) {
-				schedule.setScheduleId(((Number) obj[1]).longValue()); // DOC_ID
-			}
-			if (obj[2] instanceof Number) {
-				schedule.setBranchCode(((Number) obj[2]).longValue()); // LAB_BRANCH_CD
-			}
-			if (obj[3] instanceof Number) {
-				schedule.setLabRepId(((Number) obj[3]).longValue()); // LAB_REP_CD
-			}
-			if (obj[4] instanceof String) {
-				schedule.setWorking_days((String) obj[4]); // WORKING_DAYS
-			}
-			if (obj[5] instanceof Date) {
-				schedule.setMorning_time_start((Date) obj[5]); // MRNG_START
-			}
-			if (obj[6] instanceof Date) {
-				schedule.setMorning_time_end((Date) obj[6]); // MRNG_END
-			}
-			if (obj[7] instanceof Number) {
-				schedule.setMorning_tokens_total(((Number) obj[7]).intValue()); // MRNG_TKNS_TOTAL
-			}
-
-			if (obj[8] instanceof Date) {
-				schedule.setAfternoon_time_start((Date) obj[8]); // AFTRN_START
-			}
-			if (obj[9] instanceof Date) {
-				schedule.setAfternoon_time_end((Date) obj[9]); // AFTRN_END
-			}
-			if (obj[10] instanceof Number) {
-				schedule.setAfternoon_tokens_total(((Number) obj[10])
-						.intValue()); // AFTRN_TKNS_TOTAL
-			}
-
-			if (obj[11] instanceof Date) {
-				schedule.setEvening_time_start((Date) obj[11]); // EVNG_START
-			}
-			if (obj[12] instanceof Date) {
-				schedule.setEvening_time_end((Date) obj[12]); // EVNG_END
-			}
-			if (obj[13] instanceof Number) {
-				schedule.setEvening_tokens_total(((Number) obj[13]).intValue()); // EVNG_TKNS_TOTAL
-			}
-
-			if (obj[14] instanceof Date) {
-				schedule.setNight_time_start((Date) obj[14]); // NIGHT_START
-			}
-			if (obj[15] instanceof Date) {
-				schedule.setNight_time_end((Date) obj[15]); // NIGHT_END
-			}
-			if (obj[16] instanceof Number) {
-				schedule.setNight_tokens_total(((Number) obj[16]).intValue()); // NIGHT_TKNS_TOTAL
-			}
-
-			if (obj[17] instanceof Number) {
-				schedule.setStatus(((Number) obj[17]).intValue()); // STATUS
-			}
-			scheduleList.add(schedule);
-		}
-		return scheduleList;
-	}*/
+	/*
+	 * private List<Schedule> populateScheduleList(List<Object[]> objList) {
+	 * 
+	 * List<Schedule> scheduleList = new ArrayList<Schedule>(objList.size());
+	 * for (Object obj[] : objList) { Schedule schedule = new Schedule(); if
+	 * (obj[0] instanceof Number) { schedule.setScheduleId(((Number)
+	 * obj[0]).longValue()); // SCHDLE_ID } if (obj[1] instanceof Number) {
+	 * schedule.setScheduleId(((Number) obj[1]).longValue()); // DOC_ID } if
+	 * (obj[2] instanceof Number) { schedule.setBranchCode(((Number)
+	 * obj[2]).longValue()); // LAB_BRANCH_CD } if (obj[3] instanceof Number) {
+	 * schedule.setLabRepId(((Number) obj[3]).longValue()); // LAB_REP_CD } if
+	 * (obj[4] instanceof String) { schedule.setWorking_days((String) obj[4]);
+	 * // WORKING_DAYS } if (obj[5] instanceof Date) {
+	 * schedule.setMorning_time_start((Date) obj[5]); // MRNG_START } if (obj[6]
+	 * instanceof Date) { schedule.setMorning_time_end((Date) obj[6]); //
+	 * MRNG_END } if (obj[7] instanceof Number) {
+	 * schedule.setMorning_tokens_total(((Number) obj[7]).intValue()); //
+	 * MRNG_TKNS_TOTAL }
+	 * 
+	 * if (obj[8] instanceof Date) { schedule.setAfternoon_time_start((Date)
+	 * obj[8]); // AFTRN_START } if (obj[9] instanceof Date) {
+	 * schedule.setAfternoon_time_end((Date) obj[9]); // AFTRN_END } if (obj[10]
+	 * instanceof Number) { schedule.setAfternoon_tokens_total(((Number)
+	 * obj[10]) .intValue()); // AFTRN_TKNS_TOTAL }
+	 * 
+	 * if (obj[11] instanceof Date) { schedule.setEvening_time_start((Date)
+	 * obj[11]); // EVNG_START } if (obj[12] instanceof Date) {
+	 * schedule.setEvening_time_end((Date) obj[12]); // EVNG_END } if (obj[13]
+	 * instanceof Number) { schedule.setEvening_tokens_total(((Number)
+	 * obj[13]).intValue()); // EVNG_TKNS_TOTAL }
+	 * 
+	 * if (obj[14] instanceof Date) { schedule.setNight_time_start((Date)
+	 * obj[14]); // NIGHT_START } if (obj[15] instanceof Date) {
+	 * schedule.setNight_time_end((Date) obj[15]); // NIGHT_END } if (obj[16]
+	 * instanceof Number) { schedule.setNight_tokens_total(((Number)
+	 * obj[16]).intValue()); // NIGHT_TKNS_TOTAL }
+	 * 
+	 * if (obj[17] instanceof Number) { schedule.setStatus(((Number)
+	 * obj[17]).intValue()); // STATUS } scheduleList.add(schedule); } return
+	 * scheduleList; }
+	 */
 
 }
