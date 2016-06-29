@@ -1,17 +1,19 @@
+http://52.204.243.73/
+http://52.204.243.73:8080/LabApi/
 --------------------------------------------------------------------Schedule------------------------------------------------------------
 GET
-http://52.68.195.81:8080/LabApi/api/schedule/get?scheduleId=1
+http://52.204.243.73:8080/LabApi/api/schedule/get?scheduleId=1
 
 GET
-http://52.68.195.81:8080/LabApi/api/schedule/getScheduleListbyDoctor?DoctorId=2
+http://52.204.243.73:8080/LabApi/api/schedule/getScheduleListbyDoctor?DoctorId=2
 
 GET
-http://52.68.195.81:8080/LabApi/api/schedule/getScheduleListbyLabBranch?LabBranchCd=2
+http://52.204.243.73:8080/LabApi/api/schedule/getScheduleListbyLabBranch?LabBranchCd=2
 GET
-http://52.68.195.81:8080/LabApi/api/schedule/getScheduleListbyLabRep?LabRepId=3
+http://52.204.243.73:8080/LabApi/api/schedule/getScheduleListbyLabRep?LabRepId=3
 
 POST
-http://52.68.195.81:8080/LabApi/api/schedule/addSchedule
+http://52.204.243.73:8080/LabApi/api/schedule/addSchedule
 
 {
     "docId": "3",
@@ -29,7 +31,7 @@ http://52.68.195.81:8080/LabApi/api/schedule/addSchedule
   }
 
 POST
-http://52.68.195.81:8080/LabApi/api/schedule/updateSchedule
+http://52.204.243.73:8080/LabApi/api/schedule/updateSchedule
 {
     "afternoon_time_end": "1970-01-01T00:15:00+05:30",
     "afternoon_time_start": "1970-01-01T00:13:00+05:30",
@@ -55,7 +57,7 @@ http://52.68.195.81:8080/LabApi/api/schedule/updateSchedule
 Speciality
 
 POST
-add-http://52.68.195.81:8080/LabApi/api/speciality/add/
+add-http://52.204.243.73:8080/LabApi/api/speciality/add/
 {
     "specName": "ENDOCRINOLOGIST",
     "search_tags": "stomach,hormones,Metabolism",
@@ -63,11 +65,11 @@ add-http://52.68.195.81:8080/LabApi/api/speciality/add/
   }
 
 GET LIST
-get-http://52.68.195.81:8080/LabApi/api/speciality/getList
+get-http://52.204.243.73:8080/LabApi/api/speciality/getList
 
 POST
 DELETE Speciality
-http://52.68.195.81:8080/LabApi/api/speciality/delete?specId=1
+http://52.204.243.73:8080/LabApi/api/speciality/delete?specId=1
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -75,7 +77,7 @@ http://52.68.195.81:8080/LabApi/api/speciality/delete?specId=1
 Users
 
 POST
-add-http://52.68.195.81:8080/LabApi/api/user/add/
+add-http://52.204.243.73:8080/LabApi/api/user/add/
 
   {
     "name": "Rupinder",
@@ -87,24 +89,24 @@ add-http://52.68.195.81:8080/LabApi/api/user/add/
 
  
 GET
-get-http://52.68.195.81:8080/LabApi/api/user/get?emailId=meetthenikhil@gmail.com
-get-http://52.68.195.81:8080/LabApi/api/user/get?emailId=nitin.poonam@gmail.com
+get-http://52.204.243.73:8080/LabApi/api/user/get?emailId=meetthenikhil@gmail.com
+get-http://52.204.243.73:8080/LabApi/api/user/get?emailId=nitin.poonam@gmail.com
 
-http://52.68.195.81:8080/LabApi/api/user/get?emailId=rupinder@finxera.com
+http://52.204.243.73:8080/LabApi/api/user/get?emailId=rupinder@finxera.com
 
 POST
 ACTIVATE USER
-http://52.68.195.81:8080/LabApi/api/user/activateuser?emailId=meetthenikhil@gmail.com
+http://52.204.243.73:8080/LabApi/api/user/activateuser?emailId=meetthenikhil@gmail.com
 
 POST
 DELETE USER
-http://52.68.195.81:8080/LabApi/api/user/delete?emailId=meetthenikhil@gmail.com
+http://52.204.243.73:8080/LabApi/api/user/delete?emailId=meetthenikhil@gmail.com
 
 POST
-http://52.68.195.81:8080/LabApi/api/user/resendOTP?emailId=nikhil@finxera.com
+http://52.204.243.73:8080/LabApi/api/user/resendOTP?emailId=nikhil@finxera.com
 
 POST
-http://52.68.195.81:8080/LabApi/api/user/validateLogin/
+http://52.204.243.73:8080/LabApi/api/user/validateLogin/
   {
     
     "emailId": "nikhil@finxera.com",
@@ -120,12 +122,12 @@ http://52.68.195.81:8080/LabApi/api/user/validateLogin/
 Lab Service URLs
 
 ------------------------------------------LAB OFFICE-----------------------------------------------------
-GET - http://52.68.195.81:8080/LabApi/api/laboffice/get?labOfficeId=3
+GET - http://52.204.243.73:8080/LabApi/api/laboffice/get?labOfficeId=3
 GET -
-http://52.68.195.81:8080/LabApi/api/laboffice/getList
+http://52.204.243.73:8080/LabApi/api/laboffice/getList
 
 POST -
-http://52.68.195.81:8080/LabApi/api/laboffice/add/
+http://52.204.243.73:8080/LabApi/api/laboffice/add/
 
 {
     "labName": "HiTech Lab",
@@ -146,7 +148,7 @@ http://52.68.195.81:8080/LabApi/api/laboffice/add/
     }
   }
 
-POST - http://52.68.195.81:8080/LabApi/api/laboffice/update/
+POST - http://52.204.243.73:8080/LabApi/api/laboffice/update/
 {
     "emailID": "hitech@gmail.com",
     "labAddress": {
@@ -169,18 +171,18 @@ POST - http://52.68.195.81:8080/LabApi/api/laboffice/update/
   }
 
 
-POST - http://52.68.195.81:8080/LabApi/api/laboffice/delete?labOfficeId=2
+POST - http://52.204.243.73:8080/LabApi/api/laboffice/delete?labOfficeId=2
 
 
 --------------------------------------------------LAB BRANCH----------------------------------------------------------------------------------------------
 
 
 GET -
-http://52.68.195.81:8080/LabApi/api/labbranch/get?labbranchCode=5
-http://52.68.195.81:8080/LabApi/api/labbranch/getLabList?OfficeId=3
+http://52.204.243.73:8080/LabApi/api/labbranch/get?labbranchCode=5
+http://52.204.243.73:8080/LabApi/api/labbranch/getLabList?OfficeId=3
 
 ADD -
-POST -- http://52.68.195.81:8080/LabApi/api/labbranch/add/
+POST -- http://52.204.243.73:8080/LabApi/api/labbranch/add/
 {
     "labOfficeId": "3",
     "labName": "MODERN LAB",
@@ -199,7 +201,7 @@ POST -- http://52.68.195.81:8080/LabApi/api/labbranch/add/
     }
   }
 
-POST -- http://52.68.195.81:8080/LabApi/api/labbranch/update/
+POST -- http://52.204.243.73:8080/LabApi/api/labbranch/update/
 
 {
     "emailID": "hitech@gmail.com",
@@ -223,19 +225,19 @@ POST -- http://52.68.195.81:8080/LabApi/api/labbranch/update/
   }
 
 
-POST - http://52.68.195.81:8080/LabApi/api/labbranch/delete?labBranchCode=5
+POST - http://52.204.243.73:8080/LabApi/api/labbranch/delete?labBranchCode=5
 
 --------------------------------------------------LAB REPRESENTATIVES
 ----------------------------------------------------------------------------------------------
 
-GET -http://52.68.195.81:8080/LabApi/api/labRep/get?labRepId=3
-GET - http://52.68.195.81:8080/LabApi/api/labRep/getList?labBranchCode=5
+GET -http://52.204.243.73:8080/LabApi/api/labRep/get?labRepId=3
+GET - http://52.204.243.73:8080/LabApi/api/labRep/getList?labBranchCode=5
 
 POST -
-http://52.68.195.81:8080/LabApi/api/labRep/delete/2
+http://52.204.243.73:8080/LabApi/api/labRep/delete/2
 
 ADD -
-POST -- http://52.68.195.81:8080/LabApi/api/labRep/add
+POST -- http://52.204.243.73:8080/LabApi/api/labRep/add
 {
     "repName": "MUKESH",
     "primaryMobileNo": "124343432",
@@ -244,7 +246,7 @@ POST -- http://52.68.195.81:8080/LabApi/api/labRep/add
   }
 
 UPDATE -
-POST -- http://52.68.195.81:8080/LabApi/api/labRep/update
+POST -- http://52.204.243.73:8080/LabApi/api/labRep/update
 {
     "labRepresentativeId": "3",
     "labbranchCode": "5",
@@ -257,11 +259,11 @@ POST -- http://52.68.195.81:8080/LabApi/api/labRep/update
 ----------------------------------------------------------------------------------------------
 Doctor
 
-GET - http://52.68.195.81:8080/LabApi/api/doctor/get?doctorId=1
-GET - http://52.68.195.81:8080/LabApi/api/doctor/getList
+GET - http://52.204.243.73:8080/LabApi/api/doctor/get?doctorId=1
+GET - http://52.204.243.73:8080/LabApi/api/doctor/getList
 
 ADD- POST -
-http://52.68.195.81:8080/LabApi/api/doctor/add/
+http://52.204.243.73:8080/LabApi/api/doctor/add/
 {
     "doctorName": "Dr. Arun Aggarwal",
     "hospitalName": "Columbia Asia",
@@ -285,7 +287,7 @@ http://52.68.195.81:8080/LabApi/api/doctor/add/
     }
   }
 
-UPDATE - POST - http://52.68.195.81:8080/LabApi/api/doctor/update/
+UPDATE - POST - http://52.204.243.73:8080/LabApi/api/doctor/update/
 {
     "branchCode": "1",
     "docAddress": {
@@ -314,11 +316,11 @@ UPDATE - POST - http://52.68.195.81:8080/LabApi/api/doctor/update/
   }
 
 
-POST - http://52.68.195.81:8080/LabApi/api/doctor/delete?doctorId=2
+POST - http://52.204.243.73:8080/LabApi/api/doctor/delete?doctorId=2
 
 getDoctorbyCity_Spec
 GET-
-http://52.68.195.81:8080/LabApi/api/doctor/getDoctorbyCity_Spec?city=Patiala&spec=Nephrologist&state=PUNJAB
+http://52.204.243.73:8080/LabApi/api/doctor/getDoctorbyCity_Spec?city=Patiala&spec=Nephrologist&state=PUNJAB
 
 
 
@@ -327,11 +329,11 @@ http://52.68.195.81:8080/LabApi/api/doctor/getDoctorbyCity_Spec?city=Patiala&spe
 
 
 Patient
-GET - http://52.68.195.81:8080/LabApi/api/patient/get?patientId=1
-GET - http://52.68.195.81:8080/LabApi/api/patient/getList
+GET - http://52.204.243.73:8080/LabApi/api/patient/get?patientId=1
+GET - http://52.204.243.73:8080/LabApi/api/patient/getList
 
-DELETE - http://52.68.195.81:8080/LabApi/api/patient/delete/1
-POST -http://52.68.195.81:8080/LabApi/api/patient/add/
+DELETE - http://52.204.243.73:8080/LabApi/api/patient/delete/1
+POST -http://52.204.243.73:8080/LabApi/api/patient/add/
 {
     "patientName": "Amit",
     "age": "20",
@@ -351,7 +353,7 @@ POST -http://52.68.195.81:8080/LabApi/api/patient/add/
     }
 }
 
-POST - http://52.68.195.81:8080/LabApi/api/patient/update/
+POST - http://52.204.243.73:8080/LabApi/api/patient/update/
   {
     "patientId": "12",
     "patientName": "Nikhil Aggarwal",
@@ -382,15 +384,15 @@ POST - http://52.68.195.81:8080/LabApi/api/patient/update/
 ----------------------------------------------------------------------------------------------
 
 
-GET - http://52.68.195.81:8080/LabApi/api/test/get?testsId=2
+GET - http://52.204.243.73:8080/LabApi/api/test/get?testsId=2
 GET -
-http://52.68.195.81:8080/LabApi/api/test/getList
+http://52.204.243.73:8080/LabApi/api/test/getList
 
 POST -
-http://52.68.195.81:8080/LabApi/api/test/delete?testsId=2
+http://52.204.243.73:8080/LabApi/api/test/delete?testsId=2
 
 ADD -
-POST -- http://52.68.195.81:8080/LabApi/api/test/add
+POST -- http://52.204.243.73:8080/LabApi/api/test/add
  {
     "testName": "Deluted Lecocyte Count",
     "shortName": "D.L.C",
@@ -406,7 +408,7 @@ POST -- http://52.68.195.81:8080/LabApi/api/test/add
   
   
 UPDATE -
-POST -- http://52.68.195.81:8080/LabApi/api/tests/update
+POST -- http://52.204.243.73:8080/LabApi/api/tests/update
 {
     "bodyOrgan": "Infection",
     "description": "D.L.C test is to check if body is Infected from Virus.",
